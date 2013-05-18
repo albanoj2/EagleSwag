@@ -1,16 +1,20 @@
 /**
  * @author Justin Albano
- * @date May 17, 2013
+ * @date May 18, 2013
  * @file ConcreteQuestion.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ *       Concrete implementation of a question. This abstract class is used a
+ *       reduction of redundant code, where the common code of all questions is
+ *       stored. When a new question is created, it must simply extend this
+ *       abstract class and declare its own constructor.
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
-public class ConcreteQuestion implements Question {
+public abstract class ConcreteQuestion implements Question {
 
 	/***************************************************************************
 	 * Attributes
@@ -169,6 +173,16 @@ public class ConcreteQuestion implements Question {
 	@Override
 	public void incrementUsedCount () {
 		this.usedCount++;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#incrementUsedCount()
+	 */
+	@Override
+	public String toString () {
+		return "[ID:] " + this.id + ", [Question:] " + this.question + ", " + "[Yes value:] " + this.yesValue + ", " + "[No value:] " + this.noValue + ", [Used count:] " + this.usedCount;
 	}
 
 }
