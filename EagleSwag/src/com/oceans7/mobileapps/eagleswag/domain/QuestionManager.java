@@ -22,6 +22,8 @@ import java.util.Queue;
 import android.content.Context;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.persistence.DataController;
+
 public class QuestionManager {
 
 	/***************************************************************************
@@ -31,16 +33,63 @@ public class QuestionManager {
 	/**
 	 * Singleton instance of the question manager.
 	 */
-	private static QuestionManager instance = new QuestionManager();
+	private static QuestionManager instance;
+
+	/**
+	 * The ID of the question manager configuration resource.
+	 */
+	private static final int QUESTION_MANAGER_CONFIG_RES = com.oceans7.mobileapps.eagleswag.R.raw.questionmanager;
+
+	/**
+	 * The data controller that manages the storage and retrieval of questions.
+	 */
+	private DataController dataController;
 
 	/***************************************************************************
 	 * Constructor
 	 **************************************************************************/
 
 	/**
-	 * Hidden constructor.
+	 * Hidden constructor. Sets the data controller upon instantiation.
+	 * 
+	 * @param context
+	 *            The context used to obtain the configuration resource file.
 	 */
-	private QuestionManager () {}
+	private QuestionManager (Context context) {
+
+		try {
+			// Obtain the class name of the data controller
+			Properties properties = new Properties();
+			properties.load(context.getResources().openRawResource(QUESTION_MANAGER_CONFIG_RES));
+			String dataControllerName = properties.getProperty("questionManager.dataController.classname");
+			Log.i("Question Manager", "Configuration file specified data controller as " + dataControllerName);
+
+			// Reflexively set the data controller
+			this.dataController = (DataController) Class.forName(dataControllerName).newInstance();
+			Log.i("Question Manager", "Data controller set to " + dataControllerName);
+		}
+		catch (InstantiationException e) {
+			// Error occurred while instantiating data controller
+			Log.e("Question Manager", "Error occurred while instantiating data controller: " + e);
+		}
+		catch (IllegalAccessException e) {
+			// Illegal access occurred when trying to instantiate
+			Log.e("Question Manager", "Illegal access occurred while setting data controller: " + e);
+		}
+		catch (ClassNotFoundException e) {
+			// The data controller class could not be found
+			Log.e("Question Manager", "Data controller class cannot be found: " + e);
+		}
+		catch (FileNotFoundException e) {
+			// The configuration file could not be found
+			Log.e("Question Manager", "Configuration file could not be found: " + e);
+		}
+		catch (IOException e) {
+			// IOException occurred while trying to access the properties file
+			Log.e("Question Manager", "IOException occurred while trying to access the confiuration file: " + e);
+		}
+
+	}
 
 	/***************************************************************************
 	 * Methods
@@ -49,11 +98,21 @@ public class QuestionManager {
 	/**
 	 * Obtain the singleton instance for the manager.
 	 * 
+	 * @param context
+	 *            The context used to obtain the configuration data for the
+	 *            question manager.
+	 * 
 	 * @return
 	 *         The singleton instance for the manager.
 	 */
-	public static QuestionManager getInstance () {
-		// Eager instantiation of the instance
+	public static QuestionManager getInstance (Context context) {
+
+		if (instance == null) {
+			// Lazy instantiation
+			instance = new QuestionManager(context);
+		}
+
+		// Return the question manager
 		return instance;
 	}
 
@@ -79,33 +138,23 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			properties.load(context.getResources().openRawResource(com.oceans7.mobileapps.eagleswag.R.raw.questionmanager));
+			properties.load(context.getResources().openRawResource(QUESTION_MANAGER_CONFIG_RES));
 
 			// The number of engineering questions that should be loaded
-			int engineeringQuestions = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
-			Log.i("Question Manager", "(" + engineeringQuestions + ") engineering questions should be loaded");
+			int engineeringQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
+			Log.i("Question Manager", "(" + engineeringQCount + ") engineering questions should be loaded");
 
 			// The number of general questions that should be loaded
-			int generalQuestions = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
-			Log.i("Question Manager", "(" + generalQuestions + ") general questions should be loaded");
+			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
+			Log.i("Question Manager", "(" + generalQCount + ") general questions should be loaded");
 
-			for (int i = 0; i < engineeringQuestions; i++) {
-				// Create the specified number of engineering questions
-				// TODO Offload this task to the data manager
+			// Obtain the engineering questions and add them to the question queue
+			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.getEngineeringQuestions(engineeringQCount);
+			questionQueue.addAll(engineeringQuestions);
 
-				EngineeringQuestion engQuestion = new EngineeringQuestion(0, null, 0, 0, 0);
-				questionQueue.add(engQuestion);
-				Log.i("Question Manager", "Added engineering question: " + engQuestion);
-			}
-
-			for (int i = 0; i < generalQuestions; i++) {
-				// Create the specified number of general questions
-				// TODO Offload this task to the data manager
-
-				GeneralQuestion genQuestion = new GeneralQuestion(0, null, 0, 0, 0);
-				questionQueue.add(genQuestion);
-				Log.i("Question Manager", "Added general question: " + genQuestion);
-			}
+			// Obtain the general questions and add them to the question queue
+			Queue<GeneralQuestion> generalQuestions = this.dataController.getGeneralQuestions(generalQCount);
+			questionQueue.addAll(generalQuestions);
 
 			// Return the correctly built queue
 			return questionQueue;
@@ -145,33 +194,23 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			properties.load(context.getResources().openRawResource(com.oceans7.mobileapps.eagleswag.R.raw.questionmanager));
+			properties.load(context.getResources().openRawResource(QUESTION_MANAGER_CONFIG_RES));
 
 			// The number of pilot questions that should be loaded
-			int pilotQuestions = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
-			Log.i("Question Manager", "(" + pilotQuestions + ") pilot questions should be loaded");
+			int pilotQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
+			Log.i("Question Manager", "(" + pilotQCount + ") pilot questions should be loaded");
 
 			// The number of general questions that should be loaded
-			int generalQuestions = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
-			Log.i("Question Manager", "(" + generalQuestions + ") general questions should be loaded");
+			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
+			Log.i("Question Manager", "(" + generalQCount + ") general questions should be loaded");
 
-			for (int i = 0; i < pilotQuestions; i++) {
-				// Create the specified number of pilot questions
-				// TODO Offload this task to the data manager
+			// Obtain the pilot questions and add them to the question queue
+			Queue<PilotQuestion> pilotQuestions = this.dataController.getPilotQuestions(pilotQCount);
+			questionQueue.addAll(pilotQuestions);
 
-				Question pilotQuestion = new PilotQuestion(0, null, 0, 0, 0);
-				questionQueue.add(pilotQuestion);
-				Log.i("Question Manager", "Added pilot question: " + pilotQuestion);
-			}
-
-			for (int i = 0; i < generalQuestions; i++) {
-				// Create the specified number of general questions
-				// TODO Offload this task to the data manager
-
-				GeneralQuestion genQuestion = new GeneralQuestion(0, null, 0, 0, 0);
-				questionQueue.add(genQuestion);
-				Log.i("Question Manager", "Added general question: " + genQuestion);
-			}
+			// Obtain the general questions and add them to the question queue
+			Queue<GeneralQuestion> generalQuestions = this.dataController.getGeneralQuestions(generalQCount);
+			questionQueue.addAll(generalQuestions);
 
 			// Return the correctly built queue
 			return questionQueue;
