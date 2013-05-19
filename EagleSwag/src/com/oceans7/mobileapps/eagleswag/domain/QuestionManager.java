@@ -23,6 +23,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
+import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
 
 public class QuestionManager {
 
@@ -56,39 +57,11 @@ public class QuestionManager {
 	 *            The context used to obtain the configuration resource file.
 	 */
 	private QuestionManager (Context context) {
-
-		try {
-			// Obtain the class name of the data controller
-			Properties properties = new Properties();
-			properties.load(context.getResources().openRawResource(QUESTION_MANAGER_CONFIG_RES));
-			String dataControllerName = properties.getProperty("questionManager.dataController.classname");
-			Log.i("Question Manager", "Configuration file specified data controller as " + dataControllerName);
-
-			// Reflexively set the data controller
-			this.dataController = (DataController) Class.forName(dataControllerName).newInstance();
-			Log.i("Question Manager", "Data controller set to " + dataControllerName);
-		}
-		catch (InstantiationException e) {
-			// Error occurred while instantiating data controller
-			Log.e("Question Manager", "Error occurred while instantiating data controller: " + e);
-		}
-		catch (IllegalAccessException e) {
-			// Illegal access occurred when trying to instantiate
-			Log.e("Question Manager", "Illegal access occurred while setting data controller: " + e);
-		}
-		catch (ClassNotFoundException e) {
-			// The data controller class could not be found
-			Log.e("Question Manager", "Data controller class cannot be found: " + e);
-		}
-		catch (FileNotFoundException e) {
-			// The configuration file could not be found
-			Log.e("Question Manager", "Configuration file could not be found: " + e);
-		}
-		catch (IOException e) {
-			// IOException occurred while trying to access the properties file
-			Log.e("Question Manager", "IOException occurred while trying to access the confiuration file: " + e);
-		}
-
+		// Obtain the data controller from the data controller factory
+		this.dataController = DataControllerFactory.getInstance().getDataController(context);
+		
+		// Open the data controller
+		this.dataController.open(context);
 	}
 
 	/***************************************************************************
@@ -108,7 +81,7 @@ public class QuestionManager {
 	public static QuestionManager getInstance (Context context) {
 
 		if (instance == null) {
-			// Lazy instantiation
+			// Lazy instantiation of singleton
 			instance = new QuestionManager(context);
 		}
 
@@ -142,11 +115,11 @@ public class QuestionManager {
 
 			// The number of engineering questions that should be loaded
 			int engineeringQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
-			Log.i("Question Manager", "(" + engineeringQCount + ") engineering questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + engineeringQCount + ") engineering questions should be loaded");
 
 			// The number of general questions that should be loaded
 			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
-			Log.i("Question Manager", "(" + generalQCount + ") general questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the engineering questions and add them to the question queue
 			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.getEngineeringQuestions(engineeringQCount);
@@ -161,12 +134,12 @@ public class QuestionManager {
 		}
 		catch (FileNotFoundException e) {
 			// The configuration file could not be found
-			Log.e("Question Manager", "Configuration file could not be found: " + e);
+			Log.e(this.getClass().getName(), "Configuration file could not be found: " + e);
 			return null;
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e("Question Manager", "IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
 			return null;
 		}
 
@@ -198,11 +171,11 @@ public class QuestionManager {
 
 			// The number of pilot questions that should be loaded
 			int pilotQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
-			Log.i("Question Manager", "(" + pilotQCount + ") pilot questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + pilotQCount + ") pilot questions should be loaded");
 
 			// The number of general questions that should be loaded
 			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
-			Log.i("Question Manager", "(" + generalQCount + ") general questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the pilot questions and add them to the question queue
 			Queue<PilotQuestion> pilotQuestions = this.dataController.getPilotQuestions(pilotQCount);
@@ -217,12 +190,12 @@ public class QuestionManager {
 		}
 		catch (FileNotFoundException e) {
 			// The configuration file could not be found
-			Log.e("Question Manager", "Configuration file could not be found: " + e);
+			Log.e(this.getClass().getName(), "Configuration file could not be found: " + e);
 			return null;
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e("Question Manager", "IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
 			return null;
 		}
 	}
