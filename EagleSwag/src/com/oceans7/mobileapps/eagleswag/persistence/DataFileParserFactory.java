@@ -51,7 +51,7 @@ public class DataFileParserFactory {
 	 * Methods
 	 **************************************************************************/
 
-	public static DataFileParserFactory getInstance () {
+	public static synchronized DataFileParserFactory getInstance () {
 
 		if (instance == null) {
 			// Lazy instantiation of the instance

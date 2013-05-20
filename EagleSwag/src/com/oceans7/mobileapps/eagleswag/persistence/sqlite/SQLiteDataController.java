@@ -10,10 +10,12 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -21,6 +23,7 @@ import android.util.Log;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
 public class SQLiteDataController implements DataController {
@@ -40,6 +43,11 @@ public class SQLiteDataController implements DataController {
 	 * SQLite database.
 	 */
 	private SQLiteDataControllerHelper helper;
+	
+	/**
+	 * A map of question classes to the database table names used.
+	 */
+	private HashMap<Class<?>, String> classToTableMap;
 
 	/***************************************************************************
 	 * Methods
@@ -81,12 +89,38 @@ public class SQLiteDataController implements DataController {
 
 		// Queue to store the general questions
 		Queue<GeneralQuestion> questions = new LinkedList<GeneralQuestion>();
+		
+		if (number > 0) {
+			// There is data to retrieve from the database
 
-		for (int i = 0; i < number; i++) {
-			// Create the specified number of general questions
-			GeneralQuestion question = new GeneralQuestion(0, null, 0, 0, 0);
-			questions.add(question);
-			Log.i("SQLite Data Controller", "Added general question: " + question);
+			// Obtain the data from the database
+			Cursor cursor = SQLiteDataControllerQueries.getQuestions(
+				this.database, SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE, number);
+
+			// Reset cursor
+			cursor.moveToFirst();
+
+			while (!cursor.isAfterLast()) {
+				// Loop through the cursor
+
+				// Question data
+				long id = cursor.getLong(SQLiteDataControllerConstants.Columns.ID.ordinal());
+				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
+				long yesValue = cursor.getLong(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
+				long noValue = cursor.getLong(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
+				long usedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
+
+				// Add the new question to the queue
+				GeneralQuestion question = new GeneralQuestion(id, text, yesValue, noValue, usedCount);
+				questions.add(question);
+				Log.i(this.getClass().getName(), "Added general question: " + question);
+
+				// Increment the cursor
+				cursor.moveToNext();
+			}
+
+			// Close the cursor
+			cursor.close();
 		}
 
 		return questions;
@@ -103,11 +137,37 @@ public class SQLiteDataController implements DataController {
 		// Queue to store the engineering questions
 		Queue<EngineeringQuestion> questions = new LinkedList<EngineeringQuestion>();
 
-		for (int i = 0; i < number; i++) {
-			// Create the specified number of engineering questions
-			EngineeringQuestion question = new EngineeringQuestion(0, null, 0, 0, 0);
-			questions.add(question);
-			Log.i("SQLite Data Controller", "Added engineering question: " + question);
+		if (number > 0) {
+			// There is data to retrieve from the database
+
+			// Obtain the data from the database
+			Cursor cursor = SQLiteDataControllerQueries.getQuestions(
+				this.database, SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE, number);
+
+			// Reset cursor
+			cursor.moveToFirst();
+
+			while (!cursor.isAfterLast()) {
+				// Loop through the cursor
+
+				// Question data
+				long id = cursor.getLong(SQLiteDataControllerConstants.Columns.ID.ordinal());
+				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
+				long yesValue = cursor.getLong(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
+				long noValue = cursor.getLong(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
+				long usedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
+
+				// Add the new question to the queue
+				EngineeringQuestion question = new EngineeringQuestion(id, text, yesValue, noValue, usedCount);
+				questions.add(question);
+				Log.i(this.getClass().getName(), "Added engineering question: " + question);
+
+				// Increment the cursor
+				cursor.moveToNext();
+			}
+
+			// Close the cursor
+			cursor.close();
 		}
 
 		return questions;
@@ -124,11 +184,37 @@ public class SQLiteDataController implements DataController {
 		// Queue to store the pilot questions
 		Queue<PilotQuestion> questions = new LinkedList<PilotQuestion>();
 
-		for (int i = 0; i < number; i++) {
-			// Create the specified number of engineering questions
-			PilotQuestion question = new PilotQuestion(0, null, 0, 0, 0);
-			questions.add(question);
-			Log.i("SQLite Data Controller", "Added pilot question: " + question);
+		if (number > 0) {
+			// There is data to retrieve from the database
+
+			// Obtain the data from the database
+			Cursor cursor = SQLiteDataControllerQueries.getQuestions(
+				this.database, SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE, number);
+
+			// Reset cursor
+			cursor.moveToFirst();
+
+			while (!cursor.isAfterLast()) {
+				// Loop through the cursor
+
+				// Question data
+				long id = cursor.getLong(SQLiteDataControllerConstants.Columns.ID.ordinal());
+				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
+				long yesValue = cursor.getLong(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
+				long noValue = cursor.getLong(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
+				long usedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
+
+				// Add the new question to the queue
+				PilotQuestion question = new PilotQuestion(id, text, yesValue, noValue, usedCount);
+				questions.add(question);
+				Log.i(this.getClass().getName(), "Added pilot question: " + question);
+
+				// Increment the cursor
+				cursor.moveToNext();
+			}
+
+			// Close the cursor
+			cursor.close();
 		}
 
 		return questions;
@@ -140,31 +226,13 @@ public class SQLiteDataController implements DataController {
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveGeneralQuestion(com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion)
 	 */
 	@Override
-	public void saveGeneralQuestion (GeneralQuestion question) {
+	public void saveQuestion (Question question) {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveEngineeringQuestion(com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion)
-	 */
-	@Override
-	public void saveEngineeringQuestion (EngineeringQuestion question) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#savePilotQuestion(com.oceans7.mobileapps.eagleswag.domain.PilotQuestion)
-	 */
-	@Override
-	public void savePilotQuestion (PilotQuestion question) {
-		// TODO Auto-generated method stub
-
+	
+	public SQLiteDatabase getDatabase () {
+		return this.database;
 	}
 
 }

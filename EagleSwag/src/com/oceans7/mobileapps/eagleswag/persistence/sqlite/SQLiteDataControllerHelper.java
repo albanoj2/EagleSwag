@@ -28,6 +28,14 @@ import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserFactory;
 
 public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 
+	/***************************************************************************
+	 * Attributes
+	 **************************************************************************/
+
+	/**
+	 * The context used to access the data file containing the questions to be
+	 * loaded into the database upon startup.
+	 */
 	private Context context;
 
 	/***************************************************************************
@@ -41,7 +49,7 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 *            The context used for the database helper.
 	 */
 	public SQLiteDataControllerHelper (Context context) {
-		super(context, SQLiteDataControllerUtil.DATABASE_NAME, null, SQLiteDataControllerUtil.DATABASE_VERSION);
+		super(context, SQLiteDataControllerConstants.DATABASE_NAME, null, SQLiteDataControllerConstants.DATABASE_VERSION);
 
 		// Save the context
 		this.context = context;
@@ -60,10 +68,9 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	public void onCreate (SQLiteDatabase db) {
 
 		try {
-			for (int i = 0; i < SQLiteDataControllerUtil.TABLES.length; i++) {
+			for (int i = 0; i < SQLiteDataControllerConstants.TABLES.length; i++) {
 				// Create each questions table in the database
-				db.execSQL(SQLiteDataControllerUtil.getCreateQuestionsTableQuery(SQLiteDataControllerUtil.TABLES[i]));
-				Log.i(this.getClass().getName(), "Created table using query: " + SQLiteDataControllerUtil.getCreateQuestionsTableQuery(SQLiteDataControllerUtil.TABLES[i]));
+				SQLiteDataControllerQueries.createQuestionsTable(db, SQLiteDataControllerConstants.TABLES[i]);
 			}
 		}
 		catch (SQLException e) {
@@ -81,17 +88,23 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 
 		for (GeneralQuestion question : generalQuestions) {
 			// Insert the new general question
-			SQLiteDataControllerUtil.insertIntoQuestionsTable(db, SQLiteDataControllerUtil.GENERAL_QUESTIONS_TABLE_NAME, question);
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db,
+				SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE,
+				question);
 		}
 
 		for (EngineeringQuestion question : engineeringQuestions) {
 			// Insert the new engineering question
-			SQLiteDataControllerUtil.insertIntoQuestionsTable(db, SQLiteDataControllerUtil.GENERAL_QUESTIONS_TABLE_NAME, question);
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db,
+				SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE,
+				question);
 		}
 
 		for (PilotQuestion question : pilotQuestions) {
 			// Insert the new pilot question
-			SQLiteDataControllerUtil.insertIntoQuestionsTable(db, SQLiteDataControllerUtil.GENERAL_QUESTIONS_TABLE_NAME, question);
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db,
+				SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE,
+				question);
 		}
 	}
 
@@ -105,13 +118,15 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
 
 		// Drop all old tables from the database
-		Log.w(this.getClass().getName(), "Database is about to be updated from version " + oldVersion + " to version " + newVersion + ". All old data will lost");
+		Log.w(this.getClass().getName(),
+			"Database is about to be updated from version " + oldVersion + " to version " + newVersion + ". All old data will lost");
 
 		try {
-			for (int i = 0; i < SQLiteDataControllerUtil.TABLES.length; i++) {
+			for (int i = 0; i < SQLiteDataControllerConstants.TABLES.length; i++) {
 				// Iterate through each table and drop it from the database
-				db.execSQL("DROP TABLE IF EXISTS " + SQLiteDataControllerUtil.TABLES[i]);
-				Log.w(this.getClass().getName(), "Dropping table '" + SQLiteDataControllerUtil.TABLES[i] + "' from database");
+				db.execSQL("DROP TABLE IF EXISTS " + SQLiteDataControllerConstants.TABLES[i]);
+				Log.w(this.getClass().getName(),
+					"Dropping table '" + SQLiteDataControllerConstants.TABLES[i] + "' from database");
 			}
 		}
 		catch (SQLException e) {

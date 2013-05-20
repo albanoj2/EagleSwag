@@ -50,7 +50,7 @@ public class DataControllerFactory {
 	 * Methods
 	 **************************************************************************/
 
-	public static DataControllerFactory getInstance () {
+	public static synchronized DataControllerFactory getInstance () {
 
 		if (instance == null) {
 			// Lazy instantiation of the instance

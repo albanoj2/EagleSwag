@@ -18,6 +18,7 @@ import android.database.SQLException;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.Question;
 
 public interface DataController {
 
@@ -31,9 +32,5 @@ public interface DataController {
 
 	public Queue<PilotQuestion> getPilotQuestions (int number);
 
-	public void saveGeneralQuestion (GeneralQuestion question);
-
-	public void saveEngineeringQuestion (EngineeringQuestion question);
-
-	public void savePilotQuestion (PilotQuestion question);
+	public void saveQuestion (Question question);
 }

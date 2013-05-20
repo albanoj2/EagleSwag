@@ -10,7 +10,7 @@
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
-public class PilotQuestion extends ConcreteQuestion {
+public class PilotQuestion extends Question {
 
 	/**
 	 * @param id
@@ -24,7 +24,7 @@ public class PilotQuestion extends ConcreteQuestion {
 	 * @param usedCount
 	 *            The used count of the question.
 	 */
-	public PilotQuestion (int id, String text, int yesValue, int noValue, int usedCount) {
+	public PilotQuestion (long id, String text, long yesValue, long noValue, long usedCount) {
 		super(id, text, yesValue, noValue, usedCount);
 	}
 
