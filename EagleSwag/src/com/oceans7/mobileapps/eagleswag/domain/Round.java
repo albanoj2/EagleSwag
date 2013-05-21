@@ -160,7 +160,7 @@ public class Round {
 
 			// Increment the question used count and save the question
 			question.incrementUsedCount();
-			controller.saveQuestion(question);
+			controller.saveQuestion(question.getClass(), question);
 
 			// Log the saved question
 			Log.i(this.getClass().getName(),
@@ -172,7 +172,7 @@ public class Round {
 
 			// Increment the question used count and save the question
 			question.incrementUsedCount();
-			controller.saveQuestion(question);
+			controller.saveQuestion(question.getClass(), question);
 
 			// Log the saved question
 			Log.i(this.getClass().getName(),

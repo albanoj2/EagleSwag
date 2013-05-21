@@ -24,7 +24,7 @@ public class EngineeringQuestion extends Question {
 	 * @param usedCount
 	 *            The used count of the question.
 	 */
-	public EngineeringQuestion (long id, String text, long yesValue, long noValue, long usedCount) {
+	public EngineeringQuestion (Integer id, String text, Integer yesValue, Integer noValue, Integer usedCount) {
 		super(id, text, yesValue, noValue, usedCount);
 	}
 

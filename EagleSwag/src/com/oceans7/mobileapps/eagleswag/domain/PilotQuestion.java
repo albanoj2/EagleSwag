@@ -24,7 +24,7 @@ public class PilotQuestion extends Question {
 	 * @param usedCount
 	 *            The used count of the question.
 	 */
-	public PilotQuestion (long id, String text, long yesValue, long noValue, long usedCount) {
+	public PilotQuestion (Integer id, String text, Integer yesValue, Integer noValue, Integer usedCount) {
 		super(id, text, yesValue, noValue, usedCount);
 	}
 

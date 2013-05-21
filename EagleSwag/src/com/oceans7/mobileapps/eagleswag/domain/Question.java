@@ -57,7 +57,7 @@ public abstract class Question {
 	 * @param usedCount
 	 *            The used count of the question.
 	 */
-	public Question (long id, String text, long yesValue, long noValue, long usedCount) {
+	public Question (Integer id, String text, Integer yesValue, Integer noValue, Integer usedCount) {
 
 		// Set the initial values of the question
 		this.setId(id);

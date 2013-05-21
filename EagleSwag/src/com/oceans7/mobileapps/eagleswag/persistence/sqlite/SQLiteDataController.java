@@ -10,8 +10,11 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import android.content.Context;
@@ -43,11 +46,29 @@ public class SQLiteDataController implements DataController {
 	 * SQLite database.
 	 */
 	private SQLiteDataControllerHelper helper;
-	
+
 	/**
-	 * A map of question classes to the database table names used.
+	 * A map of question classes to the database table names used. This is used
+	 * to map a question type to a table in the database, which allows for the
+	 * retrieval and storage of questions.
 	 */
-	private HashMap<Class<?>, String> classToTableMap;
+	private Map<Class<? extends Question>, String> classToTableMap;
+
+	/***************************************************************************
+	 * Constructors
+	 **************************************************************************/
+
+	public SQLiteDataController () {
+
+		// Create and populate the question class to table name mappings
+		this.classToTableMap = new HashMap<Class<? extends Question>, String>();
+		this.classToTableMap.put(GeneralQuestion.class,
+			SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE);
+		this.classToTableMap.put(EngineeringQuestion.class,
+			SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE);
+		this.classToTableMap.put(PilotQuestion.class,
+			SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE);
+	}
 
 	/***************************************************************************
 	 * Methods
@@ -69,7 +90,7 @@ public class SQLiteDataController implements DataController {
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * 
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#close()
 	 */
@@ -82,20 +103,35 @@ public class SQLiteDataController implements DataController {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getGeneralQuestions(int)
+	 * Obtains a specified number of questions of the supplied type, T. The
+	 * generic parameter, T, specified the type of the questions returned from
+	 * this method (the type of the questions in the queue returned from this
+	 * method). The supplied class (givenClass) determines the mapping of
+	 * question type to the database table that contains the questions data.
+	 * 
+	 * @param key
+	 *            The class of the question type. For example, if the supplied
+	 *            type, T, is GeneralQuestion, the givenClass is
+	 *            GeneralQuestion.class. This class is used as a key to map the
+	 *            question type to the database table used to retrieve the
+	 *            question data.
+	 * @param number
+	 *            The number of questions to retrieve from the database.
+	 * @return
+	 *         A queue containing the specified number of questions of type, T.
 	 */
-	@Override
-	public Queue<GeneralQuestion> getGeneralQuestions (int number) {
+	public <T extends Question> Queue<T> getQuestions (Class<T> key, int number) {
 
-		// Queue to store the general questions
-		Queue<GeneralQuestion> questions = new LinkedList<GeneralQuestion>();
-		
+		// Create queue of requested question objects
+		Queue<T> questions = new LinkedList<T>();
+
 		if (number > 0) {
-			// There is data to retrieve from the database
+			// Continue only if there is data to retrieve from the database
 
-			// Obtain the data from the database
-			Cursor cursor = SQLiteDataControllerQueries.getQuestions(
-				this.database, SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE, number);
+			// Obtain the data for the questions from the database
+			Cursor cursor = SQLiteDataControllerQueries.getQuestions(this.database,
+				this.classToTableMap.get(key),
+				number);
 
 			// Reset cursor
 			cursor.moveToFirst();
@@ -104,16 +140,46 @@ public class SQLiteDataController implements DataController {
 				// Loop through the cursor
 
 				// Question data
-				long id = cursor.getLong(SQLiteDataControllerConstants.Columns.ID.ordinal());
+				int id = cursor.getInt(SQLiteDataControllerConstants.Columns.ID.ordinal());
 				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
-				long yesValue = cursor.getLong(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
-				long noValue = cursor.getLong(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
-				long usedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
+				int yesValue = cursor.getInt(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
+				int noValue = cursor.getInt(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
+				int usedCount = cursor.getInt(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
 
-				// Add the new question to the queue
-				GeneralQuestion question = new GeneralQuestion(id, text, yesValue, noValue, usedCount);
-				questions.add(question);
-				Log.i(this.getClass().getName(), "Added general question: " + question);
+				try {
+					// Obtain the constructor for the supplied class
+					Class<?>[] argTypes = new Class<?>[] { Integer.class, String.class, Integer.class, Integer.class, Integer.class };
+					Constructor<T> constructor = key.getDeclaredConstructor(argTypes);
+					Object[] args = new Object[] { id, text, yesValue, noValue, usedCount };
+
+					// Invoke the constructor to obtain the object
+					T question = constructor.newInstance(args);
+
+					// Add the new question to the queue
+					questions.add(question);
+					Log.i(this.getClass().getName(),
+						"Added general question to " + key.getCanonicalName() + " queue: " + question);
+				}
+				catch (IllegalArgumentException e) {
+					Log.e(this.getClass().getName(),
+						"Illegal argument exception occurred while trying to instantiate new question using reflective method: " + e);
+				}
+				catch (InstantiationException e) {
+					Log.e(this.getClass().getName(),
+						"Instantiation exception occurred while trying to instantiate new question using reflective method: " + e);
+				}
+				catch (IllegalAccessException e) {
+					Log.e(this.getClass().getName(),
+						"Illegal access exception occurred while trying to instantiate new question using reflective method: " + e);
+				}
+				catch (InvocationTargetException e) {
+					Log.e(this.getClass().getName(),
+						"Invokation target exception occurred while trying to instantiate new question using reflective method: " + e);
+				}
+				catch (NoSuchMethodException e) {
+					Log.e(this.getClass().getName(),
+						"The constructor used to create the generic question object cannot be found: " + e);
+				}
 
 				// Increment the cursor
 				cursor.moveToNext();
@@ -128,109 +194,14 @@ public class SQLiteDataController implements DataController {
 
 	/**
 	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getEngineeringQuestions(int)
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveQuestion(java.lang.Class, com.oceans7.mobileapps.eagleswag.domain.Question)
 	 */
 	@Override
-	public Queue<EngineeringQuestion> getEngineeringQuestions (int number) {
-
-		// Queue to store the engineering questions
-		Queue<EngineeringQuestion> questions = new LinkedList<EngineeringQuestion>();
-
-		if (number > 0) {
-			// There is data to retrieve from the database
-
-			// Obtain the data from the database
-			Cursor cursor = SQLiteDataControllerQueries.getQuestions(
-				this.database, SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE, number);
-
-			// Reset cursor
-			cursor.moveToFirst();
-
-			while (!cursor.isAfterLast()) {
-				// Loop through the cursor
-
-				// Question data
-				long id = cursor.getLong(SQLiteDataControllerConstants.Columns.ID.ordinal());
-				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
-				long yesValue = cursor.getLong(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
-				long noValue = cursor.getLong(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
-				long usedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
-
-				// Add the new question to the queue
-				EngineeringQuestion question = new EngineeringQuestion(id, text, yesValue, noValue, usedCount);
-				questions.add(question);
-				Log.i(this.getClass().getName(), "Added engineering question: " + question);
-
-				// Increment the cursor
-				cursor.moveToNext();
-			}
-
-			// Close the cursor
-			cursor.close();
-		}
-
-		return questions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getPilotQuestion(int)
-	 */
-	@Override
-	public Queue<PilotQuestion> getPilotQuestions (int number) {
-
-		// Queue to store the pilot questions
-		Queue<PilotQuestion> questions = new LinkedList<PilotQuestion>();
-
-		if (number > 0) {
-			// There is data to retrieve from the database
-
-			// Obtain the data from the database
-			Cursor cursor = SQLiteDataControllerQueries.getQuestions(
-				this.database, SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE, number);
-
-			// Reset cursor
-			cursor.moveToFirst();
-
-			while (!cursor.isAfterLast()) {
-				// Loop through the cursor
-
-				// Question data
-				long id = cursor.getLong(SQLiteDataControllerConstants.Columns.ID.ordinal());
-				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
-				long yesValue = cursor.getLong(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
-				long noValue = cursor.getLong(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
-				long usedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
-
-				// Add the new question to the queue
-				PilotQuestion question = new PilotQuestion(id, text, yesValue, noValue, usedCount);
-				questions.add(question);
-				Log.i(this.getClass().getName(), "Added pilot question: " + question);
-
-				// Increment the cursor
-				cursor.moveToNext();
-			}
-
-			// Close the cursor
-			cursor.close();
-		}
-
-		return questions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveGeneralQuestion(com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion)
-	 */
-	@Override
-	public void saveQuestion (Question question) {
+	public void saveQuestion (Class<? extends Question> key, Question question) {
 		// TODO Auto-generated method stub
-
+		
 	}
-	
+
 	public SQLiteDatabase getDatabase () {
 		return this.database;
 	}

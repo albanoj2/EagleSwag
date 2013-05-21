@@ -122,11 +122,11 @@ public class QuestionManager {
 			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the engineering questions and add them to the question queue
-			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.getEngineeringQuestions(engineeringQCount);
+			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.<EngineeringQuestion>getQuestions(EngineeringQuestion.class, generalQCount);
 			questionQueue.addAll(engineeringQuestions);
 
 			// Obtain the general questions and add them to the question queue
-			Queue<GeneralQuestion> generalQuestions = this.dataController.getGeneralQuestions(generalQCount);
+			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion>getQuestions(GeneralQuestion.class, generalQCount);
 			questionQueue.addAll(generalQuestions);
 
 			// Return the correctly built queue
@@ -178,11 +178,11 @@ public class QuestionManager {
 			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the pilot questions and add them to the question queue
-			Queue<PilotQuestion> pilotQuestions = this.dataController.getPilotQuestions(pilotQCount);
+			Queue<PilotQuestion> pilotQuestions = this.dataController.<PilotQuestion>getQuestions(PilotQuestion.class, pilotQCount);
 			questionQueue.addAll(pilotQuestions);
 
 			// Obtain the general questions and add them to the question queue
-			Queue<GeneralQuestion> generalQuestions = this.dataController.getGeneralQuestions(generalQCount);
+			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion>getQuestions(GeneralQuestion.class, generalQCount);
 			questionQueue.addAll(generalQuestions);
 
 			// Return the correctly built queue
