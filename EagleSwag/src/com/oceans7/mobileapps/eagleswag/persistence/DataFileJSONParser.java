@@ -14,6 +14,8 @@
  *       to the return the questions for each category. For example, there is a
  *       method for general questions, which returns all of the general
  *       questions stored in the data file.
+ *       
+ *       TODO: Increase documentation on the methods for this class
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -111,7 +113,11 @@ public class DataFileJSONParser implements DataFileParser {
 				// Convert the object to a JSON object
 				JSONObject jsonQuestion = (JSONObject) question;
 
-				// Extract the JSON values
+				// Extract the JSON values (note that the ID value is set to 0
+				// because it will be supplied later by the data controller
+				// (there is no ID associated with the questions in the 
+				// questions data file)
+				int questionId = 0;
 				String text = (String) jsonQuestion.get(QUESTION_TEXT_ID);
 				int yesValue = Integer.parseInt((String) jsonQuestion.get(YES_VALUE_ID));
 				int noValue = Integer.parseInt((String) jsonQuestion.get(NO_VALUE_ID));
@@ -120,7 +126,7 @@ public class DataFileJSONParser implements DataFileParser {
 				// Obtain the constructor for the supplied class
 				Class<?>[] argTypes = new Class<?>[] { Integer.class, String.class, Integer.class, Integer.class, Integer.class };
 				Constructor<T> constructor = key.getDeclaredConstructor(argTypes);
-				Object[] args = new Object[] { id, text, yesValue, noValue, usedCount };
+				Object[] args = new Object[] { questionId, text, yesValue, noValue, usedCount };
 
 				// Invoke the constructor to obtain the object
 				T questionToAdd = constructor.newInstance(args);
@@ -162,48 +168,7 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	@Override
 	public Queue<GeneralQuestion> getGeneralQuestions () {
-
-		// The question queue
-		Queue<GeneralQuestion> questions = new LinkedList<GeneralQuestion>();
-
-		// The JSON parser
-		JSONParser parser = new JSONParser();
-
-		try {
-			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
-
-			// Parse the JSON file
-			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));
-			jsonQuestions.close();
-
-			// Obtain a JSON array for the general questions
-			JSONArray generalQuestions = (JSONArray) jsonObj.get(GENERAL_QUESTIONS_ID);
-
-			for (Object question : generalQuestions) {
-				// Loop through each of the questions found
-
-				// Convert the object to a JSON object
-				JSONObject jsonQuestion = (JSONObject) question;
-
-				// Extract the JSON values
-				String text = (String) jsonQuestion.get(QUESTION_TEXT_ID);
-				int yesValue = Integer.parseInt((String) jsonQuestion.get(YES_VALUE_ID));
-				int noValue = Integer.parseInt((String) jsonQuestion.get(NO_VALUE_ID));
-				int usedCount = Integer.parseInt((String) jsonQuestion.get(USED_COUNT_ID));
-
-				// Add the new general question (ignoring the ID)
-				questions.add(new GeneralQuestion(0, text, yesValue, noValue, usedCount));
-			}
-		}
-		catch (IOException e) {
-			Log.e(this.getClass().getName(), "IOException occurred while parsing the JSON questions file for general questions: " + e);
-		}
-		catch (ParseException e) {
-			Log.e(this.getClass().getName(), "ParseException occurred while parsing the JSON questions file for general questions: " + e);
-		}
-
-		return questions;
+		return this.<GeneralQuestion>getQuestions(GeneralQuestion.class, GENERAL_QUESTIONS_ID);
 	}
 
 	/**
@@ -213,48 +178,7 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	@Override
 	public Queue<EngineeringQuestion> getEngineeringQuestions () {
-
-		// The question queue
-		Queue<EngineeringQuestion> questions = new LinkedList<EngineeringQuestion>();
-
-		// The JSON parser
-		JSONParser parser = new JSONParser();
-
-		try {
-			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
-
-			// Parse the JSON file
-			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));
-			jsonQuestions.close();
-
-			// Obtain a JSON array for the engineering questions
-			JSONArray generalQuestions = (JSONArray) jsonObj.get(ENGINEERING_QUESTIONS_ID);
-
-			for (Object question : generalQuestions) {
-				// Loop through each of the questions found
-
-				// Convert the object to a JSON object
-				JSONObject jsonQuestion = (JSONObject) question;
-
-				// Extract the JSON values
-				String text = (String) jsonQuestion.get(QUESTION_TEXT_ID);
-				int yesValue = Integer.parseInt((String) jsonQuestion.get(YES_VALUE_ID));
-				int noValue = Integer.parseInt((String) jsonQuestion.get(NO_VALUE_ID));
-				int usedCount = Integer.parseInt((String) jsonQuestion.get(USED_COUNT_ID));
-
-				// Add the new engineering question (ignoring the ID)
-				questions.add(new EngineeringQuestion(0, text, yesValue, noValue, usedCount));
-			}
-		}
-		catch (IOException e) {
-			Log.e(this.getClass().getName(), "IOException occurred while parsing the JSON questions file for engineering questions: " + e);
-		}
-		catch (ParseException e) {
-			Log.e(this.getClass().getName(), "ParseException occurred while parsing the JSON questions file for engineering questions: " + e);
-		}
-
-		return questions;
+		return this.<EngineeringQuestion>getQuestions(EngineeringQuestion.class, ENGINEERING_QUESTIONS_ID);
 	}
 
 	/**
@@ -264,48 +188,7 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	@Override
 	public Queue<PilotQuestion> getPilotQuestions () {
-
-		// The question queue
-		Queue<PilotQuestion> questions = new LinkedList<PilotQuestion>();
-
-		// The JSON parser
-		JSONParser parser = new JSONParser();
-
-		try {
-			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
-
-			// Parse the JSON file
-			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));
-			jsonQuestions.close();
-
-			// Obtain a JSON array for the pilot questions
-			JSONArray generalQuestions = (JSONArray) jsonObj.get(PILOT_QUESTIONS_ID);
-
-			for (Object question : generalQuestions) {
-				// Loop through each of the questions found
-
-				// Convert the object to a JSON object
-				JSONObject jsonQuestion = (JSONObject) question;
-
-				// Extract the JSON values
-				String text = (String) jsonQuestion.get(QUESTION_TEXT_ID);
-				int yesValue = Integer.parseInt((String) jsonQuestion.get(YES_VALUE_ID));
-				int noValue = Integer.parseInt((String) jsonQuestion.get(NO_VALUE_ID));
-				int usedCount = Integer.parseInt((String) jsonQuestion.get(USED_COUNT_ID));
-
-				// Add the new pilot question (ignoring the ID)
-				questions.add(new PilotQuestion(0, text, yesValue, noValue, usedCount));
-			}
-		}
-		catch (IOException e) {
-			Log.e(this.getClass().getName(), "IOException occurred while parsing the JSON questions file for pilot questions: " + e);
-		}
-		catch (ParseException e) {
-			Log.e(this.getClass().getName(), "ParseException occurred while parsing the JSON questions file for pilot questions: " + e);
-		}
-
-		return questions;
+		return this.<PilotQuestion>getQuestions(PilotQuestion.class, PILOT_QUESTIONS_ID);
 	}
 
 }
