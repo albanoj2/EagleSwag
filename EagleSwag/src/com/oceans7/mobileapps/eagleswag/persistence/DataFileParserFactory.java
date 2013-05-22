@@ -82,11 +82,7 @@ public class DataFileParserFactory {
 			dataFileParser = (DataFileParser) Class.forName(dataFileParserName).newInstance();
 			Log.i(this.getClass().getName(), "Data controller set to " + dataFileParserName);
 
-			// Set the context and the resource ID of the data file parser: the
-			// resource ID string is obtained from the configuration file and 
-			// the resource ID is then obtained by using this string to access
-			// the field within the R.java file that contains the resource
-			// TODO: Change this comment to explain assets instead of resources
+			// Set the context and the location of the data file asset
 			String dataFileResource = properties.getProperty("dataFileParser.assetLocation");
 			dataFileParser.setContext(context);
 			dataFileParser.setAsset(dataFileResource);
