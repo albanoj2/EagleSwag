@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="dbTableMappings.xsd">
+    
+    <!-- General questions table -->
+    <map>
+        <class package="com.oceans7.mobileapps.eagleswag.domain">GeneralQuestion</class>
+        <table>
+            <class package="com.oceans7.mobileapps.eagleswag.persistence.sqlite">SQLiteDataControllerConstants</class>
+            <constant>GENERAL_QUESTIONS_TABLE</constant>
+        </table>
+    </map>
+    
+    <!-- Engineering questions table -->
+    <map>
+        <class package="com.oceans7.mobileapps.eagleswag.domain">EngineeringQuestion</class>
+        <table>
+            <class package="com.oceans7.mobileapps.eagleswag.persistence.sqlite">SQLiteDataControllerConstants</class>
+            <constant>ENGINEERING_QUESTIONS_TABLE</constant>
+        </table>
+    </map>
+    
+    <!-- Pilot questions table -->
+    <map>
+        <class package="com.oceans7.mobileapps.eagleswag.domain">PilotQuestion</class>
+        <table>
+            <class package="com.oceans7.mobileapps.eagleswag.persistence.sqlite">SQLiteDataControllerConstants</class>
+            <constant>PILOT_QUESTIONS_TABLE</constant>
+        </table>
+    </map>
+</mappings>
