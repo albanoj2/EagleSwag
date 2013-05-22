@@ -6,6 +6,7 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ * TODO: Documentation
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -141,10 +142,7 @@ public class SQLiteDataControllerQueries {
 		content.put(SQLiteDataControllerConstants.USED_COUNT_COLUMN, question.getUsedCount());
 
 		// Update the database
-		db.update(table,
-			content,
-			SQLiteDataControllerConstants.ID_COLUMN + " = ?",
-			new String[] { "" + question.getId() });
+		db.update(table, content, SQLiteDataControllerConstants.ID_COLUMN + " = ?", new String[] { "" + question.getId() });
 
 		// Log the update
 		Log.i(SQLiteDataControllerQueries.class.getName(),

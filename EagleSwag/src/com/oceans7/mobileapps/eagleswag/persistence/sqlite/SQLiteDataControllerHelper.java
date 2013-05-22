@@ -6,6 +6,7 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ * 		TODO: Improve documentation
  *       A helper class used to create, update, and management the SQLite
  *       database.
  */

@@ -6,6 +6,7 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ * 		TODO: Improve documentation
  *       A lookup dictionary for queries and table/column names to be used in
  *       the SQLiteDataController.
  */

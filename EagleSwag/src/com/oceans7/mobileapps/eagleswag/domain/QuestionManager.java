@@ -15,6 +15,7 @@ package com.oceans7.mobileapps.eagleswag.domain;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Queue;
@@ -37,9 +38,9 @@ public class QuestionManager {
 	private static QuestionManager instance;
 
 	/**
-	 * The ID of the question manager configuration resource.
+	 * The asset location of the question manager configuration resource.
 	 */
-	private static final int QUESTION_MANAGER_CONFIG_RES = com.oceans7.mobileapps.eagleswag.R.raw.questionmanager;
+	private static final String QUESTION_MANAGER_CONFIG_ASSET = "config/domain/question-manager.cfg";
 
 	/**
 	 * The data controller that manages the storage and retrieval of questions.
@@ -59,7 +60,7 @@ public class QuestionManager {
 	private QuestionManager (Context context) {
 		// Obtain the data controller from the data controller factory
 		this.dataController = DataControllerFactory.getInstance().getDataController(context);
-		
+
 		// Open the data controller
 		this.dataController.open(context);
 	}
@@ -111,22 +112,29 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			properties.load(context.getResources().openRawResource(QUESTION_MANAGER_CONFIG_RES));
+			InputStream is = context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
+			properties.load(is);
+			is.close();
 
 			// The number of engineering questions that should be loaded
 			int engineeringQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
-			Log.i(this.getClass().getName(), "(" + engineeringQCount + ") engineering questions should be loaded");
+			Log.i(this.getClass().getName(),
+				"(" + engineeringQCount + ") engineering questions should be loaded");
 
 			// The number of general questions that should be loaded
 			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
-			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
+			Log.i(this.getClass().getName(),
+				"(" + generalQCount + ") general questions should be loaded");
 
-			// Obtain the engineering questions and add them to the question queue
-			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.<EngineeringQuestion>getQuestions(EngineeringQuestion.class, generalQCount);
+			// Obtain the engineering questions and add them to the question
+			// queue
+			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.<EngineeringQuestion> getQuestions(EngineeringQuestion.class,
+				generalQCount);
 			questionQueue.addAll(engineeringQuestions);
 
 			// Obtain the general questions and add them to the question queue
-			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion>getQuestions(GeneralQuestion.class, generalQCount);
+			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion> getQuestions(GeneralQuestion.class,
+				generalQCount);
 			questionQueue.addAll(generalQuestions);
 
 			// Return the correctly built queue
@@ -139,7 +147,8 @@ public class QuestionManager {
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(),
+				"IOException occurred while trying to access the confiuration file: " + e);
 			return null;
 		}
 
@@ -167,22 +176,28 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			properties.load(context.getResources().openRawResource(QUESTION_MANAGER_CONFIG_RES));
+			InputStream is = context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
+			properties.load(is);
+			is.close();
 
 			// The number of pilot questions that should be loaded
 			int pilotQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
-			Log.i(this.getClass().getName(), "(" + pilotQCount + ") pilot questions should be loaded");
+			Log.i(this.getClass().getName(),
+				"(" + pilotQCount + ") pilot questions should be loaded");
 
 			// The number of general questions that should be loaded
 			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
-			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
+			Log.i(this.getClass().getName(),
+				"(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the pilot questions and add them to the question queue
-			Queue<PilotQuestion> pilotQuestions = this.dataController.<PilotQuestion>getQuestions(PilotQuestion.class, pilotQCount);
+			Queue<PilotQuestion> pilotQuestions = this.dataController.<PilotQuestion> getQuestions(PilotQuestion.class,
+				pilotQCount);
 			questionQueue.addAll(pilotQuestions);
 
 			// Obtain the general questions and add them to the question queue
-			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion>getQuestions(GeneralQuestion.class, generalQCount);
+			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion> getQuestions(GeneralQuestion.class,
+				generalQCount);
 			questionQueue.addAll(generalQuestions);
 
 			// Return the correctly built queue
@@ -195,7 +210,8 @@ public class QuestionManager {
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(),
+				"IOException occurred while trying to access the confiuration file: " + e);
 			return null;
 		}
 	}

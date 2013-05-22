@@ -33,9 +33,10 @@ public class DataControllerFactory {
 	private static DataControllerFactory instance;
 
 	/**
-	 * The ID of the data controller configuration resource.
+	 * The location of the data controller configuration asset. This location is
+	 * relative to the assets directory of the Android project.
 	 */
-	private static final int DATA_CONTROLLER_CONFIG_RES = com.oceans7.mobileapps.eagleswag.R.raw.datacontroller;
+	private static final String DATA_CONTROLLER_CONFIG_ASSET = "config/domain/data-controller.cfg";
 
 	/***************************************************************************
 	 * Constructors
@@ -77,7 +78,7 @@ public class DataControllerFactory {
 
 		try {
 			// Obtain the class name of the data controller
-			InputStream is = context.getResources().openRawResource(DATA_CONTROLLER_CONFIG_RES);
+			InputStream is = context.getAssets().open(DATA_CONTROLLER_CONFIG_ASSET);
 			Properties properties = new Properties();
 			properties.load(is);
 			is.close();

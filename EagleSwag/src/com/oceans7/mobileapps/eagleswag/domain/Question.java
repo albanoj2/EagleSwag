@@ -71,94 +71,48 @@ public abstract class Question {
 	 * Methods
 	 **************************************************************************/
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#getId()
-	 */
 	public long getId () {
 		return this.id;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#setId(long)
-	 */
 	public void setId (long id) {
 		this.id = id;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#getQuestionString()
-	 */
 	public String getQuestionString () {
 		return this.question;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#setQuestionString(java.lang.String)
-	 */
 	public void setQuestionString (String text) {
 		this.question = text;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#getYesPointValue()
-	 */
 	public long getYesPointValue () {
 		return this.yesValue;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#setYesPointValue(long)
-	 */
 	public void setYesPointValue (long value) {
 		this.yesValue = value;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#getNoPointValue()
-	 */
 	public long getNoPointValue () {
 		return this.noValue;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#setNoPointValue(long)
-	 */
 	public void setNoPointValue (long value) {
 		this.noValue = value;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#getUsedCount()
-	 */
 	public long getUsedCount () {
 		return this.usedCount;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.domain.Question#incrementUsedCount()
-	 */
+	
 	public void incrementUsedCount () {
 		this.usedCount++;
+	}
+
+	public void setUsedCount (long usedCount) {
+		this.usedCount = usedCount;
 	}
 
 	/**

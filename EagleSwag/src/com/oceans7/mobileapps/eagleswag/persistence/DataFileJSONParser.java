@@ -7,6 +7,7 @@
  *       EagleSwag Android Mobile App
  * 
  *       Parser for JSON file containing questions data.
+ *       TODO: Complete documentation for this class.
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -41,9 +42,9 @@ public class DataFileJSONParser implements DataFileParser {
 	private Context context;
 
 	/**
-	 * The ID of the resource containing the data.
+	 * The the location of the asset containing the question data.
 	 */
-	private int resourceID;
+	private String asset;
 
 	private static final String GENERAL_QUESTIONS_ID = "generalQuestions";
 	private static final String ENGINEERING_QUESTIONS_ID = "engineeringQuestions";
@@ -71,8 +72,8 @@ public class DataFileJSONParser implements DataFileParser {
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#setResourceID(int)
 	 */
 	@Override
-	public void setResourceID (int resourceID) {
-		this.resourceID = resourceID;
+	public void setAsset (String asset) {
+		this.asset = asset;
 	}
 	
 	/**
@@ -91,7 +92,7 @@ public class DataFileJSONParser implements DataFileParser {
 
 		try {
 			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getResources().openRawResource(this.resourceID);
+			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
 
 			// Parse the JSON file
 			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));
@@ -142,7 +143,7 @@ public class DataFileJSONParser implements DataFileParser {
 
 		try {
 			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getResources().openRawResource(this.resourceID);
+			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
 
 			// Parse the JSON file
 			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));
@@ -193,7 +194,7 @@ public class DataFileJSONParser implements DataFileParser {
 
 		try {
 			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getResources().openRawResource(this.resourceID);
+			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
 
 			// Parse the JSON file
 			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));

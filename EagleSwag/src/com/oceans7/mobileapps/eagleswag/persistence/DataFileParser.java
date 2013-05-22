@@ -33,12 +33,14 @@ public interface DataFileParser {
 	public void setContext (Context context);
 
 	/**
-	 * The resource ID of the data file that should be read.
+	 * The location of the data file asset containing the questions data to
+	 * parse. This location is relative to the assets directory of the Android
+	 * project
 	 * 
-	 * @param resourceID
-	 *            The resource ID of the data file.
+	 * @param asset
+	 *            The location of the asset within the assets directory.
 	 */
-	public void setResourceID (int resourceID);
+	public void setAsset (String asset);
 
 	/**
 	 * Obtain a list of the general questions in the data file.

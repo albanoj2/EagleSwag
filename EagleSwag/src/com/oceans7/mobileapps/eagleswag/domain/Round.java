@@ -152,8 +152,10 @@ public class Round {
 	 */
 	public void save (Context context) {
 
-		// Obtain a reference to the data controller for the application
+		// Obtain a reference to the data controller for the application and
+		// open the data controller
 		DataController controller = DataControllerFactory.getInstance().getDataController(context);
+		controller.open(context);
 
 		for (Question question : this.questionsAnsweredYes) {
 			// Iterate through the 'yes' questions and save each
@@ -178,6 +180,9 @@ public class Round {
 			Log.i(this.getClass().getName(),
 				"Incremented used count and saved question: " + question);
 		}
+		
+		// Close the data controller
+		controller.close();
 	}
 
 }

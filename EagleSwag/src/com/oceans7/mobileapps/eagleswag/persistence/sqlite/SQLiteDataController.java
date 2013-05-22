@@ -5,6 +5,8 @@
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
+ *       
+ *       TODO: Documentation (class description)
  * 
  */
 
@@ -12,7 +14,6 @@ package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
@@ -23,9 +24,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
@@ -55,22 +53,6 @@ public class SQLiteDataController implements DataController {
 	private Map<Class<? extends Question>, String> classToTableMap;
 
 	/***************************************************************************
-	 * Constructors
-	 **************************************************************************/
-
-	public SQLiteDataController () {
-
-		// Create and populate the question class to table name mappings
-		this.classToTableMap = new HashMap<Class<? extends Question>, String>();
-		this.classToTableMap.put(GeneralQuestion.class,
-			SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE);
-		this.classToTableMap.put(EngineeringQuestion.class,
-			SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE);
-		this.classToTableMap.put(PilotQuestion.class,
-			SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE);
-	}
-
-	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
 
@@ -87,10 +69,14 @@ public class SQLiteDataController implements DataController {
 
 		// Obtain a writable database reference
 		this.database = this.helper.getWritableDatabase();
+		
+		// Populate the class key to database table map
+		SQLiteDataControllerMappingsParser parser = new SQLiteDataControllerMappingsParser(context);
+		this.classToTableMap = parser.generateMappingsTable();
 	}
 
 	/**
-	 * 
+	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#close()
 	 */
@@ -198,12 +184,25 @@ public class SQLiteDataController implements DataController {
 	 */
 	@Override
 	public void saveQuestion (Class<? extends Question> key, Question question) {
-		// TODO Auto-generated method stub
+
+		// Convert the key into the table name where the data will be saved
+		String table = this.classToTableMap.get(key);
+		
+		// Save the question in the database
+		SQLiteDataControllerQueries.updateQuestion(this.database, table, question);
 		
 	}
 
 	public SQLiteDatabase getDatabase () {
 		return this.database;
+	}
+
+	/**
+	 * @return 
+	 *		The classToTableMap.
+	 */
+	public Map<Class<? extends Question>, String> getClassToTableMap () {
+		return classToTableMap;
 	}
 
 }
