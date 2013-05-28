@@ -4,18 +4,22 @@
  * @file DataFileJSONParser.java
  * @version 1.0.0
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ *          Oceans7 Software
+ *          EagleSwag Android Mobile App
  * 
- *       Parser for JSON file containing questions data. This class is used to
- *       parse the JSON data file containing the question data for the
- *       application. The data from the JSON file is returned in segments: Each
- *       question category (General, Engineering, etc.) has a method dedicated
- *       to the return the questions for each category. For example, there is a
- *       method for general questions, which returns all of the general
- *       questions stored in the data file.
- *       
- *       TODO: Increase documentation on the methods for this class
+ *          Parser for JSON file containing questions data. This class is used
+ *          to
+ *          parse the JSON data file containing the question data for the
+ *          application. The data from the JSON file is returned in segments:
+ *          Each
+ *          question category (General, Engineering, etc.) has a method
+ *          dedicated
+ *          to the return the questions for each category. For example, there is
+ *          a
+ *          method for general questions, which returns all of the general
+ *          questions stored in the data file.
+ * 
+ *          TODO: Increase documentation on the methods for this class
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -57,9 +61,20 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	private String asset;
 
+	/**
+	 * The name of the tags for each of the question types. These are the
+	 * headings in the JSON file that precede each segment of questions.
+	 */
 	private static final String GENERAL_QUESTIONS_ID = "generalQuestions";
 	private static final String ENGINEERING_QUESTIONS_ID = "engineeringQuestions";
 	private static final String PILOT_QUESTIONS_ID = "pilotQuestions";
+
+	/**
+	 * The identifiers for each of the pieces of data for a question in the JSON
+	 * data file. These identifiers are not necessarily the same as the table
+	 * columns for a SQLite database table of questions, or the headings for a
+	 * file-based persistent storage technique.
+	 */
 	private static final String QUESTION_TEXT_ID = "text";
 	private static final String YES_VALUE_ID = "yesValue";
 	private static final String NO_VALUE_ID = "noValue";
@@ -68,9 +83,10 @@ public class DataFileJSONParser implements DataFileParser {
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
-	
+
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#setContext(android.content.Context)
 	 */
 	@Override
@@ -80,27 +96,37 @@ public class DataFileJSONParser implements DataFileParser {
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#setResourceID(int)
 	 */
 	@Override
 	public void setAsset (String asset) {
 		this.asset = asset;
 	}
-	
+
 	/**
-	 * Retrieves the questions (of the specified type) from the data file.
+	 * Retrieves the questions (of the specified type) from the data file. The
+	 * key is used as the identifier to select which type of question is being
+	 * search for. This key is used to create the question object when a segment
+	 * of question data is found in the data file.
+	 * 
 	 * @param key
+	 *            The identifier for the type of question being retrieved.
 	 * @param id
+	 *            The identifier for the tag within the JSON file (the tag that
+	 *            begins a segment of questions for a specified type). For
+	 *            example, "generalQuestions": [...].
 	 * @return
+	 *         A queue containing questions of the type supplied to the method.
 	 */
 	private <T extends Question> Queue<T> getQuestions (Class<T> key, String id) {
-		
+
 		// The queue used to store the questions retrieved from the data file
 		Queue<T> questions = new LinkedList<T>();
 
 		// The JSON parser to parse the data file
 		JSONParser parser = new JSONParser();
-		
+
 		try {
 			// Open the JSON file containing the questions
 			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
@@ -121,14 +147,14 @@ public class DataFileJSONParser implements DataFileParser {
 
 				// Extract the JSON values (note that the ID value is set to 0
 				// because it will be supplied later by the data controller
-				// (there is no ID associated with the questions in the 
+				// (there is no ID associated with the questions in the
 				// questions data file)
 				int questionId = 0;
 				String text = (String) jsonQuestion.get(QUESTION_TEXT_ID);
 				int yesValue = Integer.parseInt((String) jsonQuestion.get(YES_VALUE_ID));
 				int noValue = Integer.parseInt((String) jsonQuestion.get(NO_VALUE_ID));
 				int usedCount = Integer.parseInt((String) jsonQuestion.get(USED_COUNT_ID));
-				
+
 				// Obtain the constructor for the supplied class
 				Class<?>[] argTypes = new Class<?>[] { Integer.class, String.class, Integer.class, Integer.class, Integer.class };
 				Constructor<T> constructor = key.getDeclaredConstructor(argTypes);
@@ -166,7 +192,7 @@ public class DataFileJSONParser implements DataFileParser {
 		// Return the queue containing the questions
 		return questions;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -174,7 +200,7 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	@Override
 	public Queue<GeneralQuestion> getGeneralQuestions () {
-		return this.<GeneralQuestion>getQuestions(GeneralQuestion.class, GENERAL_QUESTIONS_ID);
+		return this.<GeneralQuestion> getQuestions(GeneralQuestion.class, GENERAL_QUESTIONS_ID);
 	}
 
 	/**
@@ -184,7 +210,7 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	@Override
 	public Queue<EngineeringQuestion> getEngineeringQuestions () {
-		return this.<EngineeringQuestion>getQuestions(EngineeringQuestion.class, ENGINEERING_QUESTIONS_ID);
+		return this.<EngineeringQuestion> getQuestions(EngineeringQuestion.class, ENGINEERING_QUESTIONS_ID);
 	}
 
 	/**
@@ -194,7 +220,7 @@ public class DataFileJSONParser implements DataFileParser {
 	 */
 	@Override
 	public Queue<PilotQuestion> getPilotQuestions () {
-		return this.<PilotQuestion>getQuestions(PilotQuestion.class, PILOT_QUESTIONS_ID);
+		return this.<PilotQuestion> getQuestions(PilotQuestion.class, PILOT_QUESTIONS_ID);
 	}
 
 }
