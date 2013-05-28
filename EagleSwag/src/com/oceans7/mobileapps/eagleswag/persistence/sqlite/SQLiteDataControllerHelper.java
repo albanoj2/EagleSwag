@@ -6,9 +6,15 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- * 		TODO: Improve documentation
  *       A helper class used to create, update, and management the SQLite
- *       database.
+ *       database. This helper class is an implementation of the
+ *       SQLiteOpenHelper class provided by the SQLite framework for Android.
+ *       This class deals with updating and crating the SQLite database used by
+ *       the application. When the version number of the database is incremented
+ *       in the SQLiteDataControllerConstants class, this helper automatically
+ *       updates the database.
+ * 
+ * @see android.database.sqlite.SQLiteOpenHelper
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -64,6 +70,9 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 * {@inheritDoc}
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
+	 * 
+	 *      TODO: This method may be reduced so that each question type does not
+	 *      have repeated logic
 	 */
 	@Override
 	public void onCreate (SQLiteDatabase db) {
@@ -88,24 +97,24 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 		Queue<PilotQuestion> pilotQuestions = parser.getPilotQuestions();
 
 		for (GeneralQuestion question : generalQuestions) {
+
 			// Insert the new general question
-			SQLiteDataControllerQueries.insertIntoQuestionsTable(db,
-				SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE,
-				question);
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db, SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE, question);
+			Log.i(this.getClass().getName(), "Inserted general questions into the general table.");
 		}
 
 		for (EngineeringQuestion question : engineeringQuestions) {
+
 			// Insert the new engineering question
-			SQLiteDataControllerQueries.insertIntoQuestionsTable(db,
-				SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE,
-				question);
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db, SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE, question);
+			Log.i(this.getClass().getName(), "Inserted engineering questions into the engineering table.");
 		}
 
 		for (PilotQuestion question : pilotQuestions) {
+
 			// Insert the new pilot question
-			SQLiteDataControllerQueries.insertIntoQuestionsTable(db,
-				SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE,
-				question);
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db, SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE, question);
+			Log.i(this.getClass().getName(), "Inserted pilot questions into the pilot table.");
 		}
 	}
 
@@ -126,8 +135,7 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 			for (int i = 0; i < SQLiteDataControllerConstants.TABLES.length; i++) {
 				// Iterate through each table and drop it from the database
 				db.execSQL("DROP TABLE IF EXISTS " + SQLiteDataControllerConstants.TABLES[i]);
-				Log.w(this.getClass().getName(),
-					"Dropping table '" + SQLiteDataControllerConstants.TABLES[i] + "' from database");
+				Log.w(this.getClass().getName(), "Dropping table '" + SQLiteDataControllerConstants.TABLES[i] + "' from database");
 			}
 		}
 		catch (SQLException e) {

@@ -6,7 +6,11 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- * TODO: Documentation
+ *       A catalog of queries for the SQLite database. This catalog contains
+ *       static methods for creating tables, storing data in tables, retrieving
+ *       data from tables, etc. This catalog has been created in order to
+ *       encapsulate the queries requires to perform common tasks in a single
+ *       location.
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -49,8 +53,7 @@ public class SQLiteDataControllerQueries {
 		}
 
 		// Log the creation of the database table
-		Log.i(SQLiteDataControllerQueries.class.getName(),
-			"Created table '" + table + "' in database '" + db + "' using the query: " + query);
+		Log.i(SQLiteDataControllerQueries.class.getName(), "Created table '" + table + "' in database '" + db + "' using the query: " + query);
 	}
 
 	/**
@@ -85,7 +88,8 @@ public class SQLiteDataControllerQueries {
 		// Add the questions to the database
 		long id = db.insert(table, null, values);
 
-		Log.i(SQLiteDataControllerConstants.class.getName(),
+		Log.i(
+			SQLiteDataControllerConstants.class.getName(),
 			"Inserting question into table '" + table + "':" + "[" + SQLiteDataControllerConstants.ID_COLUMN + ": " + id + "] " + "[" + SQLiteDataControllerConstants.QUESTION_COLUMN + ": " + text + "] " + "[" + SQLiteDataControllerConstants.YES_VALUE_COLUMN + ": " + yesValue + "] " + "[" + SQLiteDataControllerConstants.NO_VALUE_COLUMN + ": " + noValue + "]" + "[" + SQLiteDataControllerConstants.USED_COUNT_COLUMN + ": " + usedCount + "]");
 
 		return id;
@@ -116,8 +120,7 @@ public class SQLiteDataControllerQueries {
 		Cursor cursor = db.rawQuery(query, null);
 
 		// Log the execution of the select query
-		Log.i(SQLiteDataControllerQueries.class.getName(),
-			"Retrieved questions from table '" + table + "' using the query:" + query);
+		Log.i(SQLiteDataControllerQueries.class.getName(), "Retrieved questions from table '" + table + "' using the query:" + query);
 
 		return cursor;
 	}

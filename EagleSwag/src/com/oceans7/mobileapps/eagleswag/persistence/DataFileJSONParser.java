@@ -87,6 +87,12 @@ public class DataFileJSONParser implements DataFileParser {
 		this.asset = asset;
 	}
 	
+	/**
+	 * Retrieves the questions (of the specified type) from the data file.
+	 * @param key
+	 * @param id
+	 * @return
+	 */
 	private <T extends Question> Queue<T> getQuestions (Class<T> key, String id) {
 		
 		// The queue used to store the questions retrieved from the data file

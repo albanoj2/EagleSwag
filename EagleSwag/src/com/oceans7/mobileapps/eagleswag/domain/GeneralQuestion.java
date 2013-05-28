@@ -3,10 +3,10 @@
  * @date May 17, 2013
  * @file GeneralQuestion.java
  * 
- * Oceans7 Software
- * EagleSwag Android Mobile App
- *
- * TODO: Documentation
+ *       Oceans7 Software
+ *       EagleSwag Android Mobile App
+ * 
+ *       The concrete implementation of a general question.
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;
