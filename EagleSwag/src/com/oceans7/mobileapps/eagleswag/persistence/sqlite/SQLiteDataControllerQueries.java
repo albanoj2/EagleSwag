@@ -39,7 +39,13 @@ public class SQLiteDataControllerQueries {
 	public static void createQuestionsTable (SQLiteDatabase db, String table) {
 
 		// The query used to create the table
-		String query = "CREATE TABLE IF NOT EXISTS " + table + " (" + SQLiteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," + SQLiteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL," + SQLiteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL," + SQLiteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL," + SQLiteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL" + ");";
+		String query = "CREATE TABLE IF NOT EXISTS " + table + " (" + 
+			SQLiteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," + 
+			SQLiteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL," + 
+			SQLiteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL," + 
+			SQLiteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL," + 
+			SQLiteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL" + 
+			");";
 
 		try {
 			// Execute the SQL command on the database

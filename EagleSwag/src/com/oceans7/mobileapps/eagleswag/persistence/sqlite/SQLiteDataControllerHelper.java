@@ -70,9 +70,6 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 * {@inheritDoc}
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
-	 * 
-	 *      TODO: This method may be reduced so that each question type does not
-	 *      have repeated logic
 	 */
 	@Override
 	public void onCreate (SQLiteDatabase db) {
