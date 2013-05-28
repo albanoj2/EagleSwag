@@ -1,13 +1,23 @@
 /**
  * @author Justin Albano
- * @date May 18, 2013
+ * @date May 27, 2013
  * @file SQLiteDataController.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
- *       
- *       TODO: Documentation (class description)
  * 
+ *       A data controller that implements data storage and retrieval using a
+ *       SQLite database; data is stored using a relational database schema. The
+ *       SQLiteDataControllerMappingsParser is used to generate the table of
+ *       mappings from class type (for each question type: General, Engineering,
+ *       etc.) and the SQLiteDataControllerConstants and
+ *       SQLiteDataControllerQueries are combined to encapsulate the SQLite
+ *       queries, table names, database version, etc. used by the SQLite data
+ *       controller.
+ * 
+ *       Note that all queries are found in the SQLiteDataControllerQueries
+ *       class, and all data controller constants, such as table names, column
+ *       numbers, etc., are found in the SQLiteDataControllerConstants class.
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -41,7 +51,8 @@ public class SQLiteDataController implements DataController {
 
 	/**
 	 * Database helper that manages many of the underlying tasks associated with
-	 * SQLite database.
+	 * SQLite database. This helper is used to generate the writable instance of
+	 * the database used to store data for this class.
 	 */
 	private SQLiteDataControllerHelper helper;
 
@@ -49,6 +60,10 @@ public class SQLiteDataController implements DataController {
 	 * A map of question classes to the database table names used. This is used
 	 * to map a question type to a table in the database, which allows for the
 	 * retrieval and storage of questions.
+	 * 
+	 * For example, if "GeneralQuestion.class" is used as the key in this map,
+	 * the SQLite database table that holds the general questions will be
+	 * returned.
 	 */
 	private Map<Class<? extends Question>, String> classToTableMap;
 
@@ -62,14 +77,20 @@ public class SQLiteDataController implements DataController {
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#open()
 	 */
 	@Override
-	public void open (Context context) throws SQLException {
+	public void open (Context context) {
 
 		// Create the database helper
 		this.helper = new SQLiteDataControllerHelper(context);
 
-		// Obtain a writable database reference
-		this.database = this.helper.getWritableDatabase();
-		
+		try {
+			// Obtain a writable database reference
+			this.database = this.helper.getWritableDatabase();
+		}
+		catch (SQLException e) {
+			// The helper could not create a writable database
+			Log.i(this.getClass().getName(), "Writable database cannot be created by SQLite database helper: " + e);
+		}
+
 		// Populate the class key to database table map
 		SQLiteDataControllerMappingsParser parser = new SQLiteDataControllerMappingsParser(context);
 		this.classToTableMap = parser.generateMappingsTable();
@@ -83,29 +104,23 @@ public class SQLiteDataController implements DataController {
 	@Override
 	public void close () {
 		// Close the helper if it has been set
-		if (this.helper != null) this.helper.close();
+		if (this.helper != null) {
+			this.helper.close();
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Obtains a specified number of questions of the supplied type, T. The
-	 * generic parameter, T, specified the type of the questions returned from
-	 * this method (the type of the questions in the queue returned from this
-	 * method). The supplied class (givenClass) determines the mapping of
-	 * question type to the database table that contains the questions data.
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getQuestions(java.lang.Class,
+	 *      int)
 	 * 
-	 * @param key
-	 *            The class of the question type. For example, if the supplied
-	 *            type, T, is GeneralQuestion, the givenClass is
-	 *            GeneralQuestion.class. This class is used as a key to map the
-	 *            question type to the database table used to retrieve the
-	 *            question data.
-	 * @param number
-	 *            The number of questions to retrieve from the database.
-	 * @return
-	 *         A queue containing the specified number of questions of type, T.
+	 *      The data for the questions is retrieved from the SQLite database.
+	 *      The mappings from the question class (for example,
+	 *      GeneralQuestion.class) to the database table are retrieved from the
+	 *      SQLiteDataControllerMappingsParser.
 	 */
+	@Override
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, int number) {
 
 		// Create queue of requested question objects
@@ -115,9 +130,7 @@ public class SQLiteDataController implements DataController {
 			// Continue only if there is data to retrieve from the database
 
 			// Obtain the data for the questions from the database
-			Cursor cursor = SQLiteDataControllerQueries.getQuestions(this.database,
-				this.classToTableMap.get(key),
-				number);
+			Cursor cursor = SQLiteDataControllerQueries.getQuestions(this.database, this.classToTableMap.get(key), number);
 
 			// Reset cursor
 			cursor.moveToFirst();
@@ -143,8 +156,7 @@ public class SQLiteDataController implements DataController {
 
 					// Add the new question to the queue
 					questions.add(question);
-					Log.i(this.getClass().getName(),
-						"Added general question to " + key.getCanonicalName() + " queue: " + question);
+					Log.i(this.getClass().getName(), "Added general question to " + key.getCanonicalName() + " queue: " + question);
 				}
 				catch (IllegalArgumentException e) {
 					Log.e(this.getClass().getName(),
@@ -163,8 +175,7 @@ public class SQLiteDataController implements DataController {
 						"Invokation target exception occurred while trying to instantiate new question using reflective method: " + e);
 				}
 				catch (NoSuchMethodException e) {
-					Log.e(this.getClass().getName(),
-						"The constructor used to create the generic question object cannot be found: " + e);
+					Log.e(this.getClass().getName(), "The constructor used to create the generic question object cannot be found: " + e);
 				}
 
 				// Increment the cursor
@@ -180,29 +191,35 @@ public class SQLiteDataController implements DataController {
 
 	/**
 	 * {@inheritDoc}
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveQuestion(java.lang.Class, com.oceans7.mobileapps.eagleswag.domain.Question)
+	 * 
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveQuestion(java.lang.Class,
+	 *      com.oceans7.mobileapps.eagleswag.domain.Question)
 	 */
 	@Override
 	public void saveQuestion (Class<? extends Question> key, Question question) {
 
 		// Convert the key into the table name where the data will be saved
 		String table = this.classToTableMap.get(key);
-		
+
 		// Save the question in the database
 		SQLiteDataControllerQueries.updateQuestion(this.database, table, question);
-		
-	}
 
-	public SQLiteDatabase getDatabase () {
-		return this.database;
 	}
 
 	/**
-	 * @return 
-	 *		The classToTableMap.
+	 * @return
+	 *         The classToTableMap.
 	 */
 	public Map<Class<? extends Question>, String> getClassToTableMap () {
-		return classToTableMap;
+		return this.classToTableMap;
+	}
+
+	/***************************************************************************
+	 * Getters & Setters
+	 **************************************************************************/
+
+	public SQLiteDatabase getDatabase () {
+		return this.database;
 	}
 
 }
