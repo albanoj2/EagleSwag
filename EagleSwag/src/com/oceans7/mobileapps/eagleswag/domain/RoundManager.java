@@ -6,6 +6,11 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ *       Manages a current round of questions. This manage begins by starting a
+ *       round. Next, the current question is retrieved by the external user.
+ *       The external user then answers the question as either 'yes' or 'no'.
+ *       Once all questions have been exhausted, the external user then ends the
+ *       round. This process can be repeated an indefinite number of times.
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;
@@ -20,88 +25,159 @@ public class RoundManager {
 	 * Attributes
 	 **************************************************************************/
 
-	private static RoundManager instance;
+	/**
+	 * Context used to save the current round when a round is completed.
+	 */
 	private Context context;
+
+	/**
+	 * The question manager used to obtain questions for the round.
+	 */
 	private QuestionManager questionManager;
+
+	/**
+	 * The current round.
+	 */
 	private Round currentRound;
+
+	/**
+	 * The questions for the current round.
+	 */
 	private Queue<Question> currentQuestions;
+
+	/**
+	 * The current question to answer.
+	 */
+	private Question currentQuestion;
+
+	/**
+	 * Flag to track if a round has been started or not.
+	 */
+	private boolean hasRoundBeenStarted;
 
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
 
-	private RoundManager (Context context) {
+	/**
+	 * Private constructor that provides for the initialization of the context
+	 * for the manager.
+	 * 
+	 * @param context
+	 *            The context used to save the current round.
+	 */
+	public RoundManager (Context context) {
 
 		// Set the context
 		this.setContext(context);
 
 		// Instantiate the question manager
 		this.questionManager = QuestionManager.getInstance(context);
-	}
 
-	/***************************************************************************
-	 * Singleton getInstance Method
-	 **************************************************************************/
-
-	public static synchronized RoundManager getInstance (Context context) {
-
-		if (instance == null) {
-			// Lazy instantiation
-			instance = new RoundManager(context);
-		}
-
-		return instance;
+		// Set flag to 'round not started'
+		this.hasRoundBeenStarted = false;
 	}
 
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
 
-	public void startEngineeringRound () {
+	/**
+	 * Start a new round for engineers. This initializes the current round and
+	 * obtains questions for an engineer.
+	 */
+	public synchronized void startEngineeringRound () {
 
 		// Obtain the questions from the question manager
 		this.currentQuestions = this.questionManager.getEngineeringQuestions();
 
 		// Create new round object
 		this.currentRound = new Round();
+
+		// Set flag to 'round started'
+		this.hasRoundBeenStarted = true;
+
+		// Set the current question
+		this.currentQuestion = this.currentQuestions.remove();
 	}
 
-	public void startPilotRound () {
+	/**
+	 * Start a new round for pilots. This initializes the current round and
+	 * obtains questions for a pilot.
+	 */
+	public synchronized void startPilotRound () {
 
 		// Obtain the questions from the question manager
 		this.currentQuestions = this.questionManager.getPilotQuestions();
 
 		// Create new round object
 		this.currentRound = new Round();
+
+		// Set flag to 'round started'
+		this.hasRoundBeenStarted = true;
+
+		// Set the current question
+		this.currentQuestion = this.currentQuestions.remove();
 	}
 
-	public void answerCurrentQuestionYes () throws RoundNotStartedException {
+	/**
+	 * Answer the current question in the affirmative. This action submits the
+	 * current questions as a 'yes' question for the current round.
+	 * 
+	 * @throws RoundNotStartedException
+	 *             A round has not been started.
+	 */
+	public synchronized void answerCurrentQuestionYes () throws RoundNotStartedException {
 
-		if (!this.hasRoundBeenStarted()) {
+		if (!this.hasRoundBeenStarted) {
 			// A round has not been started
-						throw new RoundNotStartedException("A round has not been started before attempting to answer a question as 'yes'");
+			throw new RoundNotStartedException("A round has not been started before attempting to answer a question as 'yes'");
 		}
-		else {
+		else if (this.currentQuestion != null) {
+
 			// Take the next question and answer it yes if it exists
-			this.currentRound.submitYesQuestion(this.currentQuestions.remove());
+			this.currentRound.submitYesQuestion(this.currentQuestion);
+
+			// Set the next question as the current question
+			this.currentQuestion = this.currentQuestions.remove();
 		}
 	}
 
-	public void answerCurrentQuestionNo () throws RoundNotStartedException {
+	/**
+	 * Answer the current question in the negative. This action submits the
+	 * current questions as a 'no' question for the current round.
+	 * 
+	 * @throws RoundNotStartedException
+	 *             A round has not been started.
+	 */
+	public synchronized void answerCurrentQuestionNo () throws RoundNotStartedException {
 
-		if (!this.hasRoundBeenStarted()) {
+		if (!this.hasRoundBeenStarted) {
 			// A round has not been started
 			throw new RoundNotStartedException("A round has not been started before attempting to answer a question as 'no'");
 		}
-		else {
+		else if (this.currentQuestion != null) {
+
 			// Take the next question and answer it no if it exists
-			this.currentRound.submitNoQuestion(this.currentQuestions.remove());
+			this.currentRound.submitNoQuestion(this.currentQuestion);
+
+			// Set the next question as the current question
+			this.currentQuestion = this.currentQuestions.remove();
 		}
 	}
 
+	/**
+	 * Queries the manager to see if there are more questions to be answered for
+	 * the current round.
+	 * 
+	 * @return
+	 *         True if there are more questions to answer; false otherwise.
+	 * @throws RoundNotStartedException
+	 *             A round has not been started.
+	 */
 	public boolean hasMoreQuestions () throws RoundNotStartedException {
 
-		if (!this.hasRoundBeenStarted()) {
+		if (!this.hasRoundBeenStarted) {
 			// A round has not yet been started
 			throw new RoundNotStartedException("A round has not been started before attempting to query if questions are available");
 		}
@@ -111,9 +187,18 @@ public class RoundManager {
 		}
 	}
 
-	public void endRound () throws RoundNotStartedException {
+	/**
+	 * Ends the current round. This saves the data for the current round and
+	 * destroys the current round and current set of questions.
+	 * 
+	 * @return
+	 *         The score for the current round.
+	 * @throws RoundNotStartedException
+	 *             A round has not been started.
+	 */
+	public synchronized double endRound () throws RoundNotStartedException {
 
-		if (!this.hasRoundBeenStarted()) {
+		if (!this.hasRoundBeenStarted) {
 			// A round has not be started yet
 			throw new RoundNotStartedException("A round has not been started before attempted to end the current round");
 		}
@@ -121,14 +206,18 @@ public class RoundManager {
 			// Save the current round
 			this.currentRound.save(this.context);
 
+			// Record the score for the round
+			double score = this.currentRound.calculateScore();
+
 			// Destroy the current round and set of questions
 			this.currentRound = null;
 			this.currentQuestions = null;
+
+			// Set flag to 'round not started'
+			this.hasRoundBeenStarted = false;
+
+			return score;
 		}
-	}
-	
-	private boolean hasRoundBeenStarted () {
-		return !(this.currentRound == null || this.currentQuestions == null);
 	}
 
 	/***************************************************************************
@@ -197,6 +286,21 @@ public class RoundManager {
 	 */
 	public void setCurrentQuestions (Queue<Question> currentQuestions) {
 		this.currentQuestions = currentQuestions;
+	}
+
+	/**
+	 * @return
+	 *         The current question to answer.
+	 */
+	public Question getCurrentQuestion () throws RoundNotStartedException {
+		
+		if (!this.hasRoundBeenStarted) {
+			// A round has not be started yet
+			throw new RoundNotStartedException("A round has not been started before attempted to obtain the current question");
+		}
+		else {
+			return currentQuestion;
+		}
 	}
 
 }
