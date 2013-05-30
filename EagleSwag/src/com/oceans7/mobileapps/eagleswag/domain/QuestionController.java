@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
  * @date May 18, 2013
- * @file QuestionManager.java
+ * @file QuestionController.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -26,23 +26,23 @@ import android.util.Log;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
 
-public class QuestionManager {
+public class QuestionController {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
 	/**
-	 * Singleton instance of the question manager.
+	 * Singleton instance of the question controller.
 	 */
-	private static QuestionManager instance;
+	private static QuestionController instance;
 	
 	private Context context;
 
 	/**
-	 * The asset location of the question manager configuration resource.
+	 * The asset location of the question controller configuration resource.
 	 */
-	private static final String QUESTION_MANAGER_CONFIG_ASSET = "config/domain/question-manager.cfg";
+	private static final String QUESTION_CONTROLLER_CONFIG_ASSET = "config/domain/question-controller.cfg";
 
 	/**
 	 * The data controller that manages the storage and retrieval of questions.
@@ -59,9 +59,9 @@ public class QuestionManager {
 	 * @param context
 	 *            The context used to obtain the configuration resource file.
 	 */
-	private QuestionManager (Context context) {
+	private QuestionController (Context context) {
 		
-		// Set the context for the manager
+		// Set the context for the controller
 		this.context = context;
 		
 		// Obtain the data controller from the data controller factory
@@ -76,23 +76,23 @@ public class QuestionManager {
 	 **************************************************************************/
 
 	/**
-	 * Obtain the singleton instance for the manager.
+	 * Obtain the singleton instance for the controller.
 	 * 
 	 * @param context
 	 *            The context used to obtain the configuration data for the
-	 *            question manager.
+	 *            question controller.
 	 * 
 	 * @return
-	 *         The singleton instance for the manager.
+	 *         The singleton instance for the controller.
 	 */
-	public static QuestionManager getInstance (Context context) {
+	public static QuestionController getInstance (Context context) {
 
 		if (instance == null) {
 			// Lazy instantiation of singleton
-			instance = new QuestionManager(context);
+			instance = new QuestionController(context);
 		}
 
-		// Return the question manager
+		// Return the question controller
 		return instance;
 	}
 
@@ -105,7 +105,7 @@ public class QuestionManager {
 	 * @return
 	 *         A queue containing a mix of engineering and general questions,
 	 *         based on the specification set in the configuration file for the
-	 *         question manager.
+	 *         question controller.
 	 */
 	public Queue<Question> getEngineeringQuestions () {
 
@@ -115,17 +115,17 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			InputStream is = this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
+			InputStream is = this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET);
 			properties.load(is);
 			is.close();
 
 			// The number of engineering questions that should be loaded
-			int engineeringQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
+			int engineeringQCount = Integer.parseInt(properties.getProperty("questionController.engineering.engineeringQuestions"));
 			Log.i(this.getClass().getName(),
 				"(" + engineeringQCount + ") engineering questions should be loaded");
 
 			// The number of general questions that should be loaded
-			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
+			int generalQCount = Integer.parseInt(properties.getProperty("questionController.engineering.generalQuestions"));
 			Log.i(this.getClass().getName(),
 				"(" + generalQCount + ") general questions should be loaded");
 
@@ -166,7 +166,7 @@ public class QuestionManager {
 	 * @return
 	 *         A queue containing a mix of pilot and general questions, based on
 	 *         the specification set in the configuration file for the question
-	 *         manager.
+	 *         controller.
 	 */
 	public Queue<Question> getPilotQuestions () {
 
@@ -176,17 +176,17 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			InputStream is = this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
+			InputStream is = this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET);
 			properties.load(is);
 			is.close();
 
 			// The number of pilot questions that should be loaded
-			int pilotQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
+			int pilotQCount = Integer.parseInt(properties.getProperty("questionController.pilot.pilotQuestions"));
 			Log.i(this.getClass().getName(),
 				"(" + pilotQCount + ") pilot questions should be loaded");
 
 			// The number of general questions that should be loaded
-			int generalQCount = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
+			int generalQCount = Integer.parseInt(properties.getProperty("questionController.pilot.generalQuestions"));
 			Log.i(this.getClass().getName(),
 				"(" + generalQCount + ") general questions should be loaded");
 

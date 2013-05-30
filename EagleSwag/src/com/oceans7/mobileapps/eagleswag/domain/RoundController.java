@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
  * @date May 29, 2013
- * @file RoundManager.java
+ * @file RoundController.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -19,7 +19,7 @@ import java.util.Queue;
 
 import android.content.Context;
 
-public class RoundManager {
+public class RoundController {
 
 	/***************************************************************************
 	 * Attributes
@@ -33,7 +33,7 @@ public class RoundManager {
 	/**
 	 * The question manager used to obtain questions for the round.
 	 */
-	private QuestionManager questionManager;
+	private QuestionController questionController;
 
 	/**
 	 * The current round.
@@ -66,13 +66,13 @@ public class RoundManager {
 	 * @param context
 	 *            The context used to save the current round.
 	 */
-	public RoundManager (Context context) {
+	public RoundController (Context context) {
 
 		// Set the context
 		this.setContext(context);
 
 		// Instantiate the question manager
-		this.questionManager = QuestionManager.getInstance(context);
+		this.questionController = QuestionController.getInstance(context);
 
 		// Set flag to 'round not started'
 		this.hasRoundBeenStarted = false;
@@ -89,7 +89,7 @@ public class RoundManager {
 	public synchronized void startEngineeringRound () {
 
 		// Obtain the questions from the question manager
-		this.currentQuestions = this.questionManager.getEngineeringQuestions();
+		this.currentQuestions = this.questionController.getEngineeringQuestions();
 
 		// Create new round object
 		this.currentRound = new Round();
@@ -108,7 +108,7 @@ public class RoundManager {
 	public synchronized void startPilotRound () {
 
 		// Obtain the questions from the question manager
-		this.currentQuestions = this.questionManager.getPilotQuestions();
+		this.currentQuestions = this.questionController.getPilotQuestions();
 
 		// Create new round object
 		this.currentRound = new Round();
@@ -244,16 +244,16 @@ public class RoundManager {
 	 * @return
 	 *         The questionManager.
 	 */
-	public QuestionManager getQuestionManager () {
-		return questionManager;
+	public QuestionController getQuestionManager () {
+		return questionController;
 	}
 
 	/**
-	 * @param questionManager
+	 * @param questionController
 	 *            The questionManager to set.
 	 */
-	public void setQuestionManager (QuestionManager questionManager) {
-		this.questionManager = questionManager;
+	public void setQuestionManager (QuestionController questionController) {
+		this.questionController = questionController;
 	}
 
 	/**

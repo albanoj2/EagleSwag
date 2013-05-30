@@ -1,14 +1,14 @@
 /**
  * @author Justin Albano
  * @date May 18, 2013
- * @file QuestionManagerTest.java
+ * @file QuestionControllerTest.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       Test fixture for the Question Manager class.
+ *       Test fixture for the Question Controller class.
  * 
- * @see com.oceans7.mobileapps.eagleswag.domain.QuestionManager
+ * @see com.oceans7.mobileapps.eagleswag.domain.QuestionController
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -24,21 +24,21 @@ import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.domain.QuestionManager;
+import com.oceans7.mobileapps.eagleswag.domain.QuestionController;
 
-public class QuestionManagerTest extends InstrumentationTestCase {
+public class QuestionControllerTest extends InstrumentationTestCase {
 	
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
-	private QuestionManager questionManager;
+	private QuestionController questionController;
 	private Context context;
 	
 	/**
-	 * The asset location of the question manager configuration resource.
+	 * The asset location of the question controller configuration resource.
 	 */
-	private static final String QUESTION_MANAGER_CONFIG_ASSET = "config/domain/question-manager.cfg";
+	private static final String QUESTION_CONTROLLER_CONFIG_ASSET = "config/domain/question-controller.cfg";
 	
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -55,8 +55,8 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 		// Obtain the target context
 		this.context = getInstrumentation().getTargetContext();
 
-		// Create the question manager
-		this.questionManager = QuestionManager.getInstance(this.context);
+		// Create the question controllerer
+		this.questionController = QuestionController.getInstance(this.context);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateEngineeringQueue () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
+		Queue<Question> questions = this.questionController.getEngineeringQuestions();
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -106,19 +106,19 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
+		Queue<Question> questions = this.questionController.getEngineeringQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
-		properties.load(this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET));
+		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of engineering questions
-		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
-		Log.d("Question Manager Test", "(" + theoEngineeringQuestions + ") engineering questions should be loaded");
+		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.engineeringQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoEngineeringQuestions + ") engineering questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
-		Log.d("Question Manager Test", "(" + theoGeneralQuestions + ") general questions should be loaded");
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.generalQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Total count of questions
 		int questionCount = 0;
@@ -137,26 +137,26 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	 * Ensures that correct number of general and engineering questions are
 	 * mixed within the question queue. The correctness of this test is verified
 	 * by comparing the actual results to the configuration file for the
-	 * question manager.
+	 * question controller.
 	 * 
 	 * @throws Exception
 	 */
 	public void testCreateCorrectDistributionOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
+		Queue<Question> questions = this.questionController.getEngineeringQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
-		properties.load(this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET));
+		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of engineering questions
-		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questionManager.engineering.engineeringQuestions"));
-		Log.d("Question Manager Test", "(" + theoEngineeringQuestions + ") engineering questions should be loaded");
+		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.engineeringQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoEngineeringQuestions + ") engineering questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionManager.engineering.generalQuestions"));
-		Log.d("Question Manager Test", "(" + theoGeneralQuestions + ") general questions should be loaded");
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.generalQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Record the number of general and engineering questions
 		int engineeringQuestions = 0;
@@ -188,7 +188,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreatePilotQueue () throws Exception {
 
 		// Obtain the pilot questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions();
+		Queue<Question> questions = this.questionController.getPilotQuestions();
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -214,19 +214,19 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions();
+		Queue<Question> questions = this.questionController.getPilotQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
-		properties.load(this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET));
+		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of pilot questions
-		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
-		Log.d("Question Manager Test", "(" + theoPilotQuestions + ") pilot questions should be loaded");
+		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.pilotQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoPilotQuestions + ") pilot questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
-		Log.d("Question Manager Test", "(" + theoGeneralQuestions + ") general questions should be loaded");
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.generalQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Total count of questions
 		int questionCount = 0;
@@ -245,26 +245,26 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	 * Ensures that correct number of general and pilot questions are mixed
 	 * within the question queue. The correctness of this test is verified by
 	 * comparing the actual results to the configuration file for the question
-	 * manager.
+	 * controller.
 	 * 
 	 * @throws Exception
 	 */
 	public void testCreateCorrectDistributionOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions();
+		Queue<Question> questions = this.questionController.getPilotQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
-		properties.load(this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET));
+		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of pilot questions
-		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questionManager.pilot.pilotQuestions"));
-		Log.d("Question Manager Test", "(" + theoPilotQuestions + ") pilot questions should be loaded");
+		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.pilotQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoPilotQuestions + ") pilot questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionManager.pilot.generalQuestions"));
-		Log.d("Question Manager Test", "(" + theoGeneralQuestions + ") general questions should be loaded");
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.generalQuestions"));
+		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Record the number of general and engineering questions
 		int pilotQuestions = 0;
@@ -297,7 +297,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testValidEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
+		Queue<Question> questions = this.questionController.getEngineeringQuestions();
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
@@ -320,7 +320,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testValidPilotQuestions () throws Exception {
 
 		// Obtain the pilot questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions();
+		Queue<Question> questions = this.questionController.getPilotQuestions();
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null

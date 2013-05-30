@@ -108,7 +108,7 @@ public class Round {
 	 * 
 	 * @return
 	 *         The score for the round based on the previously submitted 'yes'
-	 *         and 'no' answered questions.
+	 *         and 'no' answered questions. 
 	 */
 	public double calculateScore () {
 

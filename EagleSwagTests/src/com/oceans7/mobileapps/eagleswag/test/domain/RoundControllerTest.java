@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
  * @date May 29, 2013
- * @file RoundManagerTest.java
+ * @file RoundControllerTest.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -13,15 +13,15 @@ package com.oceans7.mobileapps.eagleswag.test.domain;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.domain.RoundManager;
+import com.oceans7.mobileapps.eagleswag.domain.RoundController;
 
-public class RoundManagerTest extends InstrumentationTestCase {
+public class RoundControllerTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
-	private RoundManager manager;
+	private RoundController manager;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -36,7 +36,7 @@ public class RoundManagerTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Instantiate the manager
-		this.manager = new RoundManager(this.getInstrumentation().getTargetContext());
+		this.manager = new RoundController(this.getInstrumentation().getTargetContext());
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class RoundManagerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundManager#startEngineeringRound()}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#startEngineeringRound()}
 	 * 
 	 */
 	public void testStartEngineeringRound () throws Exception {
@@ -71,7 +71,7 @@ public class RoundManagerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundManager#startPilotRound()}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#startPilotRound()}
 	 * 
 	 */
 	public void testStartPilotRound () throws Exception {
@@ -88,7 +88,7 @@ public class RoundManagerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundManager#answerCurrentQuestionYes()}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#answerCurrentQuestionYes()}
 	 * 
 	 */
 	public void testAnswerCurrentQuestionYes () throws Exception {
@@ -108,7 +108,7 @@ public class RoundManagerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundManager#answerCurrentQuestionNo()}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#answerCurrentQuestionNo()}
 	 * 
 	 */
 	public void testAnswerCurrentQuestionNo () throws Exception {
@@ -128,7 +128,7 @@ public class RoundManagerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundManager#endRound()}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#endRound()}
 	 */
 	public void testEndRound () throws Exception {
 
