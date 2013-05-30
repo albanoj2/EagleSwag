@@ -184,5 +184,17 @@ public class Round {
 		// Close the data controller
 		controller.close();
 	}
+	
+	/***************************************************************************
+	 * Getters & Setters
+	 **************************************************************************/
+	
+	public int getNumberOfYesQuestions () {
+		return this.questionsAnsweredYes.size();
+	}
+	
+	public int getNumberOfNoQuestions () {
+		return this.questionsAnsweredNo.size();
+	}
 
 }

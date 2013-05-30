@@ -36,6 +36,8 @@ public class QuestionManager {
 	 * Singleton instance of the question manager.
 	 */
 	private static QuestionManager instance;
+	
+	private Context context;
 
 	/**
 	 * The asset location of the question manager configuration resource.
@@ -58,6 +60,10 @@ public class QuestionManager {
 	 *            The context used to obtain the configuration resource file.
 	 */
 	private QuestionManager (Context context) {
+		
+		// Set the context for the manager
+		this.context = context;
+		
 		// Obtain the data controller from the data controller factory
 		this.dataController = DataControllerFactory.getInstance().getDataController(context);
 
@@ -96,15 +102,12 @@ public class QuestionManager {
 	 * configuration file. Likewise, the number of total questions to be loaded
 	 * into the queue is specified in the configuration file.
 	 * 
-	 * @param context
-	 *            The context of the activity requesting the engineering
-	 *            question queue.
 	 * @return
 	 *         A queue containing a mix of engineering and general questions,
 	 *         based on the specification set in the configuration file for the
 	 *         question manager.
 	 */
-	public Queue<Question> getEngineeringQuestions (Context context) {
+	public Queue<Question> getEngineeringQuestions () {
 
 		// Create question queue
 		Queue<Question> questionQueue = new LinkedList<Question>();
@@ -112,7 +115,7 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			InputStream is = context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
+			InputStream is = this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
 			properties.load(is);
 			is.close();
 
@@ -160,15 +163,12 @@ public class QuestionManager {
 	 * configuration file. Likewise, the number of total questions to be loaded
 	 * into the queue is specified in the configuration file.
 	 * 
-	 * @param context
-	 *            The context of the activity requesting the engineering
-	 *            question queue.
 	 * @return
 	 *         A queue containing a mix of pilot and general questions, based on
 	 *         the specification set in the configuration file for the question
 	 *         manager.
 	 */
-	public Queue<Question> getPilotQuestions (Context context) {
+	public Queue<Question> getPilotQuestions () {
 
 		// Create question queue
 		Queue<Question> questionQueue = new LinkedList<Question>();
@@ -176,7 +176,7 @@ public class QuestionManager {
 		try {
 			// Obtain the number of questions that "should" be loaded
 			Properties properties = new Properties();
-			InputStream is = context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
+			InputStream is = this.context.getAssets().open(QUESTION_MANAGER_CONFIG_ASSET);
 			properties.load(is);
 			is.close();
 

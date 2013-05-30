@@ -206,6 +206,10 @@ public class SQLiteDataController implements DataController {
 
 	}
 
+	/***************************************************************************
+	 * Getters & Setters
+	 **************************************************************************/
+	
 	/**
 	 * @return
 	 *         The classToTableMap.
@@ -213,10 +217,6 @@ public class SQLiteDataController implements DataController {
 	public Map<Class<? extends Question>, String> getClassToTableMap () {
 		return this.classToTableMap;
 	}
-
-	/***************************************************************************
-	 * Getters & Setters
-	 **************************************************************************/
 
 	public SQLiteDatabase getDatabase () {
 		return this.database;
