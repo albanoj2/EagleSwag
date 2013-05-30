@@ -27,6 +27,10 @@ import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.domain.QuestionManager;
 
 public class QuestionManagerTest extends InstrumentationTestCase {
+	
+	/***************************************************************************
+	 * Attributes
+	 **************************************************************************/
 
 	private QuestionManager questionManager;
 	private Context context;
@@ -35,6 +39,10 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	 * The asset location of the question manager configuration resource.
 	 */
 	private static final String QUESTION_MANAGER_CONFIG_ASSET = "config/domain/question-manager.cfg";
+	
+	/***************************************************************************
+	 * Setup & Tear Down
+	 **************************************************************************/
 
 	/**
 	 * {@inheritDoc}
@@ -59,6 +67,10 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	protected void tearDown () throws Exception {
 		super.tearDown();
 	}
+	
+	/***************************************************************************
+	 * Test Cases
+	 **************************************************************************/
 
 	/**
 	 * Ensure that the engineering queue is created and is iterable.

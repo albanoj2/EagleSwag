@@ -22,9 +22,17 @@ import com.oceans7.mobileapps.eagleswag.persistence.DataFileJSONParser;
 
 public class DataFileJSONParserTest extends InstrumentationTestCase {
 
+	/***************************************************************************
+	 * Attributes
+	 **************************************************************************/
+	
 	private static final String JSON_TEST_RESOURCE = "data/testquestions.json";
 	private DataFileJSONParser parser;
 
+	/***************************************************************************
+	 * Setup & Tear Down
+	 **************************************************************************/
+	
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -51,6 +59,10 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 	protected void tearDown () throws Exception {
 		super.tearDown();
 	}
+	
+	/***************************************************************************
+	 * Test Cases
+	 **************************************************************************/
 
 	/**
 	 * Test method for
