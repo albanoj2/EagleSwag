@@ -68,7 +68,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateEngineeringQueue () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -94,7 +94,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -132,7 +132,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -176,7 +176,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreatePilotQueue () throws Exception {
 
 		// Obtain the pilot questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getPilotQuestions();
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -202,7 +202,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getPilotQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -240,7 +240,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getPilotQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -285,7 +285,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testValidEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionManager.getEngineeringQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getEngineeringQuestions();
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
@@ -308,7 +308,7 @@ public class QuestionManagerTest extends InstrumentationTestCase {
 	public void testValidPilotQuestions () throws Exception {
 
 		// Obtain the pilot questions
-		Queue<Question> questions = this.questionManager.getPilotQuestions(this.context);
+		Queue<Question> questions = this.questionManager.getPilotQuestions();
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
