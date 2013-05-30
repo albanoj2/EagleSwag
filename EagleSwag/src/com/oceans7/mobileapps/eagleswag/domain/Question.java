@@ -19,7 +19,7 @@ public abstract class Question {
 	/**
 	 * The ID of the question.
 	 */
-	private long id;
+	private int id;
 
 	/**
 	 * The text associated with the question.
@@ -29,17 +29,17 @@ public abstract class Question {
 	/**
 	 * The value of the question when answered in the affirmative.
 	 */
-	private long yesValue;
+	private int yesValue;
 
 	/**
 	 * The value of the question when answered in the negative.
 	 */
-	private long noValue;
+	private int noValue;
 
 	/**
 	 * The number of times the question has been answered by the user.
 	 */
-	private long usedCount;
+	private int usedCount;
 
 	/***************************************************************************
 	 * Constructors
@@ -75,7 +75,7 @@ public abstract class Question {
 		return this.id;
 	}
 
-	public void setId (long id) {
+	public void setId (int id) {
 		this.id = id;
 	}
 
@@ -87,23 +87,23 @@ public abstract class Question {
 		this.question = text;
 	}
 
-	public long getYesPointValue () {
+	public int getYesPointValue () {
 		return this.yesValue;
 	}
 
-	public void setYesPointValue (long value) {
+	public void setYesPointValue (int value) {
 		this.yesValue = value;
 	}
 
-	public long getNoPointValue () {
+	public int getNoPointValue () {
 		return this.noValue;
 	}
 
-	public void setNoPointValue (long value) {
+	public void setNoPointValue (int value) {
 		this.noValue = value;
 	}
 
-	public long getUsedCount () {
+	public int getUsedCount () {
 		return this.usedCount;
 	}
 	
@@ -111,7 +111,7 @@ public abstract class Question {
 		this.usedCount++;
 	}
 
-	public void setUsedCount (long usedCount) {
+	public void setUsedCount (int usedCount) {
 		this.usedCount = usedCount;
 	}
 
