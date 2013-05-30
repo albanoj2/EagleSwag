@@ -44,6 +44,12 @@ public class SQLiteDataController implements DataController {
 	 **************************************************************************/
 
 	/**
+	 * The context used to provide the get questions query with its needed
+	 * arguments.
+	 */
+	private Context context;
+
+	/**
 	 * The writable database object used to retrieve and store data in the
 	 * SQLite database.
 	 */
@@ -78,6 +84,9 @@ public class SQLiteDataController implements DataController {
 	 */
 	@Override
 	public void open (Context context) {
+
+		// Store the context
+		this.context = context;
 
 		// Create the database helper
 		this.helper = new SQLiteDataControllerHelper(context);
@@ -130,7 +139,7 @@ public class SQLiteDataController implements DataController {
 			// Continue only if there is data to retrieve from the database
 
 			// Obtain the data for the questions from the database
-			Cursor cursor = SQLiteDataControllerQueries.getQuestions(this.database, this.classToTableMap.get(key), number);
+			Cursor cursor = SQLiteDataControllerQueries.getQuestions(this.context, this.database, this.classToTableMap.get(key), number);
 
 			// Reset cursor
 			cursor.moveToFirst();
@@ -209,7 +218,7 @@ public class SQLiteDataController implements DataController {
 	/***************************************************************************
 	 * Getters & Setters
 	 **************************************************************************/
-	
+
 	/**
 	 * @return
 	 *         The classToTableMap.

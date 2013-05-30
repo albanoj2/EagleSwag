@@ -109,7 +109,7 @@ public class DataControllerFactory {
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(), "IOException occurred while trying to access the configuration file: " + e);
 		}
 
 		return dataController;

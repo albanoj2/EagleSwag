@@ -16,6 +16,7 @@
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,13 +40,7 @@ public class SQLiteDataControllerQueries {
 	public static void createQuestionsTable (SQLiteDatabase db, String table) {
 
 		// The query used to create the table
-		String query = "CREATE TABLE IF NOT EXISTS " + table + " (" + 
-			SQLiteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," + 
-			SQLiteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL," + 
-			SQLiteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL," + 
-			SQLiteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL," + 
-			SQLiteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL" + 
-			");";
+		String query = "CREATE TABLE IF NOT EXISTS " + table + " (" + SQLiteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," + SQLiteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL," + SQLiteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL," + SQLiteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL," + SQLiteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL" + ");";
 
 		try {
 			// Execute the SQL command on the database
@@ -103,9 +98,8 @@ public class SQLiteDataControllerQueries {
 
 	/**
 	 * Obtains a specified number of questions from a table within a given
-	 * database. The strategy for obtaining questions from a table is the least
-	 * frequently used (LFU) technique, where the questions with the smallest
-	 * 'used count' are retrieved from the database.
+	 * database. The strategy used to obtain questions is dictated by the SQLite
+	 * configuration file.
 	 * 
 	 * @param db
 	 *            The database to extract the data from.
@@ -117,10 +111,13 @@ public class SQLiteDataControllerQueries {
 	 *         A cursor containing the data retrieved from the specified
 	 *         database table.
 	 */
-	public static Cursor getQuestions (SQLiteDatabase db, String table, int number) {
+	public static Cursor getQuestions (Context context, SQLiteDatabase db, String table, int number) {
+
+		// Obtain the strategy from factory for getting questions
+		RetrieveQuestionsStrategy strategy = RetrieveQuestionsStrategyFactory.getInstance().getRetrieveQuestionsStrategy(context);
 
 		// The query to obtain the questions
-		String query = "SELECT * FROM " + table + " " + "ORDER BY " + SQLiteDataControllerConstants.USED_COUNT_COLUMN + " ASC " + "LIMIT " + number;
+		String query = strategy.getQuery(table, number);
 
 		// Execute the query against the database
 		Cursor cursor = db.rawQuery(query, null);
