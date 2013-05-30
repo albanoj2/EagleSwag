@@ -24,7 +24,6 @@ import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.domain.Round;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataController;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerConstants;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries;
