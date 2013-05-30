@@ -12,5 +12,6 @@
     <string name="yes_button">Yes</string>
     <string name="no_button">No</string>
     <string name="title_activity_score">ScoreActivity</string>
+    <string name="goto_splash_page_button">Check my swag again</string>
 
 </resources>
