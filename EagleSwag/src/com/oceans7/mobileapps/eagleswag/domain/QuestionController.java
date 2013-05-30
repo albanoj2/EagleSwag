@@ -1,12 +1,12 @@
 /**
  * @author Justin Albano
- * @date May 18, 2013
+ * @date May 30, 2013
  * @file QuestionController.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       Performs the operations required to obtain a queue of engineering or
+ *       Performs the operations required to obtain a list of engineering or
  *       pilot questions to be used in the user interface. This class acts as
  *       the facade between the user interface and the domain subsystem.
  */
@@ -16,7 +16,9 @@ package com.oceans7.mobileapps.eagleswag.domain;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Properties;
 import java.util.Queue;
 
@@ -36,7 +38,10 @@ public class QuestionController {
 	 * Singleton instance of the question controller.
 	 */
 	private static QuestionController instance;
-	
+
+	/**
+	 * The context used to asset the controller configuration asset.
+	 */
 	private Context context;
 
 	/**
@@ -60,10 +65,10 @@ public class QuestionController {
 	 *            The context used to obtain the configuration resource file.
 	 */
 	private QuestionController (Context context) {
-		
+
 		// Set the context for the controller
 		this.context = context;
-		
+
 		// Obtain the data controller from the data controller factory
 		this.dataController = DataControllerFactory.getInstance().getDataController(context);
 
@@ -97,20 +102,20 @@ public class QuestionController {
 	}
 
 	/**
-	 * Loads a queue of questions used for engineers. This queue contains a mix
+	 * Loads a list of questions used for engineers. This list contains a mix
 	 * of engineering and general questions, based on the ratio specified by the
 	 * configuration file. Likewise, the number of total questions to be loaded
-	 * into the queue is specified in the configuration file.
+	 * into the list is specified in the configuration file.
 	 * 
 	 * @return
-	 *         A queue containing a mix of engineering and general questions,
+	 *         A list containing a mix of engineering and general questions,
 	 *         based on the specification set in the configuration file for the
 	 *         question controller.
 	 */
-	public Queue<Question> getEngineeringQuestions () {
+	public List<Question> getEngineeringQuestions () {
 
-		// Create question queue
-		Queue<Question> questionQueue = new LinkedList<Question>();
+		// Create question list
+		List<Question> questionList = new LinkedList<Question>();
 
 		try {
 			// Obtain the number of questions that "should" be loaded
@@ -121,27 +126,27 @@ public class QuestionController {
 
 			// The number of engineering questions that should be loaded
 			int engineeringQCount = Integer.parseInt(properties.getProperty("questionController.engineering.engineeringQuestions"));
-			Log.i(this.getClass().getName(),
-				"(" + engineeringQCount + ") engineering questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + engineeringQCount + ") engineering questions should be loaded");
 
 			// The number of general questions that should be loaded
 			int generalQCount = Integer.parseInt(properties.getProperty("questionController.engineering.generalQuestions"));
-			Log.i(this.getClass().getName(),
-				"(" + generalQCount + ") general questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the engineering questions and add them to the question
 			// queue
 			Queue<EngineeringQuestion> engineeringQuestions = this.dataController.<EngineeringQuestion> getQuestions(EngineeringQuestion.class,
 				generalQCount);
-			questionQueue.addAll(engineeringQuestions);
+			questionList.addAll(engineeringQuestions);
 
 			// Obtain the general questions and add them to the question queue
-			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion> getQuestions(GeneralQuestion.class,
-				generalQCount);
-			questionQueue.addAll(generalQuestions);
+			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion> getQuestions(GeneralQuestion.class, generalQCount);
+			questionList.addAll(generalQuestions);
 
-			// Return the correctly built queue
-			return questionQueue;
+			// Shuffle the list before returning it
+			Collections.shuffle(questionList);
+
+			// Return the correctly built list
+			return questionList;
 		}
 		catch (FileNotFoundException e) {
 			// The configuration file could not be found
@@ -150,28 +155,27 @@ public class QuestionController {
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e(this.getClass().getName(),
-				"IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
 			return null;
 		}
 
 	}
 
 	/**
-	 * Loads a queue of questions used for pilots. This queue contains a mix
+	 * Loads a list of questions used for pilots. This list contains a mix
 	 * of pilot and general questions, based on the ratio specified by the
 	 * configuration file. Likewise, the number of total questions to be loaded
-	 * into the queue is specified in the configuration file.
+	 * into the list is specified in the configuration file.
 	 * 
 	 * @return
-	 *         A queue containing a mix of pilot and general questions, based on
+	 *         A list containing a mix of pilot and general questions, based on
 	 *         the specification set in the configuration file for the question
 	 *         controller.
 	 */
-	public Queue<Question> getPilotQuestions () {
+	public List<Question> getPilotQuestions () {
 
-		// Create question queue
-		Queue<Question> questionQueue = new LinkedList<Question>();
+		// Create question list
+		List<Question> questionList = new LinkedList<Question>();
 
 		try {
 			// Obtain the number of questions that "should" be loaded
@@ -182,26 +186,25 @@ public class QuestionController {
 
 			// The number of pilot questions that should be loaded
 			int pilotQCount = Integer.parseInt(properties.getProperty("questionController.pilot.pilotQuestions"));
-			Log.i(this.getClass().getName(),
-				"(" + pilotQCount + ") pilot questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + pilotQCount + ") pilot questions should be loaded");
 
 			// The number of general questions that should be loaded
 			int generalQCount = Integer.parseInt(properties.getProperty("questionController.pilot.generalQuestions"));
-			Log.i(this.getClass().getName(),
-				"(" + generalQCount + ") general questions should be loaded");
+			Log.i(this.getClass().getName(), "(" + generalQCount + ") general questions should be loaded");
 
 			// Obtain the pilot questions and add them to the question queue
-			Queue<PilotQuestion> pilotQuestions = this.dataController.<PilotQuestion> getQuestions(PilotQuestion.class,
-				pilotQCount);
-			questionQueue.addAll(pilotQuestions);
+			Queue<PilotQuestion> pilotQuestions = this.dataController.<PilotQuestion> getQuestions(PilotQuestion.class, pilotQCount);
+			questionList.addAll(pilotQuestions);
 
 			// Obtain the general questions and add them to the question queue
-			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion> getQuestions(GeneralQuestion.class,
-				generalQCount);
-			questionQueue.addAll(generalQuestions);
+			Queue<GeneralQuestion> generalQuestions = this.dataController.<GeneralQuestion> getQuestions(GeneralQuestion.class, generalQCount);
+			questionList.addAll(generalQuestions);
 
-			// Return the correctly built queue
-			return questionQueue;
+			// Shuffle the list before returning it
+			Collections.shuffle(questionList);
+
+			// Return the correctly built list
+			return questionList;
 		}
 		catch (FileNotFoundException e) {
 			// The configuration file could not be found
@@ -210,8 +213,7 @@ public class QuestionController {
 		}
 		catch (IOException e) {
 			// IOException occurred while trying to access the properties file
-			Log.e(this.getClass().getName(),
-				"IOException occurred while trying to access the confiuration file: " + e);
+			Log.e(this.getClass().getName(), "IOException occurred while trying to access the confiuration file: " + e);
 			return null;
 		}
 	}

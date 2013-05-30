@@ -10,6 +10,7 @@
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
+
 public abstract class Question {
 
 	/***************************************************************************

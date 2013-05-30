@@ -13,6 +13,7 @@
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
 
+import java.util.List;
 import java.util.Properties;
 import java.util.Queue;
 
@@ -80,7 +81,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateEngineeringQueue () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = this.questionController.getEngineeringQuestions();
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -106,7 +107,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = this.questionController.getEngineeringQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -144,7 +145,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = this.questionController.getEngineeringQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -188,7 +189,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreatePilotQueue () throws Exception {
 
 		// Obtain the pilot questions
-		Queue<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = this.questionController.getPilotQuestions();
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -214,7 +215,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = this.questionController.getPilotQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -252,7 +253,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = this.questionController.getPilotQuestions();
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -297,7 +298,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testValidEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		Queue<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = this.questionController.getEngineeringQuestions();
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
@@ -320,7 +321,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testValidPilotQuestions () throws Exception {
 
 		// Obtain the pilot questions
-		Queue<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = this.questionController.getPilotQuestions();
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null

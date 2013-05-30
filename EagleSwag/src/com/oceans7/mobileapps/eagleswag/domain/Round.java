@@ -67,6 +67,10 @@ public class Round {
 	public void submitYesQuestion (Question question) {
 		// Add the question to the list of questions answered 'yes'
 		this.questionsAnsweredYes.add(question);
+
+		// Log the submitted questions as having been answered yes
+		Log.i(this.getClass().getName(),
+			"Answered questions as 'yes' for [" + question.getYesPointValue() + "] points: " + question.getQuestionString());
 	}
 
 	/**
@@ -78,6 +82,10 @@ public class Round {
 	public void submitNoQuestion (Question question) {
 		// Add the question to the list of questions answered 'no'
 		this.questionsAnsweredNo.add(question);
+
+		// Log the submitted questions as having been answered no
+		Log.i(this.getClass().getName(),
+			"Answered questions as 'no' for [" + question.getNoPointValue() + "] points: " + question.getQuestionString());
 	}
 
 	/**
@@ -108,7 +116,7 @@ public class Round {
 	 * 
 	 * @return
 	 *         The score for the round based on the previously submitted 'yes'
-	 *         and 'no' answered questions. 
+	 *         and 'no' answered questions.
 	 */
 	public double calculateScore () {
 
@@ -121,9 +129,10 @@ public class Round {
 			runningTotal += question.getYesPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
-					question.getNoPointValue()) + "]");
+			Log.i(
+				this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
+					question.getYesPointValue(), question.getNoPointValue()) + "]");
 		}
 
 		for (Question question : this.questionsAnsweredNo) {
@@ -131,9 +140,10 @@ public class Round {
 			runningTotal += question.getNoPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
-					question.getNoPointValue()) + "]");
+			Log.i(
+				this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
+					question.getYesPointValue(), question.getNoPointValue()) + "]");
 		}
 
 		// Calculate the score as earned/possible * 100
@@ -165,8 +175,7 @@ public class Round {
 			controller.saveQuestion(question.getClass(), question);
 
 			// Log the saved question
-			Log.i(this.getClass().getName(),
-				"Incremented used count and saved question: " + question);
+			Log.i(this.getClass().getName(), "Incremented used count and saved question: " + question);
 		}
 
 		for (Question question : this.questionsAnsweredNo) {
@@ -177,22 +186,21 @@ public class Round {
 			controller.saveQuestion(question.getClass(), question);
 
 			// Log the saved question
-			Log.i(this.getClass().getName(),
-				"Incremented used count and saved question: " + question);
+			Log.i(this.getClass().getName(), "Incremented used count and saved question: " + question);
 		}
-		
+
 		// Close the data controller
 		controller.close();
 	}
-	
+
 	/***************************************************************************
 	 * Getters & Setters
 	 **************************************************************************/
-	
+
 	public int getNumberOfYesQuestions () {
 		return this.questionsAnsweredYes.size();
 	}
-	
+
 	public int getNumberOfNoQuestions () {
 		return this.questionsAnsweredNo.size();
 	}

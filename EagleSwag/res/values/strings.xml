@@ -4,5 +4,13 @@
     <string name="app_name">EagleSwag</string>
     <string name="menu_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="engineer_button">Engineer</string>
+    <string name="pilot_button">Pilot</string>
+    <string name="splash_instructions">Check your swag by selecting your profession and answering a series of questions.</string>
+    <string name="title_activity_questions">QuestionsActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
+    <string name="title_activity_score">ScoreActivity</string>
 
 </resources>

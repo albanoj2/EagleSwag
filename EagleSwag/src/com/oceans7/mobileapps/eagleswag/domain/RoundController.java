@@ -15,7 +15,7 @@
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
-import java.util.Queue;
+import java.util.List;
 
 import android.content.Context;
 
@@ -43,7 +43,7 @@ public class RoundController {
 	/**
 	 * The questions for the current round.
 	 */
-	private Queue<Question> currentQuestions;
+	private List<Question> currentQuestions;
 
 	/**
 	 * The current question to answer.
@@ -98,7 +98,7 @@ public class RoundController {
 		this.hasRoundBeenStarted = true;
 
 		// Set the current question
-		this.currentQuestion = this.currentQuestions.remove();
+		this.currentQuestion = this.currentQuestions.remove(0);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class RoundController {
 		this.hasRoundBeenStarted = true;
 
 		// Set the current question
-		this.currentQuestion = this.currentQuestions.remove();
+		this.currentQuestion = this.currentQuestions.remove(0);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class RoundController {
 			this.currentRound.submitYesQuestion(this.currentQuestion);
 
 			// Set the next question as the current question
-			this.currentQuestion = this.currentQuestions.remove();
+			this.currentQuestion = this.currentQuestions.remove(0);
 		}
 	}
 
@@ -162,7 +162,7 @@ public class RoundController {
 			this.currentRound.submitNoQuestion(this.currentQuestion);
 
 			// Set the next question as the current question
-			this.currentQuestion = this.currentQuestions.remove();
+			this.currentQuestion = this.currentQuestions.remove(0);
 		}
 	}
 
@@ -276,16 +276,8 @@ public class RoundController {
 	 * @return
 	 *         The currentQuestions.
 	 */
-	public Queue<Question> getCurrentQuestions () {
+	public List<Question> getCurrentQuestions () {
 		return currentQuestions;
-	}
-
-	/**
-	 * @param currentQuestions
-	 *            The currentQuestions to set.
-	 */
-	public void setCurrentQuestions (Queue<Question> currentQuestions) {
-		this.currentQuestions = currentQuestions;
 	}
 
 	/**

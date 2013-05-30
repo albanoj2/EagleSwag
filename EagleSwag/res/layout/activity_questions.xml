@@ -2,24 +2,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_page"
+    android:background="@drawable/questions_page"
     android:theme="@android:style/Theme.NoTitleBar"
     tools:context=".SplashScreenActivity" >
 
-    <TextView
+    <TextSwitcher
+        android:id="@+id/tsQuestion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/splashLinearLayout"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="25dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/splash_instructions"
-        android:textColor="#ffffff"
-        android:typeface="serif" />
+        android:layout_marginTop="125dp" >
+
+        <TextView
+            android:id="@+id/tvQuestion1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:typeface="serif" />
+
+        <TextView
+            android:id="@+id/tvQuestion2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:typeface="serif" />
+    </TextSwitcher>
 
     <LinearLayout
-        android:id="@+id/splashLinearLayout"
+        android:id="@+id/questionsLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -31,7 +45,7 @@
         android:paddingRight="20dp" >
 
         <Button
-            android:id="@+id/bEngineerQuestions"
+            android:id="@+id/bYes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/round_button"
@@ -40,13 +54,13 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="@string/engineer_button"
+            android:text="@string/yes_button"
             android:textColor="#ececec"
             android:textColorHighlight="#000000"
             android:typeface="serif" />
 
         <Button
-            android:id="@+id/bPilotQuestions"
+            android:id="@+id/bNo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -56,7 +70,7 @@
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:text="@string/pilot_button"
+            android:text="@string/no_button"
             android:textColor="#ececec"
             android:textColorHighlight="#000000"
             android:typeface="serif" />
