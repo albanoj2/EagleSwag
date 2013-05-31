@@ -24,8 +24,10 @@ package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 import android.content.Context;
@@ -34,6 +36,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.config.QuestionType;
+import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
+import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
@@ -100,9 +105,26 @@ public class SQLiteDataController implements DataController {
 			Log.i(this.getClass().getName(), "Writable database cannot be created by SQLite database helper: " + e);
 		}
 
-		// Populate the class key to database table map
-		SQLiteDataControllerMappingsParser parser = new SQLiteDataControllerMappingsParser(context);
-		this.classToTableMap = parser.generateMappingsTable();
+		// Create the class key to database table map
+		this.classToTableMap = new HashMap<Class<? extends Question>, String>();
+
+		// Obtain a question type controller in order to populate the map
+		QuestionTypeConfigController qtConfigController = QuestionTypeConfigControllerFactory.getInstance().getController();
+
+		for (Entry<Class<? extends Question>, QuestionType> entry : qtConfigController.getQuestionType(context).entrySet()) {
+			// Loop through each of the entries and enter them into the map: the
+			// key from each entry is used as the key in the map, and the SQLite
+			// database table name is extracted from the question type and used
+			// as the value in the table
+
+			// Get the key and the table name
+			Class<? extends Question> key = entry.getKey();
+			String tableName = entry.getValue().getSqliteTable();
+
+			// Add the entry to the class key to table name map
+			this.classToTableMap.put(key, tableName);
+			Log.i(this.getClass().getName(), "Added mapping: " + key.getCanonicalName() + " -> " + tableName);
+		}
 	}
 
 	/**
