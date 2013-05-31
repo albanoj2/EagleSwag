@@ -28,7 +28,7 @@ public class SQLiteDataControllerConstants {
 	 * and the application is run, the database is automatically updated (the
 	 * SQLiteDataControllerHelper runs its update logic to update the database).
 	 */
-	public static final int DATABASE_VERSION = 10;
+	public static final int DATABASE_VERSION = 11;
 
 	/**
 	 * The name of the general questions table in the database.
