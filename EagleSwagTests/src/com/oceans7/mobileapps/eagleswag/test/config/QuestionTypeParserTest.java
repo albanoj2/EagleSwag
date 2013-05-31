@@ -61,22 +61,24 @@ public class QuestionTypeParserTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigParser#getQuestionType(android.content.Context)}
+	 * {@link com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigParser#getQuestionTypes(android.content.Context)}
 	 * .
 	 */
 	public void testGetQuestionType () {
 
 		// Obtain the types from the test configuration file
-		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionType(this.getInstrumentation().getContext());
+		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.getInstrumentation().getContext());
 
 		// Ensure that the data is correct for the test general question type
 		QuestionType generalType = map.get(GeneralQuestion.class);
-		assertEquals("General => data asset:", "data/general-questions.json", generalType.getDataAsset());
+		assertEquals("General => data asset:", "data/questions.json", generalType.getDataAsset());
+		assertEquals("General => JSON ID:", "generalQuestions", generalType.getJsonId());
 		assertEquals("General => table:", "GeneralQuestions", generalType.getSqliteTable());
 
 		// Ensure that the data is correct for the test engineer question type
 		QuestionType engineeringType = map.get(EngineeringQuestion.class);
-		assertEquals("Engineering => data asset:", "data/engineering-questions.json", engineeringType.getDataAsset());
+		assertEquals("Engineering => data asset:", "data/questions.json", engineeringType.getDataAsset());
+		assertEquals("Engineering => JSON ID:", "engineeringQuestions", engineeringType.getJsonId());
 		assertEquals("Engineering => table:", "EngineeringQuestions", engineeringType.getSqliteTable());
 	}
 

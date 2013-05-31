@@ -43,14 +43,14 @@ public class QuestionTypeConfigProxy implements QuestionTypeConfigController {
 
 	/**
 	 * {@inheritDoc}
-	 * @see com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController#getQuestionType(java.lang.Class)
+	 * @see com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController#getQuestionTypes(java.lang.Class)
 	 */
 	@Override
-	public Map<Class<? extends Question>, QuestionType> getQuestionType (Context context) {
+	public Map<Class<? extends Question>, QuestionType> getQuestionTypes (Context context) {
 
 		if (this.questionTypeMap == null) {
 			// Create the map from the delegate
-			this.questionTypeMap = this.delegate.getQuestionType(context);
+			this.questionTypeMap = this.delegate.getQuestionTypes(context);
 			Log.i(this.getClass().getName(), "Obtaining map from delegate");
 		}
 		

@@ -46,10 +46,10 @@ public class QuestionTypeConfigParser implements QuestionTypeConfigController {
 
 	/**
 	 * {@inheritDoc}
-	 * @see com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController#getQuestionType(java.lang.Class)
+	 * @see com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController#getQuestionTypes(java.lang.Class)
 	 */
 	@Override
-	public Map<Class<? extends Question>, QuestionType> getQuestionType (Context context) {
+	public Map<Class<? extends Question>, QuestionType> getQuestionTypes (Context context) {
 		
 		// The stub for the question type map
 		Map<Class<? extends Question>, QuestionType> questionTypeMap = new HashMap<Class<? extends Question>, QuestionType>();
@@ -89,12 +89,15 @@ public class QuestionTypeConfigParser implements QuestionTypeConfigController {
 					Element configElement = (Element) typeElement.getElementsByTagName("configuration").item(0);
 					Element dataElement = (Element) configElement.getElementsByTagName("data").item(0);
 					Element assetElement = (Element) dataElement.getElementsByTagName("asset").item(0);
+					Element jsonElement = (Element) configElement.getElementsByTagName("json").item(0);
+					Element jsonIdElement = (Element) jsonElement.getElementsByTagName("id").item(0);
 					Element sqliteElement = (Element) configElement.getElementsByTagName("sqlite").item(0);
 					Element tableElement = (Element) sqliteElement.getElementsByTagName("table").item(0);
 					
 					// Extract the needed data from the elements of the type
 					questionType.setName(typeElement.getAttribute("name"));
 					questionType.setDataAsset(assetElement.getAttribute("path") + assetElement.getTextContent());
+					questionType.setJsonId(jsonIdElement.getTextContent());
 					questionType.setSqliteTable(tableElement.getTextContent());
 					
 					// Create the class key for map

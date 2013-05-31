@@ -111,7 +111,7 @@ public class SQLiteDataController implements DataController {
 		// Obtain a question type controller in order to populate the map
 		QuestionTypeConfigController qtConfigController = QuestionTypeConfigControllerFactory.getInstance().getController();
 
-		for (Entry<Class<? extends Question>, QuestionType> entry : qtConfigController.getQuestionType(context).entrySet()) {
+		for (Entry<Class<? extends Question>, QuestionType> entry : qtConfigController.getQuestionTypes(context).entrySet()) {
 			// Loop through each of the entries and enter them into the map: the
 			// key from each entry is used as the key in the map, and the SQLite
 			// database table name is extracted from the question type and used
@@ -134,8 +134,9 @@ public class SQLiteDataController implements DataController {
 	 */
 	@Override
 	public void close () {
-		// Close the helper if it has been set
+		
 		if (this.helper != null) {
+			// Close the helper if it has been set
 			this.helper.close();
 		}
 	}

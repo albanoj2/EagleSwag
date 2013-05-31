@@ -18,7 +18,7 @@ import android.test.InstrumentationTestCase;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
-import com.oceans7.mobileapps.eagleswag.persistence.DataFileJSONParser;
+import com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy;
 
 public class DataFileJSONParserTest extends InstrumentationTestCase {
 
@@ -26,8 +26,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 	
-	private static final String JSON_TEST_RESOURCE = "data/testquestions.json";
-	private DataFileJSONParser parser;
+	private JSONDataFileParserStrategy parser;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -43,11 +42,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Instantiate the parser
-		this.parser = new DataFileJSONParser();
-
-		// Set the context and the resource stream for the parser
-		this.parser.setContext(this.getInstrumentation().getContext());
-		this.parser.setAsset(JSON_TEST_RESOURCE);
+		this.parser = new JSONDataFileParserStrategy();
 	}
 
 	/**
@@ -66,7 +61,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.DataFileJSONParser#getGeneralQuestions()}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy#getGeneralQuestions()}
 	 * 
 	 * Parsers a test JSON file with the same format as the actual JSON file
 	 * containing the questions data and ensures that the correct data for the
@@ -75,7 +70,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 	public void testGetGeneralQuestions () {
 
 		// Obtain the parsed queue from the JSON data file parser
-		Queue<GeneralQuestion> questions = this.parser.getGeneralQuestions();
+		Queue<GeneralQuestion> questions = this.parser.<GeneralQuestion>getQuestions(GeneralQuestion.class, this.getInstrumentation().getContext());
 
 		// Ensure that the list contains data
 		assertEquals("General queue contains data", questions.size(), 2);
@@ -97,7 +92,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.DataFileJSONParser#getEngineeringQuestions()}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy#getEngineeringQuestions()}
 	 * 
 	 * Parses a test JSON file containing data in the same format as the actual
 	 * JSON data file that contains the questions, and ensures that the data is
@@ -106,7 +101,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 	public void testGetEngineeringQuestions () {
 
 		// Obtain the parsed queue from the JSON data file parser
-		Queue<EngineeringQuestion> questions = this.parser.getEngineeringQuestions();
+		Queue<EngineeringQuestion> questions = this.parser.<EngineeringQuestion>getQuestions(EngineeringQuestion.class, this.getInstrumentation().getContext());
 
 		// Ensure that the list contains data
 		assertEquals("Engineering queue contains data", questions.size(), 2);
@@ -128,7 +123,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.DataFileJSONParser#getPilotQuestions()}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy#getPilotQuestions()}
 	 * 
 	 * Parses a test JSON file containing data in the same format as the actual
 	 * JSON data file that contains the questions, and ensures that the data is
@@ -137,7 +132,7 @@ public class DataFileJSONParserTest extends InstrumentationTestCase {
 	public void testGetPilotQuestions () {
 
 		// Obtain the parsed queue from the JSON data file parser
-		Queue<PilotQuestion> questions = this.parser.getPilotQuestions();
+		Queue<PilotQuestion> questions = this.parser.<PilotQuestion>getQuestions(PilotQuestion.class, this.getInstrumentation().getContext());
 
 		// Ensure that the list contains data
 		assertEquals("Pilot queue contains data", questions.size(), 2);

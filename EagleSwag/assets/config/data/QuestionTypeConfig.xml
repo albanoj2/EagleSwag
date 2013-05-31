@@ -4,8 +4,11 @@
         <key package="com.oceans7.mobileapps.eagleswag.domain">GeneralQuestion</key>
         <configuration>
             <data>
-                <asset path="data/">general-questions.json</asset>
+                <asset path="data/">questions.json</asset>
             </data>
+            <json>
+                <id>generalQuestions</id>
+            </json>
             <sqlite>
                 <table>GeneralQuestions</table>
             </sqlite>
@@ -16,8 +19,11 @@
         <key package="com.oceans7.mobileapps.eagleswag.domain">EngineeringQuestion</key>
         <configuration>
             <data>
-                <asset path="data/">engineering-questions.json</asset>
+                <asset path="data/">questions.json</asset>
             </data>
+            <json>
+                <id>engineeringQuestions</id>
+            </json>
             <sqlite>
                 <table>EngineeringQuestions</table>
             </sqlite>
@@ -28,8 +34,11 @@
         <key package="com.oceans7.mobileapps.eagleswag.domain">PilotQuestion</key>
         <configuration>
             <data>
-                <asset path="data/">pilot-questions.json</asset>
+                <asset path="data/">questions.json</asset>
             </data>
+            <json>
+                <id>pilotQuestions</id>
+            </json>
             <sqlite>
                 <table>PilotQuestions</table>
             </sqlite>

@@ -19,6 +19,6 @@ import com.oceans7.mobileapps.eagleswag.domain.Question;
 
 public interface QuestionTypeConfigController {
 	
-	public Map<Class<? extends Question>, QuestionType> getQuestionType (Context context);
+	public Map<Class<? extends Question>, QuestionType> getQuestionTypes (Context context);
 
 }

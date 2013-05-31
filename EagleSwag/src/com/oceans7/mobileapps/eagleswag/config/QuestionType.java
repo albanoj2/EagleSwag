@@ -20,6 +20,7 @@ public class QuestionType {
 
 	private String name;
 	private String dataAsset;
+	private String jsonId;
 	private String sqliteTable;
 
 	/***************************************************************************
@@ -97,4 +98,21 @@ public class QuestionType {
 	public void setSqliteTable (String sqliteTable) {
 		this.sqliteTable = sqliteTable;
 	}
+
+	/**
+	 * @return 
+	 *		The jsonId.
+	 */
+	public String getJsonId () {
+		return jsonId;
+	}
+
+	/**
+	 * @param jsonId 
+	 * 		The jsonId to set.
+	 */
+	public void setJsonId (String jsonId) {
+		this.jsonId = jsonId;
+	}
+	
 }

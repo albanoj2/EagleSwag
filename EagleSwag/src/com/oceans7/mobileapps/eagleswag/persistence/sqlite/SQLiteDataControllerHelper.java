@@ -19,6 +19,8 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 
 import android.content.Context;
@@ -27,11 +29,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.config.QuestionType;
+import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
+import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
-import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserFactory;
 
 public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 
@@ -86,12 +91,27 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 		}
 
 		// Obtain a data file parser
-		DataFileParser parser = DataFileParserFactory.getInstance().getDataFileParser(context);
+		DataFileParser parser = new DataFileParser();
+
+//		// Obtain the question types from the configuration file
+//		QuestionTypeConfigController qtController = QuestionTypeConfigControllerFactory.getInstance().getController();
+//		Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
+//
+//		for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {
+//			// Loop through each of the question type entries and make a table
+//			// in the database to store each of the entries
+//			
+//			// The key and question type
+//			Class<? extends Question> key = entry.getKey();
+//			QuestionType questionType = entry.getValue();
+//			
+//			Queue<Question> questions = parser.<key> getQuestions(key, context);
+//		}
 
 		// Get queues for each of the question categories
-		Queue<GeneralQuestion> generalQuestions = parser.getGeneralQuestions();
-		Queue<EngineeringQuestion> engineeringQuestions = parser.getEngineeringQuestions();
-		Queue<PilotQuestion> pilotQuestions = parser.getPilotQuestions();
+		Queue<GeneralQuestion> generalQuestions = parser.<GeneralQuestion> getQuestions(GeneralQuestion.class, context);
+		Queue<EngineeringQuestion> engineeringQuestions = parser.<EngineeringQuestion> getQuestions(EngineeringQuestion.class, context);
+		Queue<PilotQuestion> pilotQuestions = parser.<PilotQuestion> getQuestions(PilotQuestion.class, context);
 
 		for (GeneralQuestion question : generalQuestions) {
 

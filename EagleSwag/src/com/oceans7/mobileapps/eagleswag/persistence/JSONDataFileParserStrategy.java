@@ -14,6 +14,8 @@
  *          dedicated to the return the questions for each category. For
  *          example, there is a method for general questions, which returns all
  *          of the general questions stored in the data file.
+ * 
+ *          TODO Update documentation
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -34,30 +36,16 @@ import org.json.simple.parser.ParseException;
 import android.content.Context;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
+import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
-public class DataFileJSONParser implements DataFileParser {
+public class JSONDataFileParserStrategy implements DataFileParserStrategy {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
-	/**
-	 * The context of the parser used to obtain the data.
-	 */
-	private Context context;
-
-	/**
-	 * The the location of the asset containing the question data.
-	 */
-	private String asset;
-
-	private static final String GENERAL_QUESTIONS_ID = "generalQuestions";
-	private static final String ENGINEERING_QUESTIONS_ID = "engineeringQuestions";
-	private static final String PILOT_QUESTIONS_ID = "pilotQuestions";
 	private static final String QUESTION_TEXT_ID = "text";
 	private static final String YES_VALUE_ID = "yesValue";
 	private static final String NO_VALUE_ID = "noValue";
@@ -66,26 +54,6 @@ public class DataFileJSONParser implements DataFileParser {
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#setContext(android.content.Context)
-	 */
-	@Override
-	public void setContext (Context context) {
-		this.context = context;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#setResourceID(int)
-	 */
-	@Override
-	public void setAsset (String asset) {
-		this.asset = asset;
-	}
 
 	/**
 	 * Retrieves the questions (of the specified type) from the data file. This
@@ -109,18 +77,28 @@ public class DataFileJSONParser implements DataFileParser {
 	 *            the JSON data file.
 	 * @return
 	 *         A queue containing the questions of the type specified.
+	 * 
+	 *         TODO Update documentation
 	 */
-	private <T extends Question> Queue<T> getQuestions (Class<T> key, String id) {
+	@Override
+	public <T extends Question> Queue<T> getQuestions (Class<T> key, Context context) {
 
 		// The queue used to store the questions retrieved from the data file
 		Queue<T> questions = new LinkedList<T>();
 
+		// Obtain the JSON ID to parse for the key provided
+		QuestionTypeConfigController qtConfigController = QuestionTypeConfigControllerFactory.getInstance().getController();
+		String id = qtConfigController.getQuestionTypes(context).get(key).getJsonId();
+		
+		// Get the location of the asset for this key
+		String asset = qtConfigController.getQuestionTypes(context).get(key).getDataAsset();
+			
 		// The JSON parser to parse the data file
 		JSONParser parser = new JSONParser();
 
 		try {
 			// Open the JSON file containing the questions
-			InputStream jsonQuestions = this.context.getAssets().open(this.asset);
+			InputStream jsonQuestions = context.getAssets().open(asset);
 
 			// Parse the JSON file
 			JSONObject jsonObj = (JSONObject) parser.parse(new InputStreamReader(jsonQuestions));
@@ -159,59 +137,30 @@ public class DataFileJSONParser implements DataFileParser {
 			}
 		}
 		catch (IOException e) {
-			Log.e(this.getClass().getName(), "IOException occurred while parsing the JSON questions file for general questions: " + e);
+			Log.e(this.getClass().getName(), "IOException occurred while parsing the JSON questions file for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (ParseException e) {
-			Log.e(this.getClass().getName(), "ParseException occurred while parsing the JSON questions file for general questions: " + e);
+			Log.e(this.getClass().getName(), "ParseException occurred while parsing the JSON questions file for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (NoSuchMethodException e) {
-			Log.e(this.getClass().getName(), "Could not find the desired constructor for the question class provided: " + e);
+			Log.e(this.getClass().getName(), "Could not find the desired constructor for the " + key.getCanonicalName() + ": " + e);
 		}
 		catch (IllegalArgumentException e) {
-			Log.e(this.getClass().getName(), "Invalid arguments supplied to the constructor while trying to create new question: " + e);
+			Log.e(this.getClass().getName(),
+				"Invalid arguments supplied to the constructor while trying to create new " + key.getCanonicalName() + ": " + e);
 		}
 		catch (InstantiationException e) {
-			Log.e(this.getClass().getName(), "Could not not instantiate an object for the question class provided: " + e);
+			Log.e(this.getClass().getName(), "Could not not instantiate an object for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (IllegalAccessException e) {
-			Log.e(this.getClass().getName(), "Could not access the desired constructor for the question class provided: " + e);
+			Log.e(this.getClass().getName(), "Could not access the desired constructor for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (InvocationTargetException e) {
-			Log.e(this.getClass().getName(), "Could not invoke constructor on the target specified: " + e);
+			Log.e(this.getClass().getName(), "Could not invoke constructor on the target " + key.getCanonicalName() + ": " + e);
 		}
 
 		// Return the queue containing the questions
 		return questions;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#getGeneralQuestions()
-	 */
-	@Override
-	public Queue<GeneralQuestion> getGeneralQuestions () {
-		return this.<GeneralQuestion> getQuestions(GeneralQuestion.class, GENERAL_QUESTIONS_ID);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#getEngineeringQuestions()
-	 */
-	@Override
-	public Queue<EngineeringQuestion> getEngineeringQuestions () {
-		return this.<EngineeringQuestion> getQuestions(EngineeringQuestion.class, ENGINEERING_QUESTIONS_ID);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParser#getPilotQuestions()
-	 */
-	@Override
-	public Queue<PilotQuestion> getPilotQuestions () {
-		return this.<PilotQuestion> getQuestions(PilotQuestion.class, PILOT_QUESTIONS_ID);
 	}
 
 }

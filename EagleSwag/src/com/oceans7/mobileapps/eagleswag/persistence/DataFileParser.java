@@ -18,52 +18,37 @@ import java.util.Queue;
 
 import android.content.Context;
 
-import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.Question;
 
-public interface DataFileParser {
+public class DataFileParser {
 
-	/**
-	 * Set the context that is used to access the data file.
-	 * 
-	 * @param context
-	 *            The context that should be used to read from the data file.
-	 */
-	public void setContext (Context context);
+	/***************************************************************************
+	 * Attributes
+	 **************************************************************************/
 
-	/**
-	 * The location of the data file asset containing the questions data to
-	 * parse. This location is relative to the assets directory of the Android
-	 * project
-	 * 
-	 * @param asset
-	 *            The location of the asset within the assets directory.
-	 */
-	public void setAsset (String asset);
+	private DataFileParserStrategy strategy;
+
+	/***************************************************************************
+	 * Constructors
+	 **************************************************************************/
 
 	/**
-	 * Obtain a list of the general questions in the data file.
-	 * 
-	 * @return
-	 *         A queue of the general questions contained in the data file.
+	 * TODO: Change this constructor to select the strategy via configuration
+	 * file.
 	 */
-	public Queue<GeneralQuestion> getGeneralQuestions ();
+	public DataFileParser () {
+		this.strategy = new JSONDataFileParserStrategy();
+	}
+
+	/***************************************************************************
+	 * Methods
+	 **************************************************************************/
 
 	/**
-	 * Obtain a list of the engineering questions in the data file.
-	 * 
-	 * @return
-	 *         A queue of the engineering questions contained in the data file.
+	 * TODO Update documentation
 	 */
-	public Queue<EngineeringQuestion> getEngineeringQuestions ();
-
-	/**
-	 * Obtain a list of the pilot questions in the data file.
-	 * 
-	 * @return
-	 *         A queue of the pilot questions in the data file.
-	 */
-	public Queue<PilotQuestion> getPilotQuestions ();
+	public <T extends Question> Queue<T> getQuestions (Class<T> key, Context context) {
+		return this.strategy.getQuestions(key, context);
+	}
 
 }
