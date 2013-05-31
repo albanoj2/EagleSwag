@@ -44,7 +44,7 @@ public class ScoreActivity extends Activity {
 		
 		// Get the score from the intent that started this activity
 		double score = this.getIntent().getExtras().getDouble("Score");
-		this.tvScore.setText(String.format("%.1f", score) + " of 100");
+		this.tvScore.setText(String.format("%.0f", score) + " of 100");
 		
 		// Set the comments for the score
 		this.setComments(score);

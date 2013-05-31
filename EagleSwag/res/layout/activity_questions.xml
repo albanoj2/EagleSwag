@@ -46,9 +46,8 @@
         <Button
             android:id="@+id/bYes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:background="@drawable/round_button"
-            android:height="24dp"
             android:shadowColor="#000000"
             android:shadowDx="1"
             android:shadowDy="1"
@@ -61,10 +60,9 @@
         <Button
             android:id="@+id/bNo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/round_button"
-            android:height="24dp"
             android:shadowColor="#000000"
             android:shadowDx="1"
             android:shadowDy="1"

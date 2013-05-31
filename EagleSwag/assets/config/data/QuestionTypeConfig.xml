@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<types>
+    <type name="generalQuestions">
+        <class package="com.oceans7.mobileapps.eagleswag.domain">GeneralQuestion</class>
+        <configuration>
+            <data>
+                <asset path="data/">general-questions.json</asset>
+            </data>
+            <sqlite>
+                <table>GeneralQuestions</table>
+            </sqlite>
+        </configuration>
+    </type>
+    
+    <type name="engineeringQuestions">
+        <class package="com.oceans7.mobileapps.eagleswag.domain">EngineeringQuestion</class>
+        <configuration>
+            <data>
+                <asset path="data/">engineering-questions.json</asset>
+            </data>
+            <sqlite>
+                <table>EngineeringQuestions</table>
+            </sqlite>
+        </configuration>
+    </type>
+    
+    <type name="pilotQuestions">
+        <class package="com.oceans7.mobileapps.eagleswag.domain">PilotQuestion</class>
+        <configuration>
+            <data>
+                <asset path="data/">pilot-questions.json</asset>
+            </data>
+            <sqlite>
+                <table>PilotQuestions</table>
+            </sqlite>
+        </configuration>
+    </type>
+</types>

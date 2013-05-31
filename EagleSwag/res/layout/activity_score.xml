@@ -26,17 +26,17 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#ffffff"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:typeface="sans" />
 
         <TextView
             android:id="@+id/tvScoreComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:textColor="#ffffff"
             android:textSize="20sp"
-            android:typeface="serif"
-            android:layout_marginTop="15dp" />
+            android:typeface="serif" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,10 +54,9 @@
         <Button
             android:id="@+id/bBackToSplashPage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/round_button"
-            android:height="24dp"
             android:shadowColor="#000000"
             android:shadowDx="1"
             android:shadowDy="1"
