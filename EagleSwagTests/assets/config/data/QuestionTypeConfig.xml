@@ -23,16 +23,4 @@
             </sqlite>
         </configuration>
     </type>
-    
-    <type name="pilotQuestions">
-        <key package="com.oceans7.mobileapps.eagleswag.domain">PilotQuestion</key>
-        <configuration>
-            <data>
-                <asset path="data/">pilot-questions.json</asset>
-            </data>
-            <sqlite>
-                <table>PilotQuestions</table>
-            </sqlite>
-        </configuration>
-    </type>
 </types>
