@@ -36,8 +36,6 @@ import org.json.simple.parser.ParseException;
 import android.content.Context;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
