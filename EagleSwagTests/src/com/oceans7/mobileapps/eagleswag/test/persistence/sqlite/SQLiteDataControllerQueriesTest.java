@@ -18,8 +18,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;

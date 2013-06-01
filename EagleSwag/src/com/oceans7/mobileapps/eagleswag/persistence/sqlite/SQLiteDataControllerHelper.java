@@ -121,9 +121,6 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase,
 	 *      int, int)
-	 * 
-	 *      TODO: Replace the DROP TABLE looping through the table names with it
-	 *      looping through the question types in the configuration.
 	 */
 	@Override
 	public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -149,13 +146,13 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 				db.execSQL("DROP TABLE IF EXISTS " + questionType.getSqliteTable());
 				Log.w(this.getClass().getName(), "Dropping table '" + questionType.getSqliteTable() + "' from database");
 			}
+			
+			// Recreate the database
+			this.onCreate(db);
 		}
 		catch (SQLException e) {
 			// An exception occurred while dropping tables from the database
 			Log.e(this.getClass().getName(), "Error while dropping tables from the database: " + e);
 		}
-
-		// Recreate the database
-		this.onCreate(db);
 	}
 }
