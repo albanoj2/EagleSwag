@@ -19,8 +19,6 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 
 import android.content.Context;
@@ -29,10 +27,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
-import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
 
 public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
@@ -72,9 +69,6 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 * {@inheritDoc}
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
-	 * 
-	 *      TODO Include documentation on how each of the question types
-	 *      specified in the configuration is used to create a database table
 	 */
 	@Override
 	public void onCreate (SQLiteDatabase db) {
@@ -93,29 +87,49 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 		// Obtain a data file parser
 		DataFileParser parser = new DataFileParser();
 
-		// Obtain the question types from the configuration file
-		QuestionTypeConfigController qtController = QuestionTypeConfigControllerFactory.getInstance().getController();
-		Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
+		// // Obtain the question types from the configuration file
+		// QuestionTypeConfigController qtController =
+		// QuestionTypeConfigControllerFactory.getInstance().getController();
+		// Map<Class<? extends Question>, QuestionType> qtMap =
+		// qtController.getQuestionTypes(context);
+		//
+		// for (Entry<Class<? extends Question>, QuestionType> entry :
+		// qtMap.entrySet()) {
+		// // Loop through each of the question type entries and make a table
+		// // in the database to store each of the entries
+		//
+		// // The key and question type
+		// Class<? extends Question> key = entry.getKey();
+		// QuestionType questionType = entry.getValue();
+		//
+		// Queue<Question> questions = parser.<key> getQuestions(key, context);
+		// }
 
-		for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {
-			// Loop through each of the question type entries and make a table
-			// in the database to store each of the entries
+		// Get queues for each of the question categories
+		Queue<GeneralQuestion> generalQuestions = parser.<GeneralQuestion> getQuestions(GeneralQuestion.class, context);
+		Queue<EngineeringQuestion> engineeringQuestions = parser.<EngineeringQuestion> getQuestions(EngineeringQuestion.class, context);
+		Queue<PilotQuestion> pilotQuestions = parser.<PilotQuestion> getQuestions(PilotQuestion.class, context);
 
-			// The key and question type
-			Class<? extends Question> key = entry.getKey();
-			QuestionType questionType = entry.getValue();
+		for (GeneralQuestion question : generalQuestions) {
 
-			// Obtain the questions from the data parser
-			Queue<? extends Question> questions = parser.getQuestions(key, context);
-
-			for (Question question : questions) {
-				// Insert the new general question
-				SQLiteDataControllerQueries.insertIntoQuestionsTable(db, questionType.getSqliteTable(), question);
-				Log.i(this.getClass().getName(),
-					"Inserted " + key.getCanonicalName() + " into the " + questionType.getSqliteTable() + " table: " + question);
-			}
+			// Insert the new general question
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db, SQLiteDataControllerConstants.GENERAL_QUESTIONS_TABLE, question);
+			Log.i(this.getClass().getName(), "Inserted general questions into the general table.");
 		}
 
+		for (EngineeringQuestion question : engineeringQuestions) {
+
+			// Insert the new engineering question
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db, SQLiteDataControllerConstants.ENGINEERING_QUESTIONS_TABLE, question);
+			Log.i(this.getClass().getName(), "Inserted engineering questions into the engineering table.");
+		}
+
+		for (PilotQuestion question : pilotQuestions) {
+
+			// Insert the new pilot question
+			SQLiteDataControllerQueries.insertIntoQuestionsTable(db, SQLiteDataControllerConstants.PILOT_QUESTIONS_TABLE, question);
+			Log.i(this.getClass().getName(), "Inserted pilot questions into the pilot table.");
+		}
 	}
 
 	/**
@@ -123,9 +137,6 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase,
 	 *      int, int)
-	 * 
-	 *      TODO: Replace the DROP TABLE looping through the table names with it
-	 *      looping through the question types in the configuration.
 	 */
 	@Override
 	public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
