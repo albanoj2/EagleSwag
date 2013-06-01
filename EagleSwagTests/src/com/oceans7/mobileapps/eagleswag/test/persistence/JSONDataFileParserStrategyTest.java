@@ -20,7 +20,7 @@ import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy;
 
-public class DataFileJSONParserTest extends InstrumentationTestCase {
+public class JSONDataFileParserStrategyTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
