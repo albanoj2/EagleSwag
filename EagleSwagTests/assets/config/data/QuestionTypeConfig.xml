@@ -2,46 +2,55 @@
 <types>
     <type name="generalQuestions">
         <key package="com.oceans7.mobileapps.eagleswag.domain">GeneralQuestion</key>
-        <configuration>
-            <data>
-                <asset path="data/">questions.json</asset>
-            </data>
+        <data>
+        	<asset path="data/">questions.json</asset>
+        	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
+        	    JSONDataFileParserStrategy
+        	</parserStrategy>
+        </data>
+        <persistence>
             <json>
                 <id>generalQuestions</id>
             </json>
             <sqlite>
                 <table>GeneralQuestions</table>
             </sqlite>
-        </configuration>
+        </persistence>
     </type>
     
     <type name="engineeringQuestions">
         <key package="com.oceans7.mobileapps.eagleswag.domain">EngineeringQuestion</key>
-        <configuration>
-            <data>
-                <asset path="data/">questions.json</asset>
-            </data>
+        <data>
+        	<asset path="data/">questions.json</asset>
+        	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
+        	    JSONDataFileParserStrategy
+        	</parserStrategy>
+        </data>
+        <persistence>
             <json>
                 <id>engineeringQuestions</id>
             </json>
             <sqlite>
                 <table>EngineeringQuestions</table>
             </sqlite>
-        </configuration>
+        </persistence>
     </type>
     
     <type name="pilotQuestions">
         <key package="com.oceans7.mobileapps.eagleswag.domain">PilotQuestion</key>
-        <configuration>
-            <data>
-                <asset path="data/">questions.json</asset>
-            </data>
+        <data>
+        	<asset path="data/">questions.json</asset>
+        	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
+        	    JSONDataFileParserStrategy
+        	</parserStrategy>
+        </data>
+        <persistence>
             <json>
                 <id>pilotQuestions</id>
             </json>
             <sqlite>
                 <table>PilotQuestions</table>
             </sqlite>
-        </configuration>
+        </persistence>
     </type>
 </types>

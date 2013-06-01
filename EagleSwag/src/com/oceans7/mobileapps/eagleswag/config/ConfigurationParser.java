@@ -32,8 +32,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
 
-public class QuestionTypeConfigParser implements QuestionTypeConfigController {
+public class ConfigurationParser implements ConfigurationController {
 
 	/***************************************************************************
 	 * Attributes
@@ -48,7 +49,7 @@ public class QuestionTypeConfigParser implements QuestionTypeConfigController {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController#getQuestionTypes(java.lang.Class)
+	 * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationController#getQuestionTypes(java.lang.Class)
 	 * 
 	 *      TODO make the configuration fields optional and parse them only if
 	 *      they exist (otherwise, set them to null)
@@ -91,23 +92,31 @@ public class QuestionTypeConfigParser implements QuestionTypeConfigController {
 
 					// Obtain the element objects for each of the sub-elements
 					Element keyElement = (Element) typeElement.getElementsByTagName("key").item(0);
-					Element configElement = (Element) typeElement.getElementsByTagName("configuration").item(0);
-					Element dataElement = (Element) configElement.getElementsByTagName("data").item(0);
+					Element dataElement = (Element) typeElement.getElementsByTagName("data").item(0);
+					Element persistenceElement = (Element) typeElement.getElementsByTagName("persistence").item(0);
 					Element assetElement = (Element) dataElement.getElementsByTagName("asset").item(0);
-					Element jsonElement = (Element) configElement.getElementsByTagName("json").item(0);
+					Element parserStratElement = (Element) dataElement.getElementsByTagName("parserStrategy").item(0);
+					Element jsonElement = (Element) persistenceElement.getElementsByTagName("json").item(0);
 					Element jsonIdElement = (Element) jsonElement.getElementsByTagName("id").item(0);
-					Element sqliteElement = (Element) configElement.getElementsByTagName("sqlite").item(0);
+					Element sqliteElement = (Element) persistenceElement.getElementsByTagName("sqlite").item(0);
 					Element tableElement = (Element) sqliteElement.getElementsByTagName("table").item(0);
 
 					// Extract the needed data from the elements of the type
 					questionType.setName(typeElement.getAttribute("name"));
 					questionType.setDataAsset(assetElement.getAttribute("path") + assetElement.getTextContent());
-					questionType.setJsonId(jsonIdElement.getTextContent());
-					questionType.setSqliteTable(tableElement.getTextContent());
+					questionType.setJsonId(jsonIdElement.getTextContent().trim());
+					questionType.setSqliteTable(tableElement.getTextContent().trim());
+					
+					// Create the parser strategy class and set the attribute
+					String parserStratPackage = parserStratElement.getAttribute("package");
+					String parserStratClass= parserStratElement.getTextContent().trim();
+					String parserStratQualifiedClass = parserStratPackage + "." + parserStratClass;
+					Class<? extends DataFileParserStrategy> parserClass = Class.forName(parserStratQualifiedClass).asSubclass(DataFileParserStrategy.class);
+					questionType.setParserStrategy(parserClass);
 
 					// Create the class key for map
 					String packageName = keyElement.getAttribute("package");
-					String className = keyElement.getTextContent();
+					String className = keyElement.getTextContent().trim();
 					String qualifiedClassName = packageName + "." + className;
 					Class<? extends Question> clazz = Class.forName(qualifiedClassName).asSubclass(Question.class);
 
@@ -119,20 +128,16 @@ public class QuestionTypeConfigParser implements QuestionTypeConfigController {
 
 		}
 		catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(this.getClass().getName(), "IOException occurred while trying to parse configuration file: " + e);
 		}
 		catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(this.getClass().getName(), "SAXException occurred while trying to parse configuration file: " + e);
 		}
 		catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(this.getClass().getName(), "ParserConfigurationException occurred while trying to parse configuration file: " + e);
 		}
 		catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(this.getClass().getName(), "ClassNotFoundException occurred while trying to create a class specified in the configuration file: " + e);
 		}
 
 		return questionTypeMap;

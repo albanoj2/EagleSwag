@@ -16,11 +16,12 @@ import java.util.Map;
 import android.test.InstrumentationTestCase;
 
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigProxy;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy;
 
 public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 
@@ -28,7 +29,7 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
-	private QuestionTypeConfigController controller;
+	private ConfigurationController controller;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -43,7 +44,7 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Setup the controller as a proxy
-		this.controller = new QuestionTypeConfigProxy();
+		this.controller = new ConfigurationProxy();
 	}
 
 	/**
@@ -61,7 +62,7 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigProxy#getQuestionTypes(android.content.Context)}
+	 * {@link com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy#getQuestionTypes(android.content.Context)}
 	 * .
 	 */
 	public void testGetQuestionTypeOnce () {
@@ -72,19 +73,21 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 		// Ensure that the data is correct for the test general question type
 		QuestionType generalType = map.get(GeneralQuestion.class);
 		assertEquals("General => data asset:", "data/questions.json", generalType.getDataAsset());
+		assertEquals("General => parser strategy:", JSONDataFileParserStrategy.class.getName(), generalType.getParserStrategy().getName());
 		assertEquals("General => JSON ID:", "generalQuestions", generalType.getJsonId());
 		assertEquals("General => table:", "GeneralQuestions", generalType.getSqliteTable());
 
 		// Ensure that the data is correct for the test engineer question type
 		QuestionType engineeringType = map.get(EngineeringQuestion.class);
 		assertEquals("Engineering => data asset:", "data/questions.json", engineeringType.getDataAsset());
+		assertEquals("Engineering => parser strategy:", JSONDataFileParserStrategy.class.getName(), engineeringType.getParserStrategy().getName());
 		assertEquals("Engineering => JSON ID:", "engineeringQuestions", engineeringType.getJsonId());
 		assertEquals("Engineering => table:", "EngineeringQuestions", engineeringType.getSqliteTable());
 	}
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigProxy#getQuestionTypes(android.content.Context)}
+	 * {@link com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy#getQuestionTypes(android.content.Context)}
 	 * .
 	 */
 	public void testGetQuestionTypeTwice () {
@@ -96,17 +99,17 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 			// Repeat the operation twice to ensure no errors occur when the
 			// cached configuration values are used in the proxy
 
-			// Ensure that the data is correct for the test general question
-			// type
+			// Ensure that the data is correct for the test general question type
 			QuestionType generalType = map.get(GeneralQuestion.class);
 			assertEquals("General => data asset:", "data/questions.json", generalType.getDataAsset());
+			assertEquals("General => parser strategy:", JSONDataFileParserStrategy.class.getName(), generalType.getParserStrategy().getName());
 			assertEquals("General => JSON ID:", "generalQuestions", generalType.getJsonId());
 			assertEquals("General => table:", "GeneralQuestions", generalType.getSqliteTable());
 
-			// Ensure that the data is correct for the test engineer question
-			// type
+			// Ensure that the data is correct for the test engineer question type
 			QuestionType engineeringType = map.get(EngineeringQuestion.class);
 			assertEquals("Engineering => data asset:", "data/questions.json", engineeringType.getDataAsset());
+			assertEquals("Engineering => parser strategy:", JSONDataFileParserStrategy.class.getName(), engineeringType.getParserStrategy().getName());
 			assertEquals("Engineering => JSON ID:", "engineeringQuestions", engineeringType.getJsonId());
 			assertEquals("Engineering => table:", "EngineeringQuestions", engineeringType.getSqliteTable());
 		}

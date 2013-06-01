@@ -12,6 +12,8 @@
 
 package com.oceans7.mobileapps.eagleswag.config;
 
+import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
+
 public class QuestionType {
 
 	/***************************************************************************
@@ -20,6 +22,7 @@ public class QuestionType {
 
 	private String name;
 	private String dataAsset;
+	private Class<? extends DataFileParserStrategy> parserStrategy;
 	private String jsonId;
 	private String sqliteTable;
 
@@ -44,7 +47,7 @@ public class QuestionType {
 	 */
 	@Override
 	public String toString () {
-		return super.toString() + ": name='" + this.name + "', dataAsset='" + this.dataAsset + "', SQLiteTable='" + this.sqliteTable + "'";
+		return super.toString() + ": name='" + this.name + "', dataAsset='" + this.dataAsset + "', parserStrategy='" + this.parserStrategy.getName() + "', SQLiteTable='" + this.sqliteTable + "'";
 	}
 
 	/***************************************************************************
@@ -100,19 +103,35 @@ public class QuestionType {
 	}
 
 	/**
-	 * @return 
-	 *		The jsonId.
+	 * @return
+	 *         The jsonId.
 	 */
 	public String getJsonId () {
 		return jsonId;
 	}
 
 	/**
-	 * @param jsonId 
-	 * 		The jsonId to set.
+	 * @param jsonId
+	 *            The jsonId to set.
 	 */
 	public void setJsonId (String jsonId) {
 		this.jsonId = jsonId;
 	}
-	
+
+	/**
+	 * @return
+	 *         The parserStrategy.
+	 */
+	public Class<? extends DataFileParserStrategy> getParserStrategy () {
+		return parserStrategy;
+	}
+
+	/**
+	 * @param parserStrategy
+	 *            The parserStrategy to set.
+	 */
+	public void setParserStrategy (Class<? extends DataFileParserStrategy> parserStrategy) {
+		this.parserStrategy = parserStrategy;
+	}
+
 }

@@ -17,7 +17,7 @@ import android.content.Context;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
-public interface QuestionTypeConfigController {
+public interface ConfigurationController {
 	
 	public Map<Class<? extends Question>, QuestionType> getQuestionTypes (Context context);
 

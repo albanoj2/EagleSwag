@@ -30,8 +30,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
 
@@ -83,7 +83,7 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 		DataFileParser parser = new DataFileParser();
 
 		// Obtain the question types from the configuration file
-		QuestionTypeConfigController qtController = QuestionTypeConfigControllerFactory.getInstance().getController();
+		ConfigurationController qtController = ConfigurationControllerFactory.getInstance().getController();
 		Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
 
 		for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {
@@ -135,7 +135,7 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 		try {
 
 			// Obtain the question types from the configuration file
-			QuestionTypeConfigController qtController = QuestionTypeConfigControllerFactory.getInstance().getController();
+			ConfigurationController qtController = ConfigurationControllerFactory.getInstance().getController();
 			Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
 
 			for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {

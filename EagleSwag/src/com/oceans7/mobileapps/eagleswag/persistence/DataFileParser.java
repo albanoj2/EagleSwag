@@ -17,28 +17,13 @@ package com.oceans7.mobileapps.eagleswag.persistence;
 import java.util.Queue;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
+import com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
 public class DataFileParser {
-
-	/***************************************************************************
-	 * Attributes
-	 **************************************************************************/
-
-	private DataFileParserStrategy strategy;
-
-	/***************************************************************************
-	 * Constructors
-	 **************************************************************************/
-
-	/**
-	 * TODO: Change this constructor to select the strategy via configuration
-	 * file.
-	 */
-	public DataFileParser () {
-		this.strategy = new JSONDataFileParserStrategy();
-	}
 
 	/***************************************************************************
 	 * Methods
@@ -46,9 +31,33 @@ public class DataFileParser {
 
 	/**
 	 * TODO Update documentation
+	 * TODO Change this constructor to select the strategy via configuration
+	 * file.
 	 */
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, Context context) {
-		return this.strategy.getQuestions(key, context);
+		
+		// Stub for the queue to return
+		Queue<T> questions = null;
+		
+		try {
+			// Select the strategy using the configuration file
+			Class<? extends DataFileParserStrategy> parserStrategyClass = ConfigurationHelper.getInstance().getParserStrategy(key, context);
+			DataFileParserStrategy parserStrategy = parserStrategyClass.newInstance();
+			
+			// Obtain the questions from the data parser
+			questions = parserStrategy.getQuestions(key, context);
+		}
+		catch (InstantiationException e) {
+			Log.e(this.getClass().getName(), "Could not instantiate parser strategy class: " + e);
+		}
+		catch (IllegalAccessException e) {
+			Log.e(this.getClass().getName(), "Could not access the parser strategy class: " + e);
+		}
+		catch (NoSuchQuestionTypeException e) {
+			Log.e(this.getClass().getName(), "No configuration data associated with '" + key + "'. Therefore, no parsing strategy could be found for the data file: " + e);
+		}
+		
+		return questions;
 	}
 
 }

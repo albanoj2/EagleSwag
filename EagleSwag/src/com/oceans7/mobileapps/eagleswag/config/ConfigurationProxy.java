@@ -18,23 +18,23 @@ import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
-public class QuestionTypeConfigProxy implements QuestionTypeConfigController {
+public class ConfigurationProxy implements ConfigurationController {
 	
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 	
-	private QuestionTypeConfigController delegate;
+	private ConfigurationController delegate;
 	private Map<Class<? extends Question>, QuestionType> questionTypeMap;
 	
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
 	
-	public QuestionTypeConfigProxy () {
+	public ConfigurationProxy () {
 		
 		// Establish the configuration parser as the delegate
-		this.delegate = new QuestionTypeConfigParser();
+		this.delegate = new ConfigurationParser();
 	}
 	
 	/***************************************************************************
@@ -43,7 +43,7 @@ public class QuestionTypeConfigProxy implements QuestionTypeConfigController {
 
 	/**
 	 * {@inheritDoc}
-	 * @see com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController#getQuestionTypes(java.lang.Class)
+	 * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationController#getQuestionTypes(java.lang.Class)
 	 */
 	@Override
 	public Map<Class<? extends Question>, QuestionType> getQuestionTypes (Context context) {

@@ -37,8 +37,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
@@ -109,7 +109,7 @@ public class SQLiteDataController implements DataController {
 		this.classToTableMap = new HashMap<Class<? extends Question>, String>();
 
 		// Obtain a question type controller in order to populate the map
-		QuestionTypeConfigController qtConfigController = QuestionTypeConfigControllerFactory.getInstance().getController();
+		ConfigurationController qtConfigController = ConfigurationControllerFactory.getInstance().getController();
 
 		for (Entry<Class<? extends Question>, QuestionType> entry : qtConfigController.getQuestionTypes(context).entrySet()) {
 			// Loop through each of the entries and enter them into the map: the

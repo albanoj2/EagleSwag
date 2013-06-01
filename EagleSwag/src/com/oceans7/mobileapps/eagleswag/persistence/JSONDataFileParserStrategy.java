@@ -36,8 +36,10 @@ import org.json.simple.parser.ParseException;
 import android.content.Context;
 import android.util.Log;
 
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigController;
-import com.oceans7.mobileapps.eagleswag.config.QuestionTypeConfigControllerFactory;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
+import com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
 public class JSONDataFileParserStrategy implements DataFileParserStrategy {
@@ -86,17 +88,16 @@ public class JSONDataFileParserStrategy implements DataFileParserStrategy {
 		// The queue used to store the questions retrieved from the data file
 		Queue<T> questions = new LinkedList<T>();
 
-		// Obtain the JSON ID to parse for the key provided
-		QuestionTypeConfigController qtConfigController = QuestionTypeConfigControllerFactory.getInstance().getController();
-		String id = qtConfigController.getQuestionTypes(context).get(key).getJsonId();
-		
-		// Get the location of the asset for this key
-		String asset = qtConfigController.getQuestionTypes(context).get(key).getDataAsset();
-			
-		// The JSON parser to parse the data file
-		JSONParser parser = new JSONParser();
-
 		try {
+			// Obtain the JSON ID to parse for the key provided
+			String id = ConfigurationHelper.getInstance().getJsonId(key, context);
+
+			// Get the location of the asset for this key
+			String asset = ConfigurationHelper.getInstance().getDataAsset(key, context);
+
+			// The JSON parser to parse the data file
+			JSONParser parser = new JSONParser();
+
 			// Open the JSON file containing the questions
 			InputStream jsonQuestions = context.getAssets().open(asset);
 
@@ -157,6 +158,9 @@ public class JSONDataFileParserStrategy implements DataFileParserStrategy {
 		}
 		catch (InvocationTargetException e) {
 			Log.e(this.getClass().getName(), "Could not invoke constructor on the target " + key.getCanonicalName() + ": " + e);
+		}
+		catch (NoSuchQuestionTypeException e) {
+			Log.e(this.getClass().getName(), "The class '" + key + "' has no configuration data associated with it in the configuration file: " + e);
 		}
 
 		// Return the queue containing the questions
