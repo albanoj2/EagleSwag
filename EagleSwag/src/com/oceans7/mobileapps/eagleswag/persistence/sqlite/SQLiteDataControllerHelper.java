@@ -79,17 +79,6 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate (SQLiteDatabase db) {
 
-		try {
-			for (int i = 0; i < SQLiteDataControllerConstants.TABLES.length; i++) {
-				// Create each questions table in the database
-				SQLiteDataControllerQueries.createQuestionsTable(db, SQLiteDataControllerConstants.TABLES[i]);
-			}
-		}
-		catch (SQLException e) {
-			// An exception occurred while trying to create the database
-			Log.e(this.getClass().getName(), "Error while creating the database: " + e);
-		}
-
 		// Obtain a data file parser
 		DataFileParser parser = new DataFileParser();
 
@@ -104,6 +93,15 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 			// The key and question type
 			Class<? extends Question> key = entry.getKey();
 			QuestionType questionType = entry.getValue();
+
+			try {
+				// Create each questions table in the database
+				SQLiteDataControllerQueries.createQuestionsTable(db, questionType.getSqliteTable());
+			}
+			catch (SQLException e) {
+				// An exception occurred while trying to create the database
+				Log.e(this.getClass().getName(), "Error while creating the database: " + e);
+			}
 
 			// Obtain the questions from the data parser
 			Queue<? extends Question> questions = parser.getQuestions(key, context);
@@ -135,10 +133,21 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 			"Database is about to be updated from version " + oldVersion + " to version " + newVersion + ". All old data will lost");
 
 		try {
-			for (int i = 0; i < SQLiteDataControllerConstants.TABLES.length; i++) {
-				// Iterate through each table and drop it from the database
-				db.execSQL("DROP TABLE IF EXISTS " + SQLiteDataControllerConstants.TABLES[i]);
-				Log.w(this.getClass().getName(), "Dropping table '" + SQLiteDataControllerConstants.TABLES[i] + "' from database");
+
+			// Obtain the question types from the configuration file
+			QuestionTypeConfigController qtController = QuestionTypeConfigControllerFactory.getInstance().getController();
+			Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
+
+			for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {
+				// Loop through each of the question type entries and make a
+				// table
+				// in the database to store each of the entries
+
+				// The question type for this entry
+				QuestionType questionType = entry.getValue();
+
+				db.execSQL("DROP TABLE IF EXISTS " + questionType.getSqliteTable());
+				Log.w(this.getClass().getName(), "Dropping table '" + questionType.getSqliteTable() + "' from database");
 			}
 		}
 		catch (SQLException e) {

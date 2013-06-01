@@ -28,27 +28,7 @@ public class SQLiteDataControllerConstants {
 	 * and the application is run, the database is automatically updated (the
 	 * SQLiteDataControllerHelper runs its update logic to update the database).
 	 */
-	public static final int DATABASE_VERSION = 11;
-
-	/**
-	 * The name of the general questions table in the database.
-	 */
-	public static final String GENERAL_QUESTIONS_TABLE = "GeneralQuestions";
-
-	/**
-	 * The name of the engineering questions table in the database.
-	 */
-	public static final String ENGINEERING_QUESTIONS_TABLE = "EngineeringQuestions";
-
-	/**
-	 * The name of the pilot questions table in the database.
-	 */
-	public static final String PILOT_QUESTIONS_TABLE = "PilotQuestions";
-
-	/**
-	 * An array of all database question table names.
-	 */
-	public static final String[] TABLES = { GENERAL_QUESTIONS_TABLE, ENGINEERING_QUESTIONS_TABLE, PILOT_QUESTIONS_TABLE };
+	public static final int DATABASE_VERSION = 13;
 
 	/**
 	 * A numerical reference for each of the columns in a questions table.
