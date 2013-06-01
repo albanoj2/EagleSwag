@@ -15,7 +15,6 @@ package com.oceans7.mobileapps.eagleswag.test.domain;
 
 import java.util.List;
 import java.util.Properties;
-import java.util.Queue;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
