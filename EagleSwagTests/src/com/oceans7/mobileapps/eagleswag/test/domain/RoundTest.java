@@ -17,6 +17,7 @@ package com.oceans7.mobileapps.eagleswag.test.domain;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
@@ -56,7 +57,7 @@ public class RoundTest extends InstrumentationTestCase {
 		this.round = new Round();
 
 		// Set the context of the test fixture
-		this.context = this.getInstrumentation().getTargetContext();
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
 	}
 
 	/**

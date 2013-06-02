@@ -6,20 +6,20 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       Test fixture for the SQLite Data Controller class.
+ *       Test fixture for SQLiteDataController.
  * 
  * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataController
- * 
- * TODO Documentation
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
 
 import java.util.Queue;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
@@ -31,12 +31,14 @@ import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataController;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerConstants;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries;
 
+@SuppressWarnings("rawtypes")
 public class SQLiteDataControllerTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
+	private Context context;
 	private SQLiteDataController sqliteDataController;
 
 	/***************************************************************************
@@ -50,10 +52,13 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 	 */
 	protected void setUp () throws Exception {
 		super.setUp();
+		
+		// Establish the context to access the SQLite database
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
 
 		// Create the data controller
 		this.sqliteDataController = new SQLiteDataController();
-		this.sqliteDataController.open(this.getInstrumentation().getTargetContext());
+		this.sqliteDataController.open(this.context);
 	}
 
 	/**
@@ -71,7 +76,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 	/***************************************************************************
 	 * Helper Methods
 	 **************************************************************************/
-	
+
 	private <T extends Question> int helperQuestionsFound (Class<T> key, int number) throws Exception {
 
 		// The queue to store the pilot questions
@@ -89,10 +94,19 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 		return questionsFound;
 	}
 
+	/**
+	 * Helper method that obtains more questions then available for a question
+	 * type. The key specifies which type of questions are loaded. For example,
+	 * to test loading more general questions than available, use
+	 * GeneralQuestion.class as the key.
+	 * 
+	 * @param key
+	 *            The type of question to test.
+	 */
 	public <T extends Question> void helperObtainMoreQuestionsThenAvailable (Class<T> key) throws Exception {
 
 		// Obtain the table name for the key
-		String table = ConfigurationHelper.getInstance().getTableName(key, this.getInstrumentation().getTargetContext());
+		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
 		// Number of questions in the engineering questions table
 		long numberOfQuestionsInDatabase = DatabaseUtils.queryNumEntries(this.sqliteDataController.getDatabase(), table);
@@ -164,118 +178,142 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 	 **************************************************************************/
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that positive (greater than 0) general questions are requested, 0
 	 * are returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testCorrectNumberOfGeneralQuestionsAboveZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(GeneralQuestion.class, 3), 3);
 	}
 
 	/**
-	 * Ensures that if negative general questions are requested, 0 are returned.
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
 	 * 
-	 * @throws Exception
+	 * Ensures that if negative general questions are requested, 0 are returned.
 	 */
 	public void testCorrectNumberOfGeneralQuestionsBelowZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(GeneralQuestion.class, -1), 0);
 	}
 
 	/**
-	 * Ensures that if 0 general questions are requested, 0 are returned.
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
 	 * 
-	 * @throws Exception
+	 * Ensures that if 0 general questions are requested, 0 are returned.
 	 */
 	public void testCorrectNumberOfGeneralQuestionsZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(GeneralQuestion.class, 0), 0);
 	}
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that positive (greater than 0) engineering questions are
 	 * requested, 0 are returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testCorrectNumberOfEngineeringQuestionsAboveZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(EngineeringQuestion.class, 3), 3);
 	}
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that if negative engineering questions are requested, 0 are
 	 * returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testCorrectNumberOfEngineeringQuestionsBelowZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(EngineeringQuestion.class, -1), 0);
 	}
 
 	/**
-	 * Ensures that if 0 engineering questions are requested, 0 are returned.
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
 	 * 
-	 * @throws Exception
+	 * Ensures that if 0 engineering questions are requested, 0 are returned.
 	 */
 	public void testCorrectNumberOfEngineeringQuestionsZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(EngineeringQuestion.class, 0), 0);
 	}
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that positive (greater than 0) pilot questions are requested, 0
 	 * are returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testCorrectNumberOfPilotQuestionsAboveZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(PilotQuestion.class, 3), 3);
 	}
 
 	/**
-	 * Ensures that if negative pilot questions are requested, 0 are returned.
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
 	 * 
-	 * @throws Exception
+	 * Ensures that if negative pilot questions are requested, 0 are returned.
 	 */
 	public void testCorrectNumberOfPilotQuestionsBelowZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(PilotQuestion.class, -1), 0);
 	}
 
 	/**
-	 * Ensures that if 0 pilot questions are requested, 0 are returned.
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
 	 * 
-	 * @throws Exception
+	 * Ensures that if 0 pilot questions are requested, 0 are returned.
 	 */
 	public void testCorrectNumberOfPilotQuestionsZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(PilotQuestion.class, 0), 0);
 	}
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that if more questions are requested from the database than are
 	 * available, only the maximum number of questions in the database are
 	 * actually returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testObtainMoreGeneralQuestionsThenAvailable () throws Exception {
 		this.helperObtainMoreQuestionsThenAvailable(GeneralQuestion.class);
 	}
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that if more questions are requested from the database than are
 	 * available, only the maximum number of questions in the database are
 	 * actually returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testObtainMoreEngineeringQuestionsThenAvailable () throws Exception {
 		this.helperObtainMoreQuestionsThenAvailable(EngineeringQuestion.class);
 	}
 
 	/**
+	 * Test method for {@link
+	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
+	 * extends Question>, int)}.
+	 * 
 	 * Ensures that if more questions are requested from the database than are
 	 * available, only the maximum number of questions in the database are
 	 * actually returned.
-	 * 
-	 * @throws Exception
 	 */
 	public void testObtainMorePilotQuestionsThenAvailable () throws Exception {
 		this.helperObtainMoreQuestionsThenAvailable(PilotQuestion.class);
@@ -283,7 +321,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}.
 	 * 
 	 * General questions test case for ensuring that the used count value in
 	 * database is incremented when the round is saved.
@@ -294,7 +332,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}.
 	 * 
 	 * Engineering questions test case for ensuring that the used count value in
 	 * database is incremented when the round is saved.
@@ -305,7 +343,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}.
 	 * 
 	 * Pilot questions test case for ensuring that the used count value in
 	 * database is incremented when the round is saved.

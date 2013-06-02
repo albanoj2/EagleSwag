@@ -13,9 +13,11 @@ package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
 
 import java.lang.reflect.Constructor;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
@@ -34,6 +36,8 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	private Context context;
+	
 	/**
 	 * The database under test.
 	 */
@@ -56,14 +60,17 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 	@Override
 	protected void setUp () throws Exception {
 		super.setUp();
+		
+		// Establish the context
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 
 		// Obtain a reference to the database
-		SQLiteDataControllerHelper helper = new SQLiteDataControllerHelper(this.getInstrumentation().getTargetContext());
+		SQLiteDataControllerHelper helper = new SQLiteDataControllerHelper(this.context);
 		this.db = helper.getWritableDatabase();
 
 		// Setup the data controller
 		this.controller = new SQLiteDataController();
-		this.controller.open(this.getInstrumentation().getTargetContext());
+		this.controller.open(this.context);
 	}
 
 	/**
@@ -104,7 +111,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		T testQuestion = constructor.newInstance(originalArgs);
 
 		// Obtain the name of the questions table
-		String table = ConfigurationHelper.getInstance().getTableName(key, this.getInstrumentation().getTargetContext());
+		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
 		// Insert the test question into the data base
 		long id = SQLiteDataControllerQueries.insertIntoQuestionsTable(this.db, table, testQuestion);
@@ -163,7 +170,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		int newUsedCount = 3;
 
 		// Obtain the name of the questions table
-		String table = ConfigurationHelper.getInstance().getTableName(key, this.getInstrumentation().getTargetContext());
+		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
 		// Create a new question to insert into the database (using reflection)
 		Class<?>[] argTypes = new Class<?>[] { Integer.class, String.class, Integer.class, Integer.class, Integer.class };

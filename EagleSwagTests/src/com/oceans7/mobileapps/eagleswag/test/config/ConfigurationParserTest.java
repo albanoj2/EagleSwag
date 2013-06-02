@@ -6,31 +6,36 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- * TODO Documentation
+ *       Test fixture for ConfigurationParser.
+ * 
+ * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationParser
  */
 
 package com.oceans7.mobileapps.eagleswag.test.config;
 
 import java.util.Map;
 
+import android.content.Context;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 
-import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationParser;
+import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy;
 
-public class QuestionTypeParserTest extends InstrumentationTestCase {
+public class ConfigurationParserTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
+	private Context context;
 	private ConfigurationController controller;
-	
+
 	/***************************************************************************
 	 * Setup & Tear Down
 	 **************************************************************************/
@@ -42,11 +47,14 @@ public class QuestionTypeParserTest extends InstrumentationTestCase {
 	 */
 	protected void setUp () throws Exception {
 		super.setUp();
+		
+		// Establish the context for this test case
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 
 		// Setup the controller as the configuration parser
 		this.controller = new ConfigurationParser();
 	}
-	
+
 	/***************************************************************************
 	 * Test Cases
 	 **************************************************************************/
@@ -68,7 +76,7 @@ public class QuestionTypeParserTest extends InstrumentationTestCase {
 	public void testGetQuestionType () {
 
 		// Obtain the types from the test configuration file
-		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.getInstrumentation().getContext());
+		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.context);
 
 		// Ensure that the data is correct for the test general question type
 		QuestionType generalType = map.get(GeneralQuestion.class);

@@ -6,29 +6,34 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       TODO Documentation
+ *       Test fixture for ConfigurationProxy.
+ * 
+ * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy
  */
 
 package com.oceans7.mobileapps.eagleswag.test.config;
 
 import java.util.Map;
 
+import android.content.Context;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 
-import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy;
+import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy;
 
-public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
+public class ConfigurationProxyTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
+	private Context context;
 	private ConfigurationController controller;
 
 	/***************************************************************************
@@ -42,6 +47,9 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 	 */
 	protected void setUp () throws Exception {
 		super.setUp();
+		
+		// Establish the context for the test case
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 
 		// Setup the controller as a proxy
 		this.controller = new ConfigurationProxy();
@@ -68,7 +76,7 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 	public void testGetQuestionTypeOnce () {
 
 		// Obtain the types from the test configuration file
-		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.getInstrumentation().getContext());
+		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.context);
 
 		// Ensure that the data is correct for the test general question type
 		QuestionType generalType = map.get(GeneralQuestion.class);
@@ -93,20 +101,22 @@ public class QuestionTypeConfigProxyTest extends InstrumentationTestCase {
 	public void testGetQuestionTypeTwice () {
 
 		// Obtain the types from the test configuration file
-		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.getInstrumentation().getContext());
+		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.context);
 
 		for (int i = 0; i < 2; i++) {
 			// Repeat the operation twice to ensure no errors occur when the
 			// cached configuration values are used in the proxy
 
-			// Ensure that the data is correct for the test general question type
+			// Ensure that the data is correct for the test general question
+			// type
 			QuestionType generalType = map.get(GeneralQuestion.class);
 			assertEquals("General => data asset:", "data/questions.json", generalType.getDataAsset());
 			assertEquals("General => parser strategy:", JSONDataFileParserStrategy.class.getName(), generalType.getParserStrategy().getName());
 			assertEquals("General => JSON ID:", "generalQuestions", generalType.getJsonId());
 			assertEquals("General => table:", "GeneralQuestions", generalType.getSqliteTable());
 
-			// Ensure that the data is correct for the test engineer question type
+			// Ensure that the data is correct for the test engineer question
+			// type
 			QuestionType engineeringType = map.get(EngineeringQuestion.class);
 			assertEquals("Engineering => data asset:", "data/questions.json", engineeringType.getDataAsset());
 			assertEquals("Engineering => parser strategy:", JSONDataFileParserStrategy.class.getName(), engineeringType.getParserStrategy().getName());

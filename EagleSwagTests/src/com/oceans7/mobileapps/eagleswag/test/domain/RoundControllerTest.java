@@ -10,7 +10,9 @@
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
 
+import android.content.Context;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.RoundController;
@@ -36,7 +38,8 @@ public class RoundControllerTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Instantiate the manager
-		this.manager = new RoundController(this.getInstrumentation().getTargetContext());
+		Context context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
+		this.manager = new RoundController(context);
 	}
 
 	/**

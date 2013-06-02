@@ -18,6 +18,7 @@ import java.util.Properties;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
+import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
@@ -53,9 +54,9 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Obtain the target context
-		this.context = getInstrumentation().getTargetContext();
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
 
-		// Create the question controllerer
+		// Create the question controller
 		this.questionController = QuestionController.getInstance(this.context);
 	}
 
