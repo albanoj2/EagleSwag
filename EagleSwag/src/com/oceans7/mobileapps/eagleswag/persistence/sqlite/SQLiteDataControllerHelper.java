@@ -20,7 +20,6 @@
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 
 import android.content.Context;
@@ -29,9 +28,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
 
@@ -83,35 +81,33 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 		DataFileParser parser = new DataFileParser();
 
 		// Obtain the question types from the configuration file
-		ConfigurationController qtController = ConfigurationControllerFactory.getInstance().getController();
-		Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
+		Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
 
-		for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {
+		for (Class<? extends Question> key : qtMap.keySet()) {
 			// Loop through each of the question type entries and make a table
 			// in the database to store each of the entries
 
-			// The key and question type
-			Class<? extends Question> key = entry.getKey();
-			QuestionType questionType = entry.getValue();
+			// Get the SQLite database table name for the key
+			String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
 			try {
 				// Create each questions table in the database
-				SQLiteDataControllerQueries.createQuestionsTable(db, questionType.getSqliteTable());
+				SQLiteDataControllerQueries.createQuestionsTable(db, table);
+
+				// Obtain the questions from the data parser
+				Queue<? extends Question> questions = parser.getQuestions(key, context);
+
+				for (Question question : questions) {
+					// Insert the new general question
+					SQLiteDataControllerQueries.insertIntoQuestionsTable(db, table, question);
+					Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName() + " into the " + table + " table: " + question);
+				}
 			}
 			catch (SQLException e) {
 				// An exception occurred while trying to create the database
 				Log.e(this.getClass().getName(), "Error while creating the database: " + e);
 			}
 
-			// Obtain the questions from the data parser
-			Queue<? extends Question> questions = parser.getQuestions(key, context);
-
-			for (Question question : questions) {
-				// Insert the new general question
-				SQLiteDataControllerQueries.insertIntoQuestionsTable(db, questionType.getSqliteTable(), question);
-				Log.i(this.getClass().getName(),
-					"Inserted " + key.getCanonicalName() + " into the " + questionType.getSqliteTable() + " table: " + question);
-			}
 		}
 
 	}
@@ -130,23 +126,20 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 			"Database is about to be updated from version " + oldVersion + " to version " + newVersion + ". All old data will lost");
 
 		try {
-
 			// Obtain the question types from the configuration file
-			ConfigurationController qtController = ConfigurationControllerFactory.getInstance().getController();
-			Map<Class<? extends Question>, QuestionType> qtMap = qtController.getQuestionTypes(context);
+			Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
 
-			for (Entry<Class<? extends Question>, QuestionType> entry : qtMap.entrySet()) {
+			for (Class<? extends Question> key : qtMap.keySet()) {
 				// Loop through each of the question type entries and make a
-				// table
-				// in the database to store each of the entries
+				// table in the database to store each of the entries
 
-				// The question type for this entry
-				QuestionType questionType = entry.getValue();
+				// The SQLite database table that the key maps to
+				String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
-				db.execSQL("DROP TABLE IF EXISTS " + questionType.getSqliteTable());
-				Log.w(this.getClass().getName(), "Dropping table '" + questionType.getSqliteTable() + "' from database");
+				db.execSQL("DROP TABLE IF EXISTS " + table);
+				Log.w(this.getClass().getName(), "Dropping table '" + table + "' from database");
 			}
-			
+
 			// Recreate the database
 			this.onCreate(db);
 		}

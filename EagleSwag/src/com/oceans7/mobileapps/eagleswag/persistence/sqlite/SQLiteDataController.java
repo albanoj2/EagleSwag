@@ -27,7 +27,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Queue;
 
 import android.content.Context;
@@ -36,9 +35,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
-import com.oceans7.mobileapps.eagleswag.config.ConfigurationControllerFactory;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
@@ -108,22 +106,21 @@ public class SQLiteDataController implements DataController {
 		// Create the class key to database table map
 		this.classToTableMap = new HashMap<Class<? extends Question>, String>();
 
-		// Obtain a question type controller in order to populate the map
-		ConfigurationController qtConfigController = ConfigurationControllerFactory.getInstance().getController();
+		// Obtain the question types from the configuration file
+		Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
 
-		for (Entry<Class<? extends Question>, QuestionType> entry : qtConfigController.getQuestionTypes(context).entrySet()) {
+		for (Class<? extends Question> key : qtMap.keySet()) {
 			// Loop through each of the entries and enter them into the map: the
 			// key from each entry is used as the key in the map, and the SQLite
 			// database table name is extracted from the question type and used
 			// as the value in the table
 
-			// Get the key and the table name
-			Class<? extends Question> key = entry.getKey();
-			String tableName = entry.getValue().getSqliteTable();
+			// Get the table name that maps to the key
+			String table = ConfigurationHelper.getInstance().getTableName(key, context);
 
 			// Add the entry to the class key to table name map
-			this.classToTableMap.put(key, tableName);
-			Log.i(this.getClass().getName(), "Added mapping: " + key.getCanonicalName() + " -> " + tableName);
+			this.classToTableMap.put(key, table);
+			Log.i(this.getClass().getName(), "Added mapping: " + key.getCanonicalName() + " -> " + table);
 		}
 	}
 
@@ -134,7 +131,7 @@ public class SQLiteDataController implements DataController {
 	 */
 	@Override
 	public void close () {
-		
+
 		if (this.helper != null) {
 			// Close the helper if it has been set
 			this.helper.close();

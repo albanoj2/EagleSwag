@@ -31,7 +31,6 @@ public class DataFileParser {
 
 	/**
 	 * TODO Update documentation
-	 * TODO Change this constructor to select the strategy via configuration
 	 * file.
 	 */
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, Context context) {

@@ -11,6 +11,8 @@
 
 package com.oceans7.mobileapps.eagleswag.config;
 
+import java.util.Map;
+
 import android.content.Context;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
@@ -45,6 +47,10 @@ public class ConfigurationHelper {
 		}
 
 		return instance;
+	}
+	
+	public Map<Class<? extends Question>, QuestionType> getAllQuestionTypes (Context context) {
+		return this.configurationController.getQuestionTypes(context);
 	}
 
 	public <T extends Question> String getDataAsset (Class<T> key, Context context) throws NoSuchQuestionTypeException {

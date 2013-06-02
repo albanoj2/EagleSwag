@@ -13,7 +13,7 @@ package com.oceans7.mobileapps.eagleswag.config;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
-public class NoSuchQuestionTypeException extends Exception {
+public class NoSuchQuestionTypeException extends RuntimeException {
 
 	/**
 	 * Auto-generated serial version ID.
