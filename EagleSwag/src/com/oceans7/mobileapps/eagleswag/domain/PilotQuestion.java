@@ -11,7 +11,12 @@
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
+
 public class PilotQuestion extends Question {
+	
+	/***************************************************************************
+	 * Constructors
+	 **************************************************************************/
 
 	/**
 	 * @param id

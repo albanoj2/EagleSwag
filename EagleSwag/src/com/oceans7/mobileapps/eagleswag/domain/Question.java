@@ -10,6 +10,10 @@
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
+import com.oceans7.mobileapps.eagleswag.persistence.DataController;
+import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
+
+import android.content.Context;
 
 public abstract class Question {
 
@@ -66,6 +70,24 @@ public abstract class Question {
 		this.setYesPointValue(yesValue);
 		this.setNoPointValue(noValue);
 		this.usedCount = usedCount;
+
+	}
+
+	/***************************************************************************
+	 * Methods
+	 **************************************************************************/
+
+	public void save (Context context) {
+
+		// Obtain a reference to a data controller and open the controller
+		DataController controller = DataControllerFactory.getInstance().getDataController(context);
+		controller.open(context);
+
+		// Save the question
+		controller.saveQuestion(this.getClass(), this);
+		
+		// Close the controller
+		controller.close();
 	}
 
 	/***************************************************************************
@@ -107,7 +129,7 @@ public abstract class Question {
 	public int getUsedCount () {
 		return this.usedCount;
 	}
-	
+
 	public void incrementUsedCount () {
 		this.usedCount++;
 	}
