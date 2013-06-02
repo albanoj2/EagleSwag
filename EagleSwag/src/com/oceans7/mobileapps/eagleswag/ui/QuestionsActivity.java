@@ -50,7 +50,6 @@ public class QuestionsActivity extends Activity {
 		this.tsQuestion.setOutAnimation(this, android.R.anim.fade_out);
 
 		// Create a round manager and configure it
-		this.roundController = new RoundController(this);
 		new LoadQuestionData().execute();
 
 		// Setup the onClick listener for the yes button
@@ -87,6 +86,8 @@ public class QuestionsActivity extends Activity {
 				}
 				catch (RoundNotStartedException e) {
 					// The round was not started prior to answering the question
+					// TODO If the button is clicked once the round ends,
+					// nothing should happen
 					Log.e(this.getClass().getName(), "Round not started before answering the current question 'no': " + e);
 				}
 
@@ -136,7 +137,7 @@ public class QuestionsActivity extends Activity {
 	}
 
 	/**
-	 *
+	 * 
 	 * 
 	 * @param <Object...>
 	 *        The data type of the parameters to pass to the execute() method.
@@ -178,6 +179,9 @@ public class QuestionsActivity extends Activity {
 		@Override
 		protected Boolean doInBackground (Object... arg0) {
 
+			// Create the round controller
+			roundController = new RoundController(QuestionsActivity.this);
+
 			// Obtain the type of questions to load
 			int type = getIntent().getExtras().getInt("QuestionType");
 
@@ -194,7 +198,7 @@ public class QuestionsActivity extends Activity {
 					roundController.startPilotRound();
 					break;
 			}
-			
+
 			return true;
 		}
 
@@ -204,10 +208,10 @@ public class QuestionsActivity extends Activity {
 		@Override
 		protected void onPostExecute (Boolean success) {
 			super.onPostExecute((Boolean) success);
-			
+
 			// Display the first question
 			nextQuestionIfPossible();
-			
+
 			// Dismiss the loading bar
 			this.progress.dismiss();
 		}

@@ -15,7 +15,6 @@ import java.util.Queue;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
-import android.test.RenamingDelegatingContext;
 
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
