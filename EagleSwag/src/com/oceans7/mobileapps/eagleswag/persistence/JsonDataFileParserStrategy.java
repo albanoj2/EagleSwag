@@ -1,21 +1,15 @@
 /**
  * @author Justin Albano
- * @date May 18, 2013
- * @file DataFileJSONParser.java
- * @version 1.0.0
+ * @date Jun 7, 2013
+ * @file JsonDataFileParserStrategy.java
+ * @version 1.1.0
  * 
  *          Oceans7 Software
  *          EagleSwag Android Mobile App
  * 
- *          Parser for JSON file containing questions data. This class is used
- *          to parse the JSON data file containing the question data for the
- *          application. The data from the JSON file is returned in segments:
- *          Each question category (General, Engineering, etc.) has a method
- *          dedicated to the return the questions for each category. For
- *          example, there is a method for general questions, which returns all
- *          of the general questions stored in the data file.
- * 
- *          TODO Update documentation
+ *          A data parser strategy for a JSON data file. This parser strategy
+ *          extracts the data for a question type from a JSON file and returns
+ *          the extracted data in a queue of questions.
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -46,9 +40,28 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The title of the attribute associated with the text of a question stored
+	 * in a JSON question data file.
+	 */
 	private static final String QUESTION_TEXT_ID = "text";
+
+	/**
+	 * The title of the attribute associated with the yes point value of a
+	 * question stored in a JSON question data file.
+	 */
 	private static final String YES_VALUE_ID = "yesValue";
+
+	/**
+	 * The title of the attribute associated with the no point value of a
+	 * question stored in a JSON question data file.
+	 */
 	private static final String NO_VALUE_ID = "noValue";
+
+	/**
+	 * The title of the attribute associated with the used count of a question
+	 * stored in a JSON question data file.
+	 */
 	private static final String USED_COUNT_ID = "usedCount";
 
 	/***************************************************************************
@@ -56,29 +69,11 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 	 **************************************************************************/
 
 	/**
-	 * Retrieves the questions (of the specified type) from the data file. This
-	 * is a helper method intended to reduce the logic needed to support
-	 * multiple types of questions that can be found in the JSON data file.
 	 * 
-	 * @param key
-	 *            The class that specifies type of questions to create. For
-	 *            example, if GeneralQuestion.class is supplied as the key, the
-	 *            queue returned will be filled with objects of the concrete
-	 *            class GeneralQuestion (although the interface for the objects
-	 *            in the queue, as specified by the generic method parameter T,
-	 *            may be different).
-	 * @param id
-	 *            The JSON heading used to obtain the questions. For example, to
-	 *            obtain the general questions from the JSON file, use
-	 *            "generalQuestions". The heading identifier is the containing
-	 *            for each type of questions in the JSON data file. For example,
-	 *            "generalQuestion" is used as the identifier to access all of
-	 *            the questions under the heading "generalQuestions": [...] in
-	 *            the JSON data file.
-	 * @return
-	 *         A queue containing the questions of the type specified.
+	 * {@inheritDoc}
 	 * 
-	 *         TODO Update documentation
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy#getQuestion(java.lang.Class,
+	 *      android.content.Context)
 	 */
 	@Override
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, Context context) {
@@ -113,10 +108,12 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 				// Convert the object to a JSON object
 				JSONObject jsonQuestion = (JSONObject) question;
 
+				// --------------------------------------------------------------
 				// Extract the JSON values (note that the ID value is set to 0
 				// because it will be supplied later by the data controller
 				// (there is no ID associated with the questions in the
 				// questions data file)
+				// --------------------------------------------------------------
 				int questionId = 0;
 				String text = (String) jsonQuestion.get(QUESTION_TEXT_ID);
 				int yesValue = Integer.parseInt((String) jsonQuestion.get(YES_VALUE_ID));
@@ -136,32 +133,40 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 			}
 		}
 		catch (IOException e) {
-			Log.e(this.getClass().getName(), "IOException occurred while parsing the JSON questions file for " + key.getCanonicalName() + ": " + e);
+			// IO exception occurred while accessing the JSON data file
+			Log.e(this.getClass().getName(), "IO exception occurred while parsing the JSON questions file for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (ParseException e) {
-			Log.e(this.getClass().getName(), "ParseException occurred while parsing the JSON questions file for " + key.getCanonicalName() + ": " + e);
+			// A parse exception occurred while using the JSON parser object
+			Log.e(this.getClass().getName(),
+				"A parser exception occurred while using a JSON parser object to parse the JSON questions file for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (NoSuchMethodException e) {
+			// The selected constructor for the question could not be found
 			Log.e(this.getClass().getName(), "Could not find the desired constructor for the " + key.getCanonicalName() + ": " + e);
 		}
 		catch (IllegalArgumentException e) {
-			Log.e(this.getClass().getName(),
-				"Invalid arguments supplied to the constructor while trying to create new " + key.getCanonicalName() + ": " + e);
+			// The arguments to the question constructor are incorrect
+			Log.e(this.getClass().getName(), "Invalid constructor arguments while trying to create new " + key.getCanonicalName() + ": " + e);
 		}
 		catch (InstantiationException e) {
+			// The selected question object could not be instantiated
 			Log.e(this.getClass().getName(), "Could not not instantiate an object for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (IllegalAccessException e) {
+			// The selected question constructor could not be accessed
 			Log.e(this.getClass().getName(), "Could not access the desired constructor for " + key.getCanonicalName() + ": " + e);
 		}
 		catch (InvocationTargetException e) {
+			// The constructor could not be invoked on the target object
 			Log.e(this.getClass().getName(), "Could not invoke constructor on the target " + key.getCanonicalName() + ": " + e);
 		}
 		catch (NoSuchQuestionTypeException e) {
+			// No configuration data can be found for the given key
 			Log.e(this.getClass().getName(), "The class '" + key + "' has no configuration data associated with it in the configuration file: " + e);
 		}
 
-		// Return the queue containing the questions
+		// Return the queue containing the questions (which may be empty)
 		return questions;
 	}
 

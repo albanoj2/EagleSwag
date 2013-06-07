@@ -1,5 +1,14 @@
 /**
- * TODO: Documentation
+ * @author Justin Albano
+ * @date Jun 7, 2013
+ * @file QuestionActivity.java
+ * 
+ *       Android activity that displays questions to the user and provides
+ *       buttons for answering the questions. The SplashScreenActivity passes
+ *       the type of questions to answer. Based on the type supplied, a round of
+ *       questions is started for the type specified. Once the round of
+ *       questions has been completed, the score for the round is passed to a
+ *       ScoreActivity to display the score for the user.
  */
 
 package com.oceans7.mobileapps.eagleswag.ui;
@@ -26,15 +35,35 @@ public class QuestionsActivity extends Activity {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The round controller that manages the answering of questions by the user.
+	 */
 	private RoundController roundController;
+
+	/**
+	 * The text switch that displays the text for a question.
+	 */
 	private TextSwitcher tsQuestion;
+
+	/**
+	 * The button used to answer a question 'yes.'
+	 */
 	private Button bYes;
+
+	/**
+	 * The button used to answer a question 'no.'
+	 */
 	private Button bNo;
 
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,9 +87,10 @@ public class QuestionsActivity extends Activity {
 			public void onClick (View v) {
 
 				try {
-					// Answer the current question as yes and display next
-					// question if another question is available
+					// Answer the current question as yes 
 					roundController.answerCurrentQuestionYes();
+					
+					// Display next question if another question is available
 					nextQuestionIfPossible();
 
 				}
@@ -78,9 +108,10 @@ public class QuestionsActivity extends Activity {
 			public void onClick (View v) {
 
 				try {
-					// Answer the current question as no and display next
-					// question if another question is available
+					// Answer the current question as no 
 					roundController.answerCurrentQuestionNo();
+					
+					// Display next question if another question is available
 					nextQuestionIfPossible();
 
 				}
@@ -94,6 +125,11 @@ public class QuestionsActivity extends Activity {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateOptionsMenu (Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -119,7 +155,7 @@ public class QuestionsActivity extends Activity {
 
 				// Save the current round and obtain the score for the round
 				double score = this.roundController.endRound();
-				
+
 				// Render the buttons unusable before the transition occurs
 				this.bYes.setOnClickListener(null);
 				this.bNo.setOnClickListener(null);
@@ -139,7 +175,9 @@ public class QuestionsActivity extends Activity {
 	}
 
 	/**
-	 * 
+	 * Asynchronous task that loads questions and begins the round of questions
+	 * for the user. This task may be lengthy, depending on the number of
+	 * questions that must be loaded.
 	 * 
 	 * @param <Object...>
 	 *        The data type of the parameters to pass to the execute() method.
@@ -158,6 +196,10 @@ public class QuestionsActivity extends Activity {
 		 * Attributes
 		 **********************************************************************/
 
+		/**
+		 * The loading (progress) dialog displayed to the user while questions
+		 * are being loaded for a round.
+		 */
 		private ProgressDialog progress;
 
 		/***********************************************************************
@@ -165,7 +207,12 @@ public class QuestionsActivity extends Activity {
 		 **********************************************************************/
 
 		/**
+		 * {@inheritDoc}
 		 * 
+		 * @see android.os.AsyncTask#onPreExecute()
+		 * 
+		 *      Displays a loading dialog to the user while the questions for
+		 *      the round are loaded.
 		 */
 		@Override
 		protected void onPreExecute () {
@@ -176,7 +223,13 @@ public class QuestionsActivity extends Activity {
 		}
 
 		/**
+		 * {@inheritDoc}
 		 * 
+		 * @see android.os.AsyncTask#doInBackground(Params[])
+		 * 
+		 *      Loads the required questions and begins a round (the type of
+		 *      round started depends on the data supplied from the
+		 *      SplashScreenActivity that initiated this activity).
 		 */
 		@Override
 		protected Boolean doInBackground (Object... arg0) {
@@ -205,7 +258,12 @@ public class QuestionsActivity extends Activity {
 		}
 
 		/**
+		 * {@inheritDoc}
 		 * 
+		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+		 * 
+		 *      Displays the first question to the user and dismisses the
+		 *      loading dialog box.
 		 */
 		@Override
 		protected void onPostExecute (Boolean success) {

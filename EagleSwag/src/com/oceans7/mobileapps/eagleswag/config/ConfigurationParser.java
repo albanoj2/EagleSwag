@@ -6,9 +6,15 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       TODO: Documentation
- *       Thanks to:
- *       http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
+ *       A parser for the question type configuration data. This parser acts as
+ *       the real subject in the proxy pattern established for parsing the
+ *       question type configuration file. In order to extract the configuration
+ *       data from the question type configuration file, a question type object
+ *       is created for each of the question types found in the configuration
+ *       file.
+ * 
+ *       Cited sources:
+ *       - http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
  */
 
 package com.oceans7.mobileapps.eagleswag.config;
@@ -43,6 +49,10 @@ public class ConfigurationParser implements ConfigurationController {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The location of the question type configuration file within the assets
+	 * directory of the Android project file structure.
+	 */
 	private static final String ASSET_LOCATION = "config/data/QuestionTypeConfig.xml";
 
 	/***************************************************************************
@@ -102,7 +112,7 @@ public class ConfigurationParser implements ConfigurationController {
 					// Extract the name of the question type
 					String name = typeElement.getAttribute("name");
 					questionType.setName(name);
-					
+
 					// Create the class key for map
 					String packageName = keyElement.getAttribute("package");
 					String className = keyElement.getTextContent().trim();
@@ -116,9 +126,8 @@ public class ConfigurationParser implements ConfigurationController {
 					String parserStratPackage = parserStratElement.getAttribute("package");
 					String parserStratClass = parserStratElement.getTextContent().trim();
 					String parserStratQualifiedClass = parserStratPackage + "." + parserStratClass;
-					Class<? extends DataFileParserStrategy> parserClass = Class.forName(parserStratQualifiedClass).asSubclass(
-						DataFileParserStrategy.class);
-					
+					Class<? extends DataFileParserStrategy> parserClass = Class.forName(parserStratQualifiedClass).asSubclass(DataFileParserStrategy.class);
+
 					// Build data configuration and add it to the question type
 					DataConfiguration dataConfiguration = new DataConfiguration(asset, parserClass);
 					questionType.setDataConfiguration(dataConfiguration);
@@ -134,7 +143,7 @@ public class ConfigurationParser implements ConfigurationController {
 
 						// Set the JSON data for the question type
 						questionType.setJsonConfiguration(new JsonConfiguration(jsonId));
-						
+
 						// The JSON data was added
 						Log.i(this.getClass().getName(), "The JSON data was found for '" + name + "': id: <" + jsonId + ">");
 					}
@@ -150,7 +159,7 @@ public class ConfigurationParser implements ConfigurationController {
 
 						// Set the SQLite data for the question type
 						questionType.setSqliteConfiguration(new SqliteConfiguration(table));
-						
+
 						// The SQLite data was added
 						Log.i(this.getClass().getName(), "The SQLite data was found for '" + name + "': table: <" + table + ">");
 					}
@@ -163,19 +172,24 @@ public class ConfigurationParser implements ConfigurationController {
 
 		}
 		catch (IOException e) {
+			// An IO exception occurred while opening the configuration file
 			Log.e(this.getClass().getName(), "IOException occurred while trying to parse configuration file: " + e);
 		}
 		catch (SAXException e) {
+			// The SAX parser encountered an exception while parsing the file
 			Log.e(this.getClass().getName(), "SAXException occurred while trying to parse configuration file: " + e);
 		}
 		catch (ParserConfigurationException e) {
+			// The SAX parser was improperly configured for parsing the file
 			Log.e(this.getClass().getName(), "ParserConfigurationException occurred while trying to parse configuration file: " + e);
 		}
 		catch (ClassNotFoundException e) {
+			// An object could not be reflexively created (key, parser, etc.)
 			Log.e(this.getClass().getName(),
 				"ClassNotFoundException occurred while trying to create a class specified in the configuration file: " + e);
 		}
 
+		// Return question type map (which may be empty if there was an error)
 		return questionTypeMap;
 	}
 }
