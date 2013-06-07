@@ -51,7 +51,7 @@ public class RoundController {
 	private Question currentQuestion;
 
 	/**
-	 * Flag to track if a round has been started or not.
+	 * Flag to track if a round has been started.
 	 */
 	private boolean hasRoundBeenStarted;
 

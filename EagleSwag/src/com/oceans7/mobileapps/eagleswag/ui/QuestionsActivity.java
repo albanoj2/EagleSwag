@@ -60,13 +60,8 @@ public class QuestionsActivity extends Activity {
 				try {
 					// Answer the current question as yes and display next
 					// question if another question is available
-
-					if (roundController.hasMoreQuestions()) {
-						// Only answer the question if there are questions
-						// available to be answered
-						roundController.answerCurrentQuestionYes();
-						nextQuestionIfPossible();
-					}
+					roundController.answerCurrentQuestionYes();
+					nextQuestionIfPossible();
 
 				}
 				catch (RoundNotStartedException e) {
@@ -85,19 +80,12 @@ public class QuestionsActivity extends Activity {
 				try {
 					// Answer the current question as no and display next
 					// question if another question is available
-
-					if (roundController.hasMoreQuestions()) {
-						// Only answer the question if there are questions
-						// available to be answered
-						roundController.answerCurrentQuestionNo();
-						nextQuestionIfPossible();
-					}
+					roundController.answerCurrentQuestionNo();
+					nextQuestionIfPossible();
 
 				}
 				catch (RoundNotStartedException e) {
 					// The round was not started prior to answering the question
-					// TODO If the button is clicked once the round ends,
-					// nothing should happen
 					Log.e(this.getClass().getName(), "Round not started before answering the current question 'no': " + e);
 				}
 
@@ -131,6 +119,10 @@ public class QuestionsActivity extends Activity {
 
 				// Save the current round and obtain the score for the round
 				double score = this.roundController.endRound();
+				
+				// Render the buttons unusable before the transition occurs
+				this.bYes.setOnClickListener(null);
+				this.bNo.setOnClickListener(null);
 
 				// Create an intent and send the score with the intent
 				Intent intent = new Intent(this, ScoreActivity.class);
