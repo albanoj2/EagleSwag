@@ -40,7 +40,7 @@ import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
-public class JSONDataFileParserStrategy implements DataFileParserStrategy {
+public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 
 	/***************************************************************************
 	 * Attributes

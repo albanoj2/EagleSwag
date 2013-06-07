@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
  * @date May 27, 2013
- * @file SQLiteDataController.java
+ * @file SqliteDataController.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -10,14 +10,14 @@
  *       SQLite database; data is stored using a relational database schema. The
  *       SQLiteDataControllerMappingsParser is used to generate the table of
  *       mappings from class type (for each question type: General, Engineering,
- *       etc.) and the SQLiteDataControllerConstants and
- *       SQLiteDataControllerQueries are combined to encapsulate the SQLite
+ *       etc.) and the SqliteDataControllerConstants and
+ *       SqliteDataControllerQueries are combined to encapsulate the SQLite
  *       queries, table names, database version, etc. used by the SQLite data
  *       controller.
  * 
- *       Note that all queries are found in the SQLiteDataControllerQueries
+ *       Note that all queries are found in the SqliteDataControllerQueries
  *       class, and all data controller constants, such as table names, column
- *       numbers, etc., are found in the SQLiteDataControllerConstants class.
+ *       numbers, etc., are found in the SqliteDataControllerConstants class.
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -40,7 +40,7 @@ import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
-public class SQLiteDataController implements DataController {
+public class SqliteDataController implements DataController {
 
 	/***************************************************************************
 	 * Attributes
@@ -63,7 +63,7 @@ public class SQLiteDataController implements DataController {
 	 * SQLite database. This helper is used to generate the writable instance of
 	 * the database used to store data for this class.
 	 */
-	private SQLiteDataControllerHelper helper;
+	private SqliteDataControllerHelper helper;
 
 	/**
 	 * A map of question classes to the database table names used. This is used
@@ -92,7 +92,7 @@ public class SQLiteDataController implements DataController {
 		this.context = context;
 
 		// Create the database helper
-		this.helper = new SQLiteDataControllerHelper(context);
+		this.helper = new SqliteDataControllerHelper(context);
 
 		try {
 			// Obtain a writable database reference
@@ -159,7 +159,7 @@ public class SQLiteDataController implements DataController {
 			// Continue only if there is data to retrieve from the database
 
 			// Obtain the data for the questions from the database
-			Cursor cursor = SQLiteDataControllerQueries.getQuestions(this.context, this.database, this.classToTableMap.get(key), number);
+			Cursor cursor = SqliteDataControllerQueries.getQuestions(this.context, this.database, this.classToTableMap.get(key), number);
 
 			// Reset cursor
 			cursor.moveToFirst();
@@ -168,11 +168,11 @@ public class SQLiteDataController implements DataController {
 				// Loop through the cursor
 
 				// Question data
-				int id = cursor.getInt(SQLiteDataControllerConstants.Columns.ID.ordinal());
-				String text = cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal());
-				int yesValue = cursor.getInt(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal());
-				int noValue = cursor.getInt(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal());
-				int usedCount = cursor.getInt(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
+				int id = cursor.getInt(SqliteDataControllerConstants.Columns.ID.ordinal());
+				String text = cursor.getString(SqliteDataControllerConstants.Columns.QUESTION.ordinal());
+				int yesValue = cursor.getInt(SqliteDataControllerConstants.Columns.YES_VALUE.ordinal());
+				int noValue = cursor.getInt(SqliteDataControllerConstants.Columns.NO_VALUE.ordinal());
+				int usedCount = cursor.getInt(SqliteDataControllerConstants.Columns.USED_COUNT.ordinal());
 
 				try {
 					// Obtain the constructor for the supplied class
@@ -231,7 +231,7 @@ public class SQLiteDataController implements DataController {
 		String table = this.classToTableMap.get(key);
 
 		// Save the question in the database
-		SQLiteDataControllerQueries.updateQuestion(this.database, table, question);
+		SqliteDataControllerQueries.updateQuestion(this.database, table, question);
 
 	}
 

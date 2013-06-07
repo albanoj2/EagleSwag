@@ -25,7 +25,7 @@ import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.persistence.JSONDataFileParserStrategy;
+import com.oceans7.mobileapps.eagleswag.persistence.JsonDataFileParserStrategy;
 
 public class ConfigurationParserTest extends InstrumentationTestCase {
 
@@ -74,23 +74,8 @@ public class ConfigurationParserTest extends InstrumentationTestCase {
 	 * .
 	 */
 	public void testGetQuestionType () {
-
-		// Obtain the types from the test configuration file
-		Map<Class<? extends Question>, QuestionType> map = this.controller.getQuestionTypes(this.context);
-
-		// Ensure that the data is correct for the test general question type
-		QuestionType generalType = map.get(GeneralQuestion.class);
-		assertEquals("General => data asset:", "data/questions.json", generalType.getDataAsset());
-		assertEquals("General => parser strategy:", JSONDataFileParserStrategy.class.getName(), generalType.getParserStrategy().getName());
-		assertEquals("General => JSON ID:", "generalQuestions", generalType.getJsonId());
-		assertEquals("General => table:", "GeneralQuestions", generalType.getSqliteTable());
-
-		// Ensure that the data is correct for the test engineer question type
-		QuestionType engineeringType = map.get(EngineeringQuestion.class);
-		assertEquals("Engineering => data asset:", "data/questions.json", engineeringType.getDataAsset());
-		assertEquals("Engineering => parser strategy:", JSONDataFileParserStrategy.class.getName(), engineeringType.getParserStrategy().getName());
-		assertEquals("Engineering => JSON ID:", "engineeringQuestions", engineeringType.getJsonId());
-		assertEquals("Engineering => table:", "EngineeringQuestions", engineeringType.getSqliteTable());
+		// Ensure the data is parsed correctly by the parser
+		HelperMethods.ensureDataIsParsedCorrectly(this.controller, this.context);
 	}
 
 }

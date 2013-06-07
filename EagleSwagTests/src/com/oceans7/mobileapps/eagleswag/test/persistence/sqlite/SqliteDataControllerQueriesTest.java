@@ -1,12 +1,12 @@
 /**
  * @author Justin Albano
  * @date May 19, 2013
- * @file SQLiteDataControllerQueriesTest.java
+ * @file SqliteDataControllerQueriesTest.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries
+ * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
@@ -25,12 +25,12 @@ import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataController;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerConstants;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerHelper;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerHelper;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
 
-public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
+public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
@@ -46,7 +46,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 	/**
 	 * Data controller used to test the update query.
 	 */
-	private SQLiteDataController controller;
+	private SqliteDataController controller;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -65,11 +65,11 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 
 		// Obtain a reference to the database
-		SQLiteDataControllerHelper helper = new SQLiteDataControllerHelper(this.context);
+		SqliteDataControllerHelper helper = new SqliteDataControllerHelper(this.context);
 		this.db = helper.getWritableDatabase();
 
 		// Setup the data controller
-		this.controller = new SQLiteDataController();
+		this.controller = new SqliteDataController();
 		this.controller.open(this.context);
 	}
 
@@ -114,13 +114,13 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
 		// Insert the test question into the data base
-		long id = SQLiteDataControllerQueries.insertIntoQuestionsTable(this.db, table, testQuestion);
+		long id = SqliteDataControllerQueries.insertIntoQuestionsTable(this.db, table, testQuestion);
 
 		// Log the ID of the newly created row
 		Log.d(this.getClass().getName(), "ID of added quetion: " + id);
 
 		// Attempt to retrieve the data from the database
-		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + "" + " WHERE " + SQLiteDataControllerConstants.QUESTION_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + "" + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = ?",
 			new String[] { text });
 
 		// Reset cursor
@@ -136,7 +136,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		assertEquals("Used count is equal", usedCount, cursor.getLong(4));
 
 		// Remove the item from the database
-		this.db.delete(table, SQLiteDataControllerConstants.QUESTION_COLUMN + "='" + text + "'", null);
+		this.db.delete(table, SqliteDataControllerConstants.QUESTION_COLUMN + "='" + text + "'", null);
 
 		// Close the cursor
 		cursor.close();
@@ -179,33 +179,33 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		T originalQuestion = constructor.newInstance(originalArgs);
 
 		// Add the new question to the database
-		SQLiteDataControllerQueries.insertIntoQuestionsTable(this.db, table, originalQuestion);
+		SqliteDataControllerQueries.insertIntoQuestionsTable(this.db, table, originalQuestion);
 
 		// Obtain the ID of the question that was just inserted; this is used to
 		// ensure that the new question has the same ID as the question that was
 		// just created, ensuring that the new question updates the question
 		// that was just inserted
 		Cursor cursorId = this.db.rawQuery(
-			"SELECT * FROM " + table + " WHERE " + SQLiteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'", null);
+			"SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'", null);
 		cursorId.moveToFirst();
-		int idOfInsertedQuestion = cursorId.getInt(SQLiteDataControllerConstants.Columns.ID.ordinal());
+		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.Columns.ID.ordinal());
 
 		// Create a new question (using reflection)
 		Object[] newArgs = new Object[] { idOfInsertedQuestion, newText, newYesValue, newNoValue, newUsedCount };
 		T newQuestion = constructor.newInstance(newArgs);
 
 		// Store the update in the database
-		SQLiteDataControllerQueries.updateQuestion(this.db, table, newQuestion);
+		SqliteDataControllerQueries.updateQuestion(this.db, table, newQuestion);
 
 		// Retrieve the same question from the database
-		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SQLiteDataControllerConstants.ID_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.ID_COLUMN + " = ?",
 			new String[] { "" + idOfInsertedQuestion });
 		cursor.moveToFirst();
 
-		assertEquals("Question string updated:", newText, cursor.getString(SQLiteDataControllerConstants.Columns.QUESTION.ordinal()));
-		assertEquals("Yes value updated:", newYesValue, cursor.getInt(SQLiteDataControllerConstants.Columns.YES_VALUE.ordinal()));
-		assertEquals("No value updated:", newNoValue, cursor.getInt(SQLiteDataControllerConstants.Columns.NO_VALUE.ordinal()));
-		assertEquals("Used count updated:", newUsedCount, cursor.getInt(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal()));
+		assertEquals("Question string updated:", newText, cursor.getString(SqliteDataControllerConstants.Columns.QUESTION.ordinal()));
+		assertEquals("Yes value updated:", newYesValue, cursor.getInt(SqliteDataControllerConstants.Columns.YES_VALUE.ordinal()));
+		assertEquals("No value updated:", newNoValue, cursor.getInt(SqliteDataControllerConstants.Columns.NO_VALUE.ordinal()));
+		assertEquals("Used count updated:", newUsedCount, cursor.getInt(SqliteDataControllerConstants.Columns.USED_COUNT.ordinal()));
 
 		// Remove the test entry from the database
 		this.db.execSQL("DELETE FROM " + table + " WHERE _id = " + idOfInsertedQuestion);
@@ -217,7 +217,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#createQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#createQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String)}
 	 * 
 	 * Ensures that a table (formatted for questions) can be properly written to
 	 * the database. This test case creates a questions table, and then removes
@@ -229,7 +229,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 		String table = "testTableRememberToRemove";
 
 		// Create the database table
-		SQLiteDataControllerQueries.createQuestionsTable(this.db, table);
+		SqliteDataControllerQueries.createQuestionsTable(this.db, table);
 
 		// Check if the table was created
 		Cursor cursor = this.db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type=? AND name=?", new String[] { "table", table });
@@ -246,7 +246,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testInsertIntoGeneralQuestionsTable () throws Exception {
@@ -255,7 +255,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testInsertIntoEngineeringQuestionsTable () throws Exception {
@@ -264,7 +264,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testInsertIntoPilotQuestionsTable () throws Exception {
@@ -274,7 +274,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * 
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
 	 */
 	public void testUpdateGeneralQuestion () throws Exception {
 		this.helperUpdateQuestionTable(GeneralQuestion.class);
@@ -283,7 +283,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * 
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
 	 */
 	public void testUpdateEngineeringQuestion () throws Exception {
 		this.helperUpdateQuestionTable(EngineeringQuestion.class);
@@ -292,7 +292,7 @@ public class SQLiteDataControllerQueriesTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * 
-	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobileapps.eagleswag.domain.Question)}
 	 */
 	public void testUpdatePilotQuestion () throws Exception {
 		this.helperUpdateQuestionTable(PilotQuestion.class);

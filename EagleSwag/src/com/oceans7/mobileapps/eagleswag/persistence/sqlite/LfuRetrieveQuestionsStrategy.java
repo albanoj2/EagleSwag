@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
  * @date May 29, 2013
- * @file LFURetrieveQuestionsStrategy.java
+ * @file LfuRetrieveQuestionsStrategy.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -15,7 +15,7 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
-public class LFURetrieveQuestionsStrategy implements RetrieveQuestionsStrategy {
+public class LfuRetrieveQuestionsStrategy implements RetrieveQuestionsStrategy {
 
 	/**
 	 * {@inheritDoc}
@@ -26,7 +26,7 @@ public class LFURetrieveQuestionsStrategy implements RetrieveQuestionsStrategy {
 	public String getQuery (String table, int numberOfQuestions) {
 
 		// Use a LFU query to obtain the questions
-		return "SELECT * FROM " + table + " " + "ORDER BY " + SQLiteDataControllerConstants.USED_COUNT_COLUMN + " ASC " + "LIMIT " + numberOfQuestions;
+		return "SELECT * FROM " + table + " " + "ORDER BY " + SqliteDataControllerConstants.USED_COUNT_COLUMN + " ASC " + "LIMIT " + numberOfQuestions;
 	}
 
 }

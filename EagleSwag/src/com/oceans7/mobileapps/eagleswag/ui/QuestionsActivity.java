@@ -60,8 +60,13 @@ public class QuestionsActivity extends Activity {
 				try {
 					// Answer the current question as yes and display next
 					// question if another question is available
-					roundController.answerCurrentQuestionYes();
-					nextQuestionIfPossible();
+
+					if (roundController.hasMoreQuestions()) {
+						// Only answer the question if there are questions
+						// available to be answered
+						roundController.answerCurrentQuestionYes();
+						nextQuestionIfPossible();
+					}
 
 				}
 				catch (RoundNotStartedException e) {
@@ -80,8 +85,13 @@ public class QuestionsActivity extends Activity {
 				try {
 					// Answer the current question as no and display next
 					// question if another question is available
-					roundController.answerCurrentQuestionNo();
-					nextQuestionIfPossible();
+
+					if (roundController.hasMoreQuestions()) {
+						// Only answer the question if there are questions
+						// available to be answered
+						roundController.answerCurrentQuestionNo();
+						nextQuestionIfPossible();
+					}
 
 				}
 				catch (RoundNotStartedException e) {

@@ -1,18 +1,18 @@
 /**
  * @author Justin Albano
  * @date May 18, 2013
- * @file SQLiteDataControllerConstants.java
+ * @file SqliteDataControllerConstants.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
  *       A lookup dictionary for queries and table/column names to be used in
- *       the SQLiteDataController.
+ *       the SqliteDataController.
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
-public class SQLiteDataControllerConstants {
+public class SqliteDataControllerConstants {
 
 	/***************************************************************************
 	 * Static Attributes
@@ -26,7 +26,7 @@ public class SQLiteDataControllerConstants {
 	/**
 	 * The version number of the database. When the version number is altered,
 	 * and the application is run, the database is automatically updated (the
-	 * SQLiteDataControllerHelper runs its update logic to update the database).
+	 * SqliteDataControllerHelper runs its update logic to update the database).
 	 */
 	public static final int DATABASE_VERSION = 14;
 

@@ -12,7 +12,9 @@
 
 package com.oceans7.mobileapps.eagleswag.config;
 
-import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
+import com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 
 public class QuestionType {
 
@@ -21,10 +23,9 @@ public class QuestionType {
 	 **************************************************************************/
 
 	private String name;
-	private String dataAsset;
-	private Class<? extends DataFileParserStrategy> parserStrategy;
-	private String jsonId;
-	private String sqliteTable;
+	private DataConfiguration dataConfiguration;
+	private JsonConfiguration jsonConfiguration;
+	private SqliteConfiguration sqliteConfiguration;
 
 	/***************************************************************************
 	 * Constructors
@@ -34,20 +35,6 @@ public class QuestionType {
 
 	public QuestionType (String name) {
 		this.setName(name);
-	}
-
-	/***************************************************************************
-	 * Methods
-	 **************************************************************************/
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString () {
-		return super.toString() + ": name='" + this.name + "', dataAsset='" + this.dataAsset + "', parserStrategy='" + this.parserStrategy.getName() + "', SQLiteTable='" + this.sqliteTable + "'";
 	}
 
 	/***************************************************************************
@@ -71,67 +58,51 @@ public class QuestionType {
 	}
 
 	/**
-	 * @return
-	 *         The dataAsset.
+	 * @return 
+	 *		The dataConfiguration.
 	 */
-	public String getDataAsset () {
-		return dataAsset;
+	public DataConfiguration getDataConfiguration () {
+		return dataConfiguration;
 	}
 
 	/**
-	 * @param dataAsset
-	 *            The dataAsset to set.
+	 * @param dataConfiguration 
+	 * 		The dataConfiguration to set.
 	 */
-	public void setDataAsset (String dataAsset) {
-		this.dataAsset = dataAsset;
+	public void setDataConfiguration (DataConfiguration dataConfiguration) {
+		this.dataConfiguration = dataConfiguration;
 	}
 
 	/**
-	 * @return
-	 *         The sqliteTable.
+	 * @return 
+	 *		The jsonConfiguration.
 	 */
-	public String getSqliteTable () {
-		return sqliteTable;
+	public JsonConfiguration getJsonConfiguration () {
+		return jsonConfiguration;
 	}
 
 	/**
-	 * @param sqliteTable
-	 *            The sqliteTable to set.
+	 * @param jsonConfiguration 
+	 * 		The jsonConfiguration to set.
 	 */
-	public void setSqliteTable (String sqliteTable) {
-		this.sqliteTable = sqliteTable;
+	public void setJsonConfiguration (JsonConfiguration jsonConfiguration) {
+		this.jsonConfiguration = jsonConfiguration;
 	}
 
 	/**
-	 * @return
-	 *         The jsonId.
+	 * @return 
+	 *		The sqliteConfiguration.
 	 */
-	public String getJsonId () {
-		return jsonId;
+	public SqliteConfiguration getSqliteConfiguration () {
+		return sqliteConfiguration;
 	}
 
 	/**
-	 * @param jsonId
-	 *            The jsonId to set.
+	 * @param sqliteConfiguration 
+	 * 		The sqliteConfiguration to set.
 	 */
-	public void setJsonId (String jsonId) {
-		this.jsonId = jsonId;
-	}
-
-	/**
-	 * @return
-	 *         The parserStrategy.
-	 */
-	public Class<? extends DataFileParserStrategy> getParserStrategy () {
-		return parserStrategy;
-	}
-
-	/**
-	 * @param parserStrategy
-	 *            The parserStrategy to set.
-	 */
-	public void setParserStrategy (Class<? extends DataFileParserStrategy> parserStrategy) {
-		this.parserStrategy = parserStrategy;
+	public void setSqliteConfiguration (SqliteConfiguration sqliteConfiguration) {
+		this.sqliteConfiguration = sqliteConfiguration;
 	}
 
 }

@@ -31,6 +31,9 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
 
@@ -50,9 +53,6 @@ public class ConfigurationParser implements ConfigurationController {
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationController#getQuestionTypes(java.lang.Class)
-	 * 
-	 *      TODO make the configuration fields optional and parse them only if
-	 *      they exist (otherwise, set them to null)
 	 */
 	@Override
 	public Map<Class<? extends Question>, QuestionType> getQuestionTypes (Context context) {
@@ -97,28 +97,63 @@ public class ConfigurationParser implements ConfigurationController {
 					Element assetElement = (Element) dataElement.getElementsByTagName("asset").item(0);
 					Element parserStratElement = (Element) dataElement.getElementsByTagName("parserStrategy").item(0);
 					Element jsonElement = (Element) persistenceElement.getElementsByTagName("json").item(0);
-					Element jsonIdElement = (Element) jsonElement.getElementsByTagName("id").item(0);
 					Element sqliteElement = (Element) persistenceElement.getElementsByTagName("sqlite").item(0);
-					Element tableElement = (Element) sqliteElement.getElementsByTagName("table").item(0);
 
-					// Extract the needed data from the elements of the type
-					questionType.setName(typeElement.getAttribute("name"));
-					questionType.setDataAsset(assetElement.getAttribute("path") + assetElement.getTextContent());
-					questionType.setJsonId(jsonIdElement.getTextContent().trim());
-					questionType.setSqliteTable(tableElement.getTextContent().trim());
+					// Extract the name of the question type
+					String name = typeElement.getAttribute("name");
+					questionType.setName(name);
 					
-					// Create the parser strategy class and set the attribute
-					String parserStratPackage = parserStratElement.getAttribute("package");
-					String parserStratClass= parserStratElement.getTextContent().trim();
-					String parserStratQualifiedClass = parserStratPackage + "." + parserStratClass;
-					Class<? extends DataFileParserStrategy> parserClass = Class.forName(parserStratQualifiedClass).asSubclass(DataFileParserStrategy.class);
-					questionType.setParserStrategy(parserClass);
-
 					// Create the class key for map
 					String packageName = keyElement.getAttribute("package");
 					String className = keyElement.getTextContent().trim();
 					String qualifiedClassName = packageName + "." + className;
 					Class<? extends Question> clazz = Class.forName(qualifiedClassName).asSubclass(Question.class);
+
+					// Extract the data asset location
+					String asset = assetElement.getAttribute("path") + assetElement.getTextContent();
+
+					// Create the parser strategy class and set the attribute
+					String parserStratPackage = parserStratElement.getAttribute("package");
+					String parserStratClass = parserStratElement.getTextContent().trim();
+					String parserStratQualifiedClass = parserStratPackage + "." + parserStratClass;
+					Class<? extends DataFileParserStrategy> parserClass = Class.forName(parserStratQualifiedClass).asSubclass(
+						DataFileParserStrategy.class);
+					
+					// Build data configuration and add it to the question type
+					DataConfiguration dataConfiguration = new DataConfiguration(asset, parserClass);
+					questionType.setDataConfiguration(dataConfiguration);
+
+					if (jsonElement != null) {
+						// The JSON element has been specified
+
+						// The JSON data element within the configuration file
+						Element jsonIdElement = (Element) jsonElement.getElementsByTagName("id").item(0);
+
+						// The data within the JSON element
+						String jsonId = jsonIdElement.getTextContent().trim();
+
+						// Set the JSON data for the question type
+						questionType.setJsonConfiguration(new JsonConfiguration(jsonId));
+						
+						// The JSON data was added
+						Log.i(this.getClass().getName(), "The JSON data was found for '" + name + "': id: <" + jsonId + ">");
+					}
+
+					if (sqliteElement != null) {
+						// The SQLite element has been specified
+
+						// The SQLite data element within the configuration file
+						Element tableElement = (Element) sqliteElement.getElementsByTagName("table").item(0);
+
+						// The SQLite data within the element
+						String table = tableElement.getTextContent().trim();
+
+						// Set the SQLite data for the question type
+						questionType.setSqliteConfiguration(new SqliteConfiguration(table));
+						
+						// The SQLite data was added
+						Log.i(this.getClass().getName(), "The SQLite data was found for '" + name + "': table: <" + table + ">");
+					}
 
 					// Insert the question type into the map
 					questionTypeMap.put(clazz, questionType);
@@ -137,10 +172,10 @@ public class ConfigurationParser implements ConfigurationController {
 			Log.e(this.getClass().getName(), "ParserConfigurationException occurred while trying to parse configuration file: " + e);
 		}
 		catch (ClassNotFoundException e) {
-			Log.e(this.getClass().getName(), "ClassNotFoundException occurred while trying to create a class specified in the configuration file: " + e);
+			Log.e(this.getClass().getName(),
+				"ClassNotFoundException occurred while trying to create a class specified in the configuration file: " + e);
 		}
 
 		return questionTypeMap;
 	}
-
 }

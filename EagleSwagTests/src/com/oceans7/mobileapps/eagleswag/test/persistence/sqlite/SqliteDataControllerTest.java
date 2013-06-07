@@ -1,14 +1,14 @@
 /**
  * @author Justin Albano
  * @date May 18, 2013
- * @file SQLiteDataControllerTest.java
+ * @file SqliteDataControllerTest.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       Test fixture for SQLiteDataController.
+ *       Test fixture for SqliteDataController.
  * 
- * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataController
+ * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
@@ -27,19 +27,19 @@ import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataController;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerConstants;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SQLiteDataControllerQueries;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
 
 @SuppressWarnings("rawtypes")
-public class SQLiteDataControllerTest extends InstrumentationTestCase {
+public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
 	private Context context;
-	private SQLiteDataController sqliteDataController;
+	private SqliteDataController sqliteDataController;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -57,7 +57,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
 
 		// Create the data controller
-		this.sqliteDataController = new SQLiteDataController();
+		this.sqliteDataController = new SqliteDataController();
 		this.sqliteDataController.open(this.context);
 	}
 
@@ -123,7 +123,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 	/**
 	 * Helper method that supplies the logic for checking that the used count
 	 * for a question is updated in the database. Note that this method is
-	 * strictly for use with the SQLiteDataController. If the implementation
+	 * strictly for use with the SqliteDataController. If the implementation
 	 * (the data controller) for the system is changed (another data controller
 	 * is specified in the configuration), this test case is no longer relevant.
 	 * 
@@ -151,15 +151,15 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 		this.sqliteDataController.saveQuestion(key, question);
 
 		// The table to obtain the questions from
-		String table = ((SQLiteDataController) this.sqliteDataController).getClassToTableMap().get(key);
+		String table = ((SqliteDataController) this.sqliteDataController).getClassToTableMap().get(key);
 
 		// Retrieve the questions from the database table
-		Cursor cursor = ((SQLiteDataController) this.sqliteDataController).getDatabase().rawQuery("SELECT * FROM " + table + " WHERE _id = ?",
+		Cursor cursor = ((SqliteDataController) this.sqliteDataController).getDatabase().rawQuery("SELECT * FROM " + table + " WHERE _id = ?",
 			new String[] { "" + question.getId() });
 		cursor.moveToFirst();
 
 		// Retrieve the used count from the questions
-		long newUsedCount = cursor.getLong(SQLiteDataControllerConstants.Columns.USED_COUNT.ordinal());
+		long newUsedCount = cursor.getLong(SqliteDataControllerConstants.Columns.USED_COUNT.ordinal());
 		Log.d(this.getClass().getName(), "New used count: " + newUsedCount);
 
 		// Ensure the used count was updated in the database
@@ -169,7 +169,7 @@ public class SQLiteDataControllerTest extends InstrumentationTestCase {
 		question.setUsedCount(originalUsedCount);
 
 		// Update the questions (to the original used count)
-		SQLiteDataControllerQueries.updateQuestion(((SQLiteDataController) this.sqliteDataController).getDatabase(), table, question);
+		SqliteDataControllerQueries.updateQuestion(((SqliteDataController) this.sqliteDataController).getDatabase(), table, question);
 
 	}
 

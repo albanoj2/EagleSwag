@@ -5,7 +5,7 @@
         <data>
         	<asset path="data/">questions.json</asset>
         	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
-        	    JSONDataFileParserStrategy
+        	    JsonDataFileParserStrategy
         	</parserStrategy>
         </data>
         <persistence>
@@ -23,7 +23,7 @@
         <data>
         	<asset path="data/">questions.json</asset>
         	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
-        	    JSONDataFileParserStrategy
+        	    JsonDataFileParserStrategy
         	</parserStrategy>
         </data>
         <persistence>
@@ -41,7 +41,7 @@
         <data>
         	<asset path="data/">questions.json</asset>
         	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
-        	    JSONDataFileParserStrategy
+        	    JsonDataFileParserStrategy
         	</parserStrategy>
         </data>
         <persistence>

@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
  * @date May 18, 2013
- * @file SQLiteDataControllerHelper.java
+ * @file SqliteDataControllerHelper.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -11,7 +11,7 @@
  *       SQLiteOpenHelper class provided by the SQLite framework for Android.
  *       This class deals with updating and crating the SQLite database used by
  *       the application. When the version number of the database is incremented
- *       in the SQLiteDataControllerConstants class, this helper automatically
+ *       in the SqliteDataControllerConstants class, this helper automatically
  *       updates the database.
  * 
  * @see android.database.sqlite.SQLiteOpenHelper
@@ -33,7 +33,7 @@ import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
 
-public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
+public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 
 	/***************************************************************************
 	 * Attributes
@@ -55,8 +55,8 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 	 * @param context
 	 *            The context used for the database helper.
 	 */
-	public SQLiteDataControllerHelper (Context context) {
-		super(context, SQLiteDataControllerConstants.DATABASE_NAME, null, SQLiteDataControllerConstants.DATABASE_VERSION);
+	public SqliteDataControllerHelper (Context context) {
+		super(context, SqliteDataControllerConstants.DATABASE_NAME, null, SqliteDataControllerConstants.DATABASE_VERSION);
 
 		// Save the context
 		this.context = context;
@@ -92,14 +92,14 @@ public class SQLiteDataControllerHelper extends SQLiteOpenHelper {
 
 			try {
 				// Create each questions table in the database
-				SQLiteDataControllerQueries.createQuestionsTable(db, table);
+				SqliteDataControllerQueries.createQuestionsTable(db, table);
 
 				// Obtain the questions from the data parser
 				Queue<? extends Question> questions = parser.getQuestions(key, context);
 
 				for (Question question : questions) {
 					// Insert the new general question
-					SQLiteDataControllerQueries.insertIntoQuestionsTable(db, table, question);
+					SqliteDataControllerQueries.insertIntoQuestionsTable(db, table, question);
 					Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName() + " into the " + table + " table: " + question);
 				}
 			}

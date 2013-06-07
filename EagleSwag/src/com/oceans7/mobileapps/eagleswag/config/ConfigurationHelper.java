@@ -22,6 +22,9 @@ import java.util.Map;
 
 import android.content.Context;
 
+import com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
 
@@ -53,8 +56,8 @@ public class ConfigurationHelper {
 	 */
 	private ConfigurationHelper () {
 
-		// Obtain the configuration controller from the configuration factory
-		this.configurationController = ConfigurationControllerFactory.getInstance().getController();
+		// Set the controller to the configuration proxy
+		this.configurationController = new ConfigurationProxy();
 	}
 
 	/***************************************************************************
@@ -123,9 +126,16 @@ public class ConfigurationHelper {
 			// No such question type exists in the configuration file
 			throw new NoSuchQuestionTypeException(key);
 		}
+
+		// Return the data asset of the question type
+		DataConfiguration dataConfiguration = qt.getDataConfiguration();
+
+		if (dataConfiguration != null) {
+			// The asset location is set
+			return dataConfiguration.getAsset();
+		}
 		else {
-			// Return the data asset of the question type
-			return qt.getDataAsset();
+			return null;
 		}
 	}
 
@@ -159,9 +169,16 @@ public class ConfigurationHelper {
 			// No such question type exists in the configuration file
 			throw new NoSuchQuestionTypeException(key);
 		}
+
+		// Return the parser strategy of the question type
+		DataConfiguration dataConfiguration = qt.getDataConfiguration();
+
+		if (dataConfiguration != null) {
+			// The parser strategy for the type is specified
+			return dataConfiguration.getParserStrategy();
+		}
 		else {
-			// Return the parser strategy of the question type
-			return qt.getParserStrategy();
+			return null;
 		}
 
 	}
@@ -198,10 +215,18 @@ public class ConfigurationHelper {
 			// No such question type exists in the configuration file
 			throw new NoSuchQuestionTypeException(key);
 		}
-		else {
-			// Return the SQLite database table name of the question type
-			return qt.getSqliteTable();
+
+		// Return the SQLite database table name of the question type
+		SqliteConfiguration sqliteConfiguration = qt.getSqliteConfiguration();
+
+		if (sqliteConfiguration != null) {
+			// The SQLite table is set
+			return sqliteConfiguration.getTable();
 		}
+		else {
+			return null;
+		}
+
 	}
 
 	/**
@@ -236,9 +261,16 @@ public class ConfigurationHelper {
 			// No such question type exists in the configuration file
 			throw new NoSuchQuestionTypeException(key);
 		}
+
+		// Return the JSON element ID of the question type
+		JsonConfiguration jsonConfiguration = qt.getJsonConfiguration();
+
+		if (jsonConfiguration != null) {
+			// The ID for the JSON configuration is set
+			return jsonConfiguration.getId();
+		}
 		else {
-			// Return the JSON element ID of the question type
-			return qt.getJsonId();
+			return null;
 		}
 
 	}
