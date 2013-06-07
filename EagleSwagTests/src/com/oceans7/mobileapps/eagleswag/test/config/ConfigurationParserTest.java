@@ -13,19 +13,12 @@
 
 package com.oceans7.mobileapps.eagleswag.test.config;
 
-import java.util.Map;
-
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationController;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationParser;
-import com.oceans7.mobileapps.eagleswag.config.QuestionType;
-import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.persistence.JsonDataFileParserStrategy;
 
 public class ConfigurationParserTest extends InstrumentationTestCase {
 
@@ -54,11 +47,7 @@ public class ConfigurationParserTest extends InstrumentationTestCase {
 		// Setup the controller as the configuration parser
 		this.controller = new ConfigurationParser();
 	}
-
-	/***************************************************************************
-	 * Test Cases
-	 **************************************************************************/
-
+	
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -67,6 +56,10 @@ public class ConfigurationParserTest extends InstrumentationTestCase {
 	protected void tearDown () throws Exception {
 		super.tearDown();
 	}
+
+	/***************************************************************************
+	 * Test Cases
+	 **************************************************************************/
 
 	/**
 	 * Test method for

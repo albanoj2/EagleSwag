@@ -31,7 +31,6 @@ import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
 
-@SuppressWarnings("rawtypes")
 public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 	/***************************************************************************
