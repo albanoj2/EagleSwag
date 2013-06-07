@@ -6,6 +6,7 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ *       TODO Documentation
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -16,6 +17,7 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.RoundController;
+import com.oceans7.mobileapps.eagleswag.domain.RoundNotStartedException;
 
 public class RoundControllerTest extends InstrumentationTestCase {
 
@@ -24,6 +26,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	 **************************************************************************/
 
 	private RoundController manager;
+	private Context context;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -38,7 +41,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Instantiate the manager
-		Context context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 		this.manager = new RoundController(context);
 	}
 
@@ -147,8 +150,8 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * A walkthrough of a sample engineering round to ensure that a round can be
-	 * completed without any errors or bugs.
+	 * A walk-through of a sample engineering round to ensure that a round can
+	 * be completed without any errors or bugs.
 	 */
 	public void testSampleEngineeringRound () throws Exception {
 
@@ -170,7 +173,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * A walkthrough of a sample pilot round to ensure that a round can be
+	 * A walk-through of a sample pilot round to ensure that a round can be
 	 * completed without any errors or bugs.
 	 */
 	public void testSamplePilotRound () throws Exception {
@@ -190,6 +193,69 @@ public class RoundControllerTest extends InstrumentationTestCase {
 		// End the round and log score
 		double score = this.manager.endRound();
 		Log.d(this.getClass().getName(), "Score for pilot: " + score);
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#answerCurrentQuestionYes()}
+	 * 
+	 */
+	public void testAnswerYesBeforeRoundStarted () {
+
+		// Create a new round controller
+		RoundController roundController = new RoundController(this.context);
+
+		try {
+			// Answer a question before starting the round
+			roundController.answerCurrentQuestionYes();
+			fail("Answered a question yes before starting a round without receiving an exception");
+		}
+		catch (RoundNotStartedException e) {
+			// An exception was thrown as expected
+			assertTrue("RoundNotStartedException recieved when answering a question yes before starting a round", true);
+		}
+	}
+	
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#answerCurrentQuestionNo()}
+	 * 
+	 */
+	public void testAnswerNoBeforeRoundStarted () {
+
+		// Create a new round controller
+		RoundController roundController = new RoundController(this.context);
+
+		try {
+			// Answer a question before starting the round
+			roundController.answerCurrentQuestionNo();
+			fail("Answered a question no before starting a round without receiving an exception");
+		}
+		catch (RoundNotStartedException e) {
+			// An exception was thrown as expected
+			assertTrue("RoundNotStartedException recieved when answering a question no before starting a round", true);
+		}
+	}
+	
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#endRound()}
+	 * 
+	 */
+	public void testEndRoundBeforeRoundStarted () {
+
+		// Create a new round controller
+		RoundController roundController = new RoundController(this.context);
+
+		try {
+			// End round before starting the round
+			roundController.endRound();
+			fail("Ended a round before starting a round without receiving an exception");
+		}
+		catch (RoundNotStartedException e) {
+			// An exception was thrown as expected
+			assertTrue("RoundNotStartedException recieved when ending a round before starting a round", true);
+		}
 	}
 
 }
