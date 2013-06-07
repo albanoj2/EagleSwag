@@ -71,8 +71,11 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
 	 * 
-	 *      TODO Include documentation on how each of the question types
-	 *      specified in the configuration is used to create a database table
+	 *      The configuration data from the question type configuration file is
+	 *      used to specify the name of the table the data for each question
+	 *      type is placed into. The configuration data is obtained from the
+	 *      configuration controller and a questions table in the database is
+	 *      created for each question type/
 	 */
 	@Override
 	public void onCreate (SQLiteDatabase db) {

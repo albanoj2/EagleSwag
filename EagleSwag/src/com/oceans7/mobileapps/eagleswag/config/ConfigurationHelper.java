@@ -24,6 +24,8 @@ import android.content.Context;
 
 import com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration;
 import com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration;
+import com.oceans7.mobileapps.eagleswag.config.components.NoJsonConfigurationException;
+import com.oceans7.mobileapps.eagleswag.config.components.NoSqliteConfigurationException;
 import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
@@ -202,9 +204,13 @@ public class ConfigurationHelper {
 	 * @return
 	 *         The name of the SQLite database table that corresponds to the key
 	 *         provided.
+	 * 
 	 * @throws NoSuchQuestionTypeException
 	 *             No question type with the key provided was found in the
 	 *             configuration file.
+	 * @throws NoSqliteConfigurationException
+	 *             No SQLite table name configuration data set for the question
+	 *             type supplied.
 	 */
 	public <T extends Question> String getTableName (Class<T> key, Context context) throws NoSuchQuestionTypeException {
 
@@ -224,7 +230,8 @@ public class ConfigurationHelper {
 			return sqliteConfiguration.getTable();
 		}
 		else {
-			return null;
+			// No SQLite table specified in the configuration file
+			throw new NoSqliteConfigurationException("No database table name specified");
 		}
 
 	}
@@ -248,9 +255,13 @@ public class ConfigurationHelper {
 	 * @return
 	 *         The name of the JSON ID tag in the JSON data file that
 	 *         corresponds to the key.
+	 * 
 	 * @throws NoSuchQuestionTypeException
 	 *             No question type with the key provided was found in the
 	 *             configuration file.
+	 * @throws NoJsonConfigurationException
+	 *             No JSON ID configuration data set for the question type
+	 *             supplied.
 	 */
 	public <T extends Question> String getJsonId (Class<T> key, Context context) throws NoSuchQuestionTypeException {
 
@@ -270,7 +281,8 @@ public class ConfigurationHelper {
 			return jsonConfiguration.getId();
 		}
 		else {
-			return null;
+			// No JSON table specified in the configuration file
+			throw new NoJsonConfigurationException("No JSON ID specified");
 		}
 
 	}
