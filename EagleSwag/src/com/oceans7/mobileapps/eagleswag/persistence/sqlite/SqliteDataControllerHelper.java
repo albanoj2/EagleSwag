@@ -94,21 +94,31 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 			String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
 
 			try {
+				// Start a transaction for inserting the data in the database
+				db.beginTransaction();
+				
 				// Create each questions table in the database
 				SqliteDataControllerQueries.createQuestionsTable(db, table);
 
 				// Obtain the questions from the data parser
 				Queue<? extends Question> questions = parser.getQuestions(key, context);
-
+				
 				for (Question question : questions) {
 					// Insert the new general question
 					SqliteDataControllerQueries.insertIntoQuestionsTable(db, table, question);
 					Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName() + " into the " + table + " table: " + question);
 				}
+				
+				// Signal that the transaction was successful
+				db.setTransactionSuccessful();
 			}
 			catch (SQLException e) {
 				// An exception occurred while trying to create the database
-				Log.e(this.getClass().getName(), "Error while creating the database: " + e);
+				Log.e(this.getClass().getName(), "Error while creating the database '" + table + "': " + e);
+			}
+			finally {
+				// End the previously started transaction
+				db.endTransaction();
 			}
 
 		}
