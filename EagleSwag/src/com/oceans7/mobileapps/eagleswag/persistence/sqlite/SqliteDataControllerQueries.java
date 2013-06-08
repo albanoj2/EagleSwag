@@ -20,6 +20,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
@@ -40,11 +41,18 @@ public class SqliteDataControllerQueries {
 	public static void createQuestionsTable (SQLiteDatabase db, String table) {
 
 		// The query used to create the table
-		String query = "CREATE TABLE IF NOT EXISTS " + table + " (" + SqliteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT," + SqliteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL," + SqliteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL," + SqliteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL," + SqliteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL" + ");";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CREATE TABLE IF NOT EXISTS " + table + " (");
+		builder.append(SqliteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		builder.append(SqliteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL,");
+		builder.append(SqliteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL,");
+		builder.append(SqliteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL,");
+		builder.append(SqliteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL");
+		builder.append(");");
 
 		try {
 			// Execute the SQL command on the database
-			db.execSQL(query);
+			db.execSQL(builder.toString());
 		}
 		catch (SQLException e) {
 			// An SQL exception occurred while trying to create the database
@@ -54,7 +62,7 @@ public class SqliteDataControllerQueries {
 		}
 
 		// Log the creation of the database table
-		Log.i(SqliteDataControllerQueries.class.getName(), "Created table '" + table + "' in database '" + db + "' using the query: " + query);
+		Log.i(SqliteDataControllerQueries.class.getName(), "Created table '" + table + "' in database '" + db + "' using the query: " + builder);
 	}
 
 	/**
@@ -73,25 +81,30 @@ public class SqliteDataControllerQueries {
 	 */
 	public static long insertIntoQuestionsTable (SQLiteDatabase db, String table, Question question) {
 
-		// Extract the JSON values
-		String text = question.getQuestionString();
-		String yesValue = "" + question.getYesPointValue();
-		String noValue = "" + question.getNoPointValue();
-		String usedCount = "" + question.getUsedCount();
+		// Build the SQL statement
+		StringBuilder builder = new StringBuilder();
+		builder.append("INSERT INTO " + table + " (");
+		builder.append(SqliteDataControllerConstants.QUESTION_COLUMN + ", ");
+		builder.append(SqliteDataControllerConstants.YES_VALUE_COLUMN + ", ");
+		builder.append(SqliteDataControllerConstants.NO_VALUE_COLUMN + ", ");
+		builder.append(SqliteDataControllerConstants.USED_COUNT_COLUMN + " ");
+		builder.append(") VALUES (?,?,?,?)");
 
-		// Create a column-value map for the insertion
-		ContentValues values = new ContentValues();
-		values.put(SqliteDataControllerConstants.QUESTION_COLUMN, text);
-		values.put(SqliteDataControllerConstants.YES_VALUE_COLUMN, yesValue);
-		values.put(SqliteDataControllerConstants.NO_VALUE_COLUMN, noValue);
-		values.put(SqliteDataControllerConstants.USED_COUNT_COLUMN, usedCount);
+		// Create a compiled SQL statement
+		SQLiteStatement statement = db.compileStatement(builder.toString());
 
-		// Add the questions to the database
-		long id = db.insert(table, null, values);
+		// Bind the values to the statement
+		statement.bindString(1, question.getQuestionString());
+		statement.bindLong(2, question.getYesPointValue());
+		statement.bindLong(3, question.getNoPointValue());
+		statement.bindLong(4, question.getUsedCount());
+
+		// Execute the statement
+		long id = statement.executeInsert();
 
 		Log.i(
 			SqliteDataControllerConstants.class.getName(),
-			"Inserting question into table '" + table + "':" + "[" + SqliteDataControllerConstants.ID_COLUMN + ": " + id + "] " + "[" + SqliteDataControllerConstants.QUESTION_COLUMN + ": " + text + "] " + "[" + SqliteDataControllerConstants.YES_VALUE_COLUMN + ": " + yesValue + "] " + "[" + SqliteDataControllerConstants.NO_VALUE_COLUMN + ": " + noValue + "]" + "[" + SqliteDataControllerConstants.USED_COUNT_COLUMN + ": " + usedCount + "]");
+			"Inserting question into '" + table + "' where id -> " + id + ": " + builder + " -> (" + question.getQuestionString() + ", " + question.getYesPointValue() + ", " + question.getNoPointValue() + ", " + question.getUsedCount() + ")");
 
 		return id;
 	}

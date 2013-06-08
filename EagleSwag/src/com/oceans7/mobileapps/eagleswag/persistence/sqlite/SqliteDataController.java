@@ -139,15 +139,17 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
+	 * The data for the questions is retrieved from the SQLite database.
+	 * The mappings from the question class (for example, GeneralQuestion.class)
+	 * to the database table are retrieved from the
+	 * SQLiteDataControllerMappingsParser.
+	 * <br /><br/ >
+	 * 
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getQuestions(java.lang.Class,
 	 *      int)
 	 * 
-	 *      The data for the questions is retrieved from the SQLite database.
-	 *      The mappings from the question class (for example,
-	 *      GeneralQuestion.class) to the database table are retrieved from the
-	 *      SQLiteDataControllerMappingsParser.
 	 */
 	@Override
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, int number) {
