@@ -31,11 +31,6 @@ public class RoundController {
 	private Context context;
 
 	/**
-	 * The question manager used to obtain questions for the round.
-	 */
-	private QuestionController questionController;
-
-	/**
 	 * The current round.
 	 */
 	private Round currentRound;
@@ -71,9 +66,6 @@ public class RoundController {
 		// Set the context
 		this.setContext(context);
 
-		// Instantiate the question manager
-		this.questionController = QuestionController.getInstance(context);
-
 		// Set flag to 'round not started'
 		this.hasRoundBeenStarted = false;
 	}
@@ -81,34 +73,15 @@ public class RoundController {
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
-
-	/**
-	 * Start a new round for engineers. This initializes the current round and
-	 * obtains questions for an engineer.
-	 */
-	public synchronized void startEngineeringRound () {
-
-		// Obtain the questions from the question manager
-		this.currentQuestions = this.questionController.getEngineeringQuestions();
-
-		// Create new round object
-		this.currentRound = new Round();
-
-		// Set flag to 'round started'
-		this.hasRoundBeenStarted = true;
-
-		// Set the current question
-		this.currentQuestion = this.currentQuestions.remove(0);
-	}
-
+	
 	/**
 	 * Start a new round for pilots. This initializes the current round and
 	 * obtains questions for a pilot.
 	 */
-	public synchronized void startPilotRound () {
+	public synchronized void startRound (QuestionStrategy strategy) {
 
-		// Obtain the questions from the question manager
-		this.currentQuestions = this.questionController.getPilotQuestions();
+		// Obtain the questions from the supplied strategy
+		this.currentQuestions = strategy.getQuestions(this.context);
 
 		// Create new round object
 		this.currentRound = new Round();
@@ -238,22 +211,6 @@ public class RoundController {
 	 */
 	public void setContext (Context context) {
 		this.context = context;
-	}
-
-	/**
-	 * @return
-	 *         The questionManager.
-	 */
-	public QuestionController getQuestionManager () {
-		return questionController;
-	}
-
-	/**
-	 * @param questionController
-	 *            The questionManager to set.
-	 */
-	public void setQuestionManager (QuestionController questionController) {
-		this.questionController = questionController;
 	}
 
 	/**

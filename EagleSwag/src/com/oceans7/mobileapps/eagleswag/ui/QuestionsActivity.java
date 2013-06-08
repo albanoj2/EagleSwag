@@ -26,10 +26,13 @@ import android.widget.Button;
 import android.widget.TextSwitcher;
 
 import com.oceans7.mobileapps.eagleswag.R;
+import com.oceans7.mobileapps.eagleswag.domain.EngineeringStrategy;
+import com.oceans7.mobileapps.eagleswag.domain.PilotStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.RoundController;
 import com.oceans7.mobileapps.eagleswag.domain.RoundNotStartedException;
+import com.oceans7.mobileapps.eagleswag.ui.SplashScreenActivity.Usertype;
 
-public class QuestionsActivity extends Activity {
+public class QuestionsActivity<T> extends Activity {
 
 	/***************************************************************************
 	 * Attributes
@@ -238,19 +241,19 @@ public class QuestionsActivity extends Activity {
 			roundController = new RoundController(QuestionsActivity.this);
 
 			// Obtain the type of questions to load
-			int type = getIntent().getExtras().getInt("QuestionType");
+			Usertype type = Usertype.values()[getIntent().getExtras().getInt("QuestionType")];
 
-			// Load the correct questions based on the type supplied
 			switch (type) {
+				// Load the correct questions based on the type supplied
 
-				case SplashScreenActivity.ENGINEER_TYPE:
+				case ENGINEER:
 					// Engineer was selected
-					roundController.startEngineeringRound();
+					roundController.startRound(new EngineeringStrategy());
 					break;
 
-				case SplashScreenActivity.PILOT_TYPE:
+				case PILOT:
 					// Pilot was selected
-					roundController.startPilotRound();
+					roundController.startRound(new PilotStrategy());
 					break;
 			}
 

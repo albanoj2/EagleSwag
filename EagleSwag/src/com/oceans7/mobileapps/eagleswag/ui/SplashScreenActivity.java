@@ -20,8 +20,11 @@ public class SplashScreenActivity extends Activity {
 	 * Attributes
 	 **************************************************************************/
 
-	public static final int ENGINEER_TYPE = 0;
-	public static final int PILOT_TYPE = 1;
+	public enum Usertype {
+		ENGINEER,
+		PILOT
+	}
+	
 	private Button bEngineer;
 	private Button bPilot;
 
@@ -45,7 +48,7 @@ public class SplashScreenActivity extends Activity {
 
 				// Setup the round controller for engineer and start the
 				// activity for answering questions
-				transitionToQuestionsAcitivity(v, ENGINEER_TYPE);
+				transitionToQuestionsAcitivity(v, Usertype.ENGINEER);
 			}
 		});
 
@@ -56,7 +59,7 @@ public class SplashScreenActivity extends Activity {
 
 				// Setup the round controller for pilot and start the activity
 				// for answering questions
-				transitionToQuestionsAcitivity(v, PILOT_TYPE);
+				transitionToQuestionsAcitivity(v, Usertype.PILOT);
 			}
 		});
 
@@ -69,7 +72,12 @@ public class SplashScreenActivity extends Activity {
 		return true;
 	}
 
-	public void transitionToQuestionsAcitivity (View v, int type) {
+	/**
+	 * Transitions to 
+	 * @param v
+	 * @param type
+	 */
+	public void transitionToQuestionsAcitivity (View v, Usertype type) {
 
 		// Switch to the questions activity
 		Intent intent = new Intent(v.getContext(), QuestionsActivity.class);

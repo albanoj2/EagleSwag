@@ -6,7 +6,9 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       TODO Documentation
+ *       Test fixture for RoundController.
+ * 
+ * @see com.oceans7.mobileapps.eagleswag.domain.RoundController
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -16,6 +18,8 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
+import com.oceans7.mobileapps.eagleswag.domain.EngineeringStrategy;
+import com.oceans7.mobileapps.eagleswag.domain.PilotStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.RoundController;
 import com.oceans7.mobileapps.eagleswag.domain.RoundNotStartedException;
 
@@ -66,12 +70,11 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testStartEngineeringRound () throws Exception {
 
 		// Start engineering round
-		this.manager.startEngineeringRound();
+		this.manager.startRound(new EngineeringStrategy());
 
 		// Ensure that the questions and round have been set in the manager
 		assertNotNull("Question queue is set:", this.manager.getCurrentQuestions());
 		assertTrue("Questions loaded:", this.manager.hasMoreQuestions());
-		assertNotNull("Question manager is set:", this.manager.getQuestionManager());
 		assertNotNull("Round is set:", this.manager.getCurrentRound());
 	}
 
@@ -83,12 +86,11 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testStartPilotRound () throws Exception {
 
 		// Start engineering round
-		this.manager.startPilotRound();
+		this.manager.startRound(new PilotStrategy());
 
 		// Ensure that the questions and round have been set in the manager
 		assertNotNull("Question queue is set:", this.manager.getCurrentQuestions());
 		assertTrue("Questions loaded:", this.manager.hasMoreQuestions());
-		assertNotNull("Question manager is set:", this.manager.getQuestionManager());
 		assertNotNull("Round is set:", this.manager.getCurrentRound());
 	}
 
@@ -100,7 +102,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testAnswerCurrentQuestionYes () throws Exception {
 
 		// Start a round
-		this.manager.startPilotRound();
+		this.manager.startRound(new PilotStrategy());
 
 		// Get the original number of questions answered as yes
 		int originalYes = this.manager.getCurrentRound().getNumberOfYesQuestions();
@@ -120,7 +122,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testAnswerCurrentQuestionNo () throws Exception {
 
 		// Start a round
-		this.manager.startPilotRound();
+		this.manager.startRound(new PilotStrategy());
 
 		// Get the original number of questions answered as no
 		int originalNo = this.manager.getCurrentRound().getNumberOfNoQuestions();
@@ -139,7 +141,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testEndRound () throws Exception {
 
 		// Start a round
-		this.manager.startPilotRound();
+		this.manager.startRound(new PilotStrategy());
 
 		// End the round
 		this.manager.endRound();
@@ -156,7 +158,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testSampleEngineeringRound () throws Exception {
 
 		// Start the round for an engineer
-		this.manager.startEngineeringRound();
+		this.manager.startRound(new EngineeringStrategy());
 
 		while (this.manager.hasMoreQuestions()) {
 
@@ -179,7 +181,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testSamplePilotRound () throws Exception {
 
 		// Start the round for a pilot
-		this.manager.startPilotRound();
+		this.manager.startRound(new PilotStrategy());
 
 		while (this.manager.hasMoreQuestions()) {
 
@@ -215,7 +217,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 			assertTrue("RoundNotStartedException recieved when answering a question yes before starting a round", true);
 		}
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#answerCurrentQuestionNo()}
@@ -236,7 +238,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 			assertTrue("RoundNotStartedException recieved when answering a question no before starting a round", true);
 		}
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobileapps.eagleswag.domain.RoundController#endRound()}

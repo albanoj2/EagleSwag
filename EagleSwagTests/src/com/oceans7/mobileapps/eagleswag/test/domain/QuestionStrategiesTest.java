@@ -1,14 +1,11 @@
 /**
  * @author Justin Albano
- * @date May 18, 2013
- * @file QuestionControllerTest.java
+ * @date Jun 7, 2013
+ * @file QuestionStrategiesTest.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
- *       Test fixture for the Question Controller class.
- * 
- * @see com.oceans7.mobileapps.eagleswag.domain.QuestionController
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -22,25 +19,25 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.EngineeringStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.PilotStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
-import com.oceans7.mobileapps.eagleswag.domain.QuestionController;
 
-public class QuestionControllerTest extends InstrumentationTestCase {
-	
+public class QuestionStrategiesTest extends InstrumentationTestCase {
+
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
 
-	private QuestionController questionController;
 	private Context context;
-	
+
 	/**
 	 * The asset location of the question controller configuration resource.
 	 */
 	private static final String QUESTION_CONTROLLER_CONFIG_ASSET = "config/domain/question-controller.cfg";
-	
+
 	/***************************************************************************
 	 * Setup & Tear Down
 	 **************************************************************************/
@@ -54,10 +51,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Obtain the target context
-		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
-
-		// Create the question controller
-		this.questionController = QuestionController.getInstance(this.context);
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 	}
 
 	/**
@@ -68,7 +62,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	protected void tearDown () throws Exception {
 		super.tearDown();
 	}
-	
+
 	/***************************************************************************
 	 * Test Cases
 	 **************************************************************************/
@@ -81,7 +75,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateEngineeringQueue () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -107,18 +101,18 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
 		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of engineering questions
-		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.engineeringQuestions"));
+		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questions.distribution.engineer.specific"));
 		Log.d(this.getClass().getName(), "(" + theoEngineeringQuestions + ") engineering questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.generalQuestions"));
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questions.distribution.engineer.general"));
 		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Total count of questions
@@ -145,18 +139,18 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
 		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of engineering questions
-		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.engineeringQuestions"));
+		int theoEngineeringQuestions = Integer.parseInt(properties.getProperty("questions.distribution.engineer.specific"));
 		Log.d(this.getClass().getName(), "(" + theoEngineeringQuestions + ") engineering questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.engineering.generalQuestions"));
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questions.distribution.engineer.general"));
 		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Record the number of general and engineering questions
@@ -189,7 +183,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreatePilotQueue () throws Exception {
 
 		// Obtain the pilot questions
-		List<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = new PilotStrategy().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -215,18 +209,18 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = new PilotStrategy().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
 		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of pilot questions
-		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.pilotQuestions"));
+		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questions.distribution.pilot.specific"));
 		Log.d(this.getClass().getName(), "(" + theoPilotQuestions + ") pilot questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.generalQuestions"));
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questions.distribution.pilot.general"));
 		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Total count of questions
@@ -253,18 +247,18 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = new PilotStrategy().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
 		properties.load(this.context.getAssets().open(QUESTION_CONTROLLER_CONFIG_ASSET));
 
 		// Retrieve the number of pilot questions
-		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.pilotQuestions"));
+		int theoPilotQuestions = Integer.parseInt(properties.getProperty("questions.distribution.pilot.specific"));
 		Log.d(this.getClass().getName(), "(" + theoPilotQuestions + ") pilot questions should be loaded");
 
 		// Retrieve the number of general questions
-		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questionController.pilot.generalQuestions"));
+		int theoGeneralQuestions = Integer.parseInt(properties.getProperty("questions.distribution.pilot.general"));
 		Log.d(this.getClass().getName(), "(" + theoGeneralQuestions + ") general questions should be loaded");
 
 		// Record the number of general and engineering questions
@@ -298,7 +292,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testValidEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = this.questionController.getEngineeringQuestions();
+		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
@@ -321,7 +315,7 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 	public void testValidPilotQuestions () throws Exception {
 
 		// Obtain the pilot questions
-		List<Question> questions = this.questionController.getPilotQuestions();
+		List<Question> questions = new PilotStrategy().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
@@ -334,4 +328,5 @@ public class QuestionControllerTest extends InstrumentationTestCase {
 			assertTrue("Used count is non-negative", question.getUsedCount() >= 0);
 		}
 	}
+
 }
