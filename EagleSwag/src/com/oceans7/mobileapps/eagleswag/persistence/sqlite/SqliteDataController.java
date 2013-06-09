@@ -222,15 +222,17 @@ public class SqliteDataController implements DataController {
 	}
 	
 	/**
+	 * TODO Add caching to obtain the total score
 	 * {@inheritDoc}
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getTotalScore(java.lang.String)
 	 */
 	@Override
 	public int getTotalScore (String type) {
-		return SqliteDataControllerQueries.getTotalScore(database, type);
+		return SqliteDataControllerQueries.getTotalScore(this.database, type);
 	}
 
 	/**
+	 * TODO Add caching to obtain the average score
 	 * {@inheritDoc}
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getAverageScore(java.lang.String)
 	 */
@@ -267,6 +269,7 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
+	 * TODO Update the cache (see above) when saving scores
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveRoundScore(com.oceans7.mobileapps.eagleswag.domain.Score,

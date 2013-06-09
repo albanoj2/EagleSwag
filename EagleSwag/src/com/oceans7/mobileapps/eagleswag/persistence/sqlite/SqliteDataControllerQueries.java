@@ -104,8 +104,7 @@ public class SqliteDataControllerQueries {
 		// Execute the statement
 		long id = statement.executeInsert();
 
-		Log.i(
-			SqliteDataControllerConstants.class.getName(),
+		Log.i(SqliteDataControllerConstants.class.getName(),
 			"Inserting question into '" + table + "' where id -> " + id + ": " + builder + " -> (" + question.getQuestionString() + ", " + question.getYesPointValue() + ", " + question.getNoPointValue() + ", " + question.getUsedCount() + ")");
 
 		return id;
@@ -230,8 +229,7 @@ public class SqliteDataControllerQueries {
 		long id = statement.executeInsert();
 
 		// Log the insertion
-		Log.i(
-			SqliteDataControllerConstants.class.getName(),
+		Log.i(SqliteDataControllerConstants.class.getName(),
 			"Inserting score into '" + SqliteDataControllerConstants.SCORE_TABLE_NAME + "' where id -> " + id + ": " + builder + " -> (" + score.getScore() + ", " + score.getTimestamp() + ", " + type + ")");
 
 		return id;
@@ -246,10 +244,17 @@ public class SqliteDataControllerQueries {
 	 */
 	public static int getTotalScore (SQLiteDatabase db, String type) {
 
+		if (db == null) {
+			// The database was not set
+			Log.e(SqliteDataControllerQueries.class.getName(), "Database is null");
+		}
+
 		// Obtain the sum of the scores for a type
-		Cursor cursor = db.rawQuery(
-			"SELECT SUM(" + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?",
-			new String[] { type });
+		String query = "SELECT SUM(" + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?";
+		Cursor cursor = db.rawQuery(query, new String[] { type });
+		
+		// Obtained the sum data from the database
+		Log.i(SqliteDataControllerQueries.class.getName(), "Obtained sum of scores using the query: " + query);
 
 		// Default value
 		int totalScore = 0;

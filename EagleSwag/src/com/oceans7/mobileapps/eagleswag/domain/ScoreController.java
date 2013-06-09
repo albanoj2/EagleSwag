@@ -6,6 +6,9 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ *       Domain class responsible for retrieving the data (such as average score
+ *       and total score) for scores that were previously saved in persistent
+ *       storage.
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;
@@ -21,22 +24,24 @@ public class ScoreController {
 	 * Attributes
 	 **************************************************************************/
 
-	private DataController dataController;
+	/**
+	 * The context used to access the data controller.
+	 */
+	private Context context;
 
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
 
 	/**
-	 * Parameterized constructor that requires the context used to access the
-	 * data for the previously saved rounds.
+	 * Parameterized constructor that specifies context used to access the data
+	 * controller.
 	 * 
 	 * @param context
-	 *            The context used to access the data for the previously saved
-	 *            rounds.
+	 *            The context used to access the data controller.
 	 */
 	public ScoreController (Context context) {
-		this.dataController = DataControllerFactory.getInstance().getDataController(context);
+		this.context = context;
 	}
 
 	/***************************************************************************
@@ -55,7 +60,18 @@ public class ScoreController {
 	 *         strategy.
 	 */
 	public int getTotalScore (QuestionStrategy strategy) {
-		return this.dataController.getTotalScore(strategy.getName());
+
+		// Create and open the data controller
+		DataController dataController = DataControllerFactory.getInstance().getDataController(this.context);
+		dataController.open(this.context);
+
+		// Obtain the score from the data controller
+		int score = dataController.getTotalScore(strategy.getName());
+
+		// Close the data controller
+		dataController.close();
+
+		return score;
 	}
 
 	/**
@@ -70,7 +86,18 @@ public class ScoreController {
 	 *         strategy.
 	 */
 	public int getAverageScore (QuestionStrategy strategy) {
-		return this.dataController.getAverageScore(strategy.getName());
+
+		// Create and open the data controller
+		DataController dataController = DataControllerFactory.getInstance().getDataController(this.context);
+		dataController.open(this.context);
+
+		// Obtain the average score from the data controller
+		int average = dataController.getAverageScore(strategy.getName());
+
+		// Close the data controller
+		dataController.close();
+
+		return average;
 	}
 
 	/***************************************************************************
@@ -79,18 +106,18 @@ public class ScoreController {
 
 	/**
 	 * @return
-	 *         The dataController.
+	 *         The context.
 	 */
-	public DataController getDataController () {
-		return dataController;
+	public Context getContext () {
+		return context;
 	}
 
 	/**
-	 * @param dataController
-	 *            The dataController to set.
+	 * @param context
+	 *            The context to set.
 	 */
-	public void setDataController (DataController dataController) {
-		this.dataController = dataController;
+	public void setContext (Context context) {
+		this.context = context;
 	}
 
 }

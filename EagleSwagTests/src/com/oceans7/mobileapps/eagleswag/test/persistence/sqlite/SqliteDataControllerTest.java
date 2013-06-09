@@ -258,4 +258,21 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		// Ensure the average score is correct
 		assertEquals("Average score is correct:", 50, average);
 	}
+	
+	/**
+	 * TODO Documentation
+	 */
+	public void testAverageScoreRounding () {
+		
+		// Insert a few test scores into the database
+		this.sqliteDataController.saveRoundScore(new Score(10), "test");
+		this.sqliteDataController.saveRoundScore(new Score(10), "test");
+		this.sqliteDataController.saveRoundScore(new Score(20), "test");
+
+		// Obtain the average score for the entries placed in the database
+		int average = this.sqliteDataController.getAverageScore("test");
+
+		// Ensure the average score is correct
+		assertEquals("Average score is correct:", 13, average);
+	}
 }
