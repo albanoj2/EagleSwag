@@ -80,6 +80,9 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate (SQLiteDatabase db) {
 
+		// RECORD: time stamp of the beginning of the creation
+		long start = System.currentTimeMillis();
+
 		// Obtain a data file parser
 		DataFileParser parser = new DataFileParser();
 
@@ -121,6 +124,10 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 				db.endTransaction();
 			}
 
+			// RECORD: time stamp of the end of the creation
+			long end = System.currentTimeMillis();
+			Log.i(this.getClass().getName(), "SQLite database creation took " + (end - start) + "ms");
+
 		}
 
 		// Create scores table
@@ -155,7 +162,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 				db.execSQL("DROP TABLE IF EXISTS " + table);
 				Log.w(this.getClass().getName(), "Dropping table '" + table + "' from database");
 			}
-			
+
 			// Drop the scores table
 			db.execSQL("DROP TABLE IF EXISTS " + SqliteDataControllerConstants.SCORE_TABLE_NAME);
 

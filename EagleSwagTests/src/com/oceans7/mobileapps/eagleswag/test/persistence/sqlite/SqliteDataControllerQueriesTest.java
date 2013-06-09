@@ -302,6 +302,9 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		this.helperUpdateQuestionTable(PilotQuestion.class);
 	}
 
+	/**
+	 * TODO Documentation
+	 */
 	public void testInsertScore () {
 
 		// Insert a test score into the database
@@ -319,4 +322,39 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		assertEquals("Correct type:", new EngineeringStrategy().getName(), cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
 		assertEquals("Correct timestamp:", 0, cursor.getLong(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP.ordinal()));
 	}
+	
+	/**
+	 * TODO Documentation
+	 */
+	public void testTotalScore () {
+
+		// Insert a few test scores into the database
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(0.0));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(100.0));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(50.0));
+		
+		// Obtain the total score for the entries placed in the database
+		double totalScore = SqliteDataControllerQueries.getTotalScore(this.db, new EngineeringStrategy().getName());
+		
+		// Ensure the total score is correct
+		assertEquals("Total score is correct:", 150.0, totalScore);
+	}
+	
+	/**
+	 * TODO Documentation
+	 */
+	public void testAverageScore () {
+
+		// Insert a few test scores into the database
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(0.0));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(100.0));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(50.0));
+		
+		// Obtain the average score for the entries placed in the database
+		double averageScore = SqliteDataControllerQueries.getAverageScore(this.db, new EngineeringStrategy().getName());
+		
+		// Ensure the average score is correct
+		assertEquals("Average score is correct:", 50.0, averageScore);
+	}
+	
 }

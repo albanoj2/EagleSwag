@@ -54,9 +54,6 @@ public class Round {
 		// Initialize the data structures to store the answered questions
 		this.questionsAnsweredYes = new LinkedList<Question>();
 		this.questionsAnsweredNo = new LinkedList<Question>();
-
-		// Initialize the empty score
-		this.score = new Score();
 	}
 
 	/***************************************************************************
@@ -134,9 +131,10 @@ public class Round {
 			runningTotal += question.getYesPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
-					question.getNoPointValue()) + "]");
+			Log.i(
+				this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
+					question.getYesPointValue(), question.getNoPointValue()) + "]");
 		}
 
 		for (Question question : this.questionsAnsweredNo) {
@@ -144,20 +142,28 @@ public class Round {
 			runningTotal += question.getNoPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
-					question.getNoPointValue()) + "]");
+			Log.i(
+				this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
+					question.getYesPointValue(), question.getNoPointValue()) + "]");
 		}
 
-		// Calculate the score as earned/possible * 100
-		double score = (runningTotal / totalPossiblePoints) * 100;
-		Log.i(this.getClass().getName(), "Score for round: " + score);
+		if ((this.getNumberOfYesQuestions() + this.getNumberOfNoQuestions()) > 0) {
+			// Calculate the score as earned/possible * 100 (if there were
+			// questions answered). If there were no questions answered, the
+			// possible points would be 0, and the score would be NaN
+			double score = (runningTotal / totalPossiblePoints) * 100;
+			Log.i(this.getClass().getName(), "Score for round: " + score);
 
-		// Set the score and timestamp for the score
-		this.score.setScore(score);
-		this.score.setTimestamp(System.currentTimeMillis() / 1000L);
+			// Set the score for the round
+			this.score = new Score(score);
 
-		return score;
+			return score;
+		}
+		else {
+			// No questions were answered
+			return 0;
+		}
 	}
 
 	/**
@@ -195,8 +201,8 @@ public class Round {
 			Log.i(this.getClass().getName(), "Incremented used count and saved question: " + question);
 		}
 
-		if (strategy != null) {
-			// Save the score object if a strategy is provided
+		if (strategy != null && this.score != null) {
+			// Save score object if a strategy is provided and the score is set
 			this.score.save(strategy, context);
 		}
 	}

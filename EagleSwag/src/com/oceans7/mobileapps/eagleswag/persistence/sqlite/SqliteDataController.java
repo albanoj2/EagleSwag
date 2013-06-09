@@ -220,6 +220,26 @@ public class SqliteDataController implements DataController {
 
 		return questions;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getTotalScore(java.lang.String)
+	 */
+	@Override
+	public double getTotalScore (String type) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getAverageScore(java.lang.String)
+	 */
+	@Override
+	public double getAverageScore (String type) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	/**
 	 * {@inheritDoc}

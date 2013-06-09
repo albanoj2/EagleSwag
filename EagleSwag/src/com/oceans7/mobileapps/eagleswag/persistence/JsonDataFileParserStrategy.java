@@ -82,6 +82,9 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 		Queue<T> questions = new LinkedList<T>();
 
 		try {
+			// RECORD: time stamp of the beginning of the parsing
+			long start = System.currentTimeMillis();
+			
 			// Obtain the JSON ID to parse for the key provided
 			String id = ConfigurationHelper.getInstance().getJsonId(key, context);
 
@@ -130,6 +133,10 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 
 				// Add the new general question (ignoring the ID)
 				questions.add(questionToAdd);
+				
+				// RECORD: time stamp of the end of the parsing
+				long end = System.currentTimeMillis();
+				Log.i(this.getClass().getName(), "JSON parsing took " + (end - start) + "ms");
 			}
 		}
 		catch (IOException e) {

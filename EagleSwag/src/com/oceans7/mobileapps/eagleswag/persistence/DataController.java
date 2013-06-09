@@ -60,6 +60,20 @@ public interface DataController {
 	 *         A queue containing the specified number of questions of type, T.
 	 */
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, int number);
+	
+	/**
+	 * TODO Documentation
+	 * @param type
+	 * @return
+	 */
+	public double getTotalScore (String type);
+	
+	/**
+	 * TODO Documentation
+	 * @param type
+	 * @return
+	 */
+	public double getAverageScore (String type);
 
 	/**
 	 * Saves a question. The key parameter is used as a means of saving the
@@ -74,5 +88,10 @@ public interface DataController {
 	 */
 	public void saveQuestion (Class<? extends Question> key, Question question);
 	
+	/**
+	 * TODO Documentation
+	 * @param score
+	 * @param type
+	 */
 	public void saveRoundScore (Score score, String type);
 }
