@@ -147,8 +147,9 @@ public class RoundControllerTest extends InstrumentationTestCase {
 		this.manager.endRound();
 
 		// Ensure that the current round and questions has been erased
-		assertTrue("Current round unset:", this.manager.getCurrentRound() == null);
-		assertTrue("Current questions unset:", this.manager.getCurrentQuestions() == null);
+		assertNull("Current round unset:", this.manager.getCurrentRound());
+		assertNull("Current questions unset:", this.manager.getCurrentQuestions());
+		assertNull("Current strategy unset:", this.manager.getCurrentStrategy());
 	}
 
 	/**

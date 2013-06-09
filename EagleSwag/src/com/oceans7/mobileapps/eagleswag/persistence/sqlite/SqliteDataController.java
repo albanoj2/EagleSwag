@@ -38,6 +38,7 @@ import android.util.Log;
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.domain.Score;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
 public class SqliteDataController implements DataController {
@@ -142,8 +143,8 @@ public class SqliteDataController implements DataController {
 	 * The data for the questions is retrieved from the SQLite database.
 	 * The mappings from the question class (for example, GeneralQuestion.class)
 	 * to the database table are retrieved from the
-	 * SQLiteDataControllerMappingsParser.
-	 * <br /><br/ >
+	 * SQLiteDataControllerMappingsParser. <br />
+	 * <br/ >
 	 * 
 	 * {@inheritDoc}
 	 * 
@@ -170,11 +171,11 @@ public class SqliteDataController implements DataController {
 				// Loop through the cursor
 
 				// Question data
-				int id = cursor.getInt(SqliteDataControllerConstants.Columns.ID.ordinal());
-				String text = cursor.getString(SqliteDataControllerConstants.Columns.QUESTION.ordinal());
-				int yesValue = cursor.getInt(SqliteDataControllerConstants.Columns.YES_VALUE.ordinal());
-				int noValue = cursor.getInt(SqliteDataControllerConstants.Columns.NO_VALUE.ordinal());
-				int usedCount = cursor.getInt(SqliteDataControllerConstants.Columns.USED_COUNT.ordinal());
+				int id = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.ID.ordinal());
+				String text = cursor.getString(SqliteDataControllerConstants.QuestionColumns.QUESTION.ordinal());
+				int yesValue = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.YES_VALUE.ordinal());
+				int noValue = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.NO_VALUE.ordinal());
+				int usedCount = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.USED_COUNT.ordinal());
 
 				try {
 					// Obtain the constructor for the supplied class
@@ -234,6 +235,21 @@ public class SqliteDataController implements DataController {
 
 		// Save the question in the database
 		SqliteDataControllerQueries.updateQuestion(this.database, table, question);
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveRoundScore(com.oceans7.mobileapps.eagleswag.domain.Score,
+	 *      java.lang.String)
+	 *      TODO Implement a mechanism to save the round
+	 */
+	@Override
+	public void saveRoundScore (Score score, String type) {
+
+		// Save the score in the database
+		SqliteDataControllerQueries.insertIntoScoreTable(this.database, type, score);
 
 	}
 

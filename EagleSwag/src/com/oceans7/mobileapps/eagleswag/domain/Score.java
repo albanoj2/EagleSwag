@@ -11,6 +11,12 @@
 
 package com.oceans7.mobileapps.eagleswag.domain;
 
+import android.content.Context;
+import android.util.Log;
+
+import com.oceans7.mobileapps.eagleswag.persistence.DataController;
+import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
+
 public class Score {
 
 	/***************************************************************************
@@ -32,24 +38,25 @@ public class Score {
 	 **************************************************************************/
 
 	/**
-	 * Default constructor.
+	 * Default constructor (automatically sets the timestamp)
 	 */
-	public Score () {}
+	public Score () {
+		this.setTimestamp(System.currentTimeMillis() / 1000L);
+	}
 
 	/**
 	 * Parameterized constructor that allows for the initialization of the score
-	 * and the timestamp of when the score was recorded.
+	 * and the timestamp of when the score was recorded (automatically sets the
+	 * timestamp).
 	 * 
 	 * @param score
 	 *            The score value.
-	 * @param timestamp
-	 *            When the score was recorded (the UNIX timestamp).
 	 */
-	public Score (double score, long timestamp) {
+	public Score (double score) {
 
 		// Set the data for the round score
 		this.setScore(score);
-		this.setTimestamp(timestamp);
+		this.setTimestamp(System.currentTimeMillis() / 1000L);
 	}
 
 	/***************************************************************************
@@ -58,8 +65,26 @@ public class Score {
 
 	/**
 	 * Saves the round in persistent storage.
+	 * 
+	 * @param strategy
+	 *            The strategy used to save the round.
 	 */
-	public void save () {}
+	public void save (QuestionStrategy strategy, Context context) {
+
+		// Obtain a reference to a data controller and open the controller
+		DataController controller = DataControllerFactory.getInstance().getDataController(context);
+		controller.open(context);
+
+		// Save the score
+		controller.saveRoundScore(this, strategy.getName());
+		
+		// Log the score at the time of saving
+		Log.i(this.getClass().getName(), "Saving score of " + this.getScore());
+
+		// Close the controller
+		controller.close();
+
+	}
 
 	/***************************************************************************
 	 * Getters & Setters

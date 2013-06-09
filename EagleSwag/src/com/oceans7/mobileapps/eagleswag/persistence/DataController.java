@@ -19,6 +19,7 @@ import java.util.Queue;
 import android.content.Context;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.domain.Score;
 
 public interface DataController {
 
@@ -72,4 +73,6 @@ public interface DataController {
 	 *            The question object to store.
 	 */
 	public void saveQuestion (Class<? extends Question> key, Question question);
+	
+	public void saveRoundScore (Score score, String type);
 }

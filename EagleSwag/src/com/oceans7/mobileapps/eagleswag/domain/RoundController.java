@@ -46,6 +46,11 @@ public class RoundController {
 	private Question currentQuestion;
 
 	/**
+	 * The current strategy used to start the round.
+	 */
+	private QuestionStrategy currentStrategy;
+
+	/**
 	 * Flag to track if a round has been started.
 	 */
 	private boolean hasRoundBeenStarted;
@@ -73,7 +78,7 @@ public class RoundController {
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
-	
+
 	/**
 	 * Start a new round for pilots. This initializes the current round and
 	 * obtains questions for a pilot.
@@ -85,6 +90,9 @@ public class RoundController {
 
 		// Create new round object
 		this.currentRound = new Round();
+
+		// Set the current strategy
+		this.currentStrategy = strategy;
 
 		// Set flag to 'round started'
 		this.hasRoundBeenStarted = true;
@@ -176,15 +184,19 @@ public class RoundController {
 			throw new RoundNotStartedException("A round has not been started before attempted to end the current round");
 		}
 		else {
-			// Save the current round
-			this.currentRound.save(this.context);
 
 			// Record the score for the round
 			double score = this.currentRound.calculateScore();
 
+			// Save the current round
+			this.currentRound.save(this.currentStrategy, this.context);
+
 			// Destroy the current round and set of questions
 			this.currentRound = null;
 			this.currentQuestions = null;
+
+			// Remove the current strategy
+			this.currentStrategy = null;
 
 			// Set flag to 'round not started'
 			this.hasRoundBeenStarted = false;
@@ -242,7 +254,7 @@ public class RoundController {
 	 *         The current question to answer.
 	 */
 	public Question getCurrentQuestion () throws RoundNotStartedException {
-		
+
 		if (!this.hasRoundBeenStarted) {
 			// A round has not be started yet
 			throw new RoundNotStartedException("A round has not been started before attempted to obtain the current question");
@@ -250,6 +262,14 @@ public class RoundController {
 		else {
 			return currentQuestion;
 		}
+	}
+
+	/**
+	 * @return
+	 *         The currentStrategy.
+	 */
+	public QuestionStrategy getCurrentStrategy () {
+		return currentStrategy;
 	}
 
 }

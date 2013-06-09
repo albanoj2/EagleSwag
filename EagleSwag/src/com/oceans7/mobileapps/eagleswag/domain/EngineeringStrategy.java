@@ -23,5 +23,14 @@ public class EngineeringStrategy extends QuestionStrategy {
 	@Override
 	public List<Question> getQuestions (Context context) {
 		return super.getQuestions(context, EngineeringQuestion.class, "engineer");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy#getName()
+	 */
+	@Override
+	public String getName () {
+		return "engineering";
 	} 
 }

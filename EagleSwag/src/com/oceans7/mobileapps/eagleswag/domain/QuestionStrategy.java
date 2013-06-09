@@ -94,5 +94,7 @@ public abstract class QuestionStrategy {
 	}
 	
 	public abstract List<Question> getQuestions (Context context);
+	
+	public abstract String getName ();
 
 }

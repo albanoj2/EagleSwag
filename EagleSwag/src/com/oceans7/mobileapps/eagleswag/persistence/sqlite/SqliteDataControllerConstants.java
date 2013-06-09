@@ -28,14 +28,18 @@ public class SqliteDataControllerConstants {
 	 * and the application is run, the database is automatically updated (the
 	 * SqliteDataControllerHelper runs its update logic to update the database).
 	 */
-	public static final int DATABASE_VERSION = 14;
+	public static final int DATABASE_VERSION = 15;
 
 	/**
 	 * A numerical reference for each of the columns in a questions table.
 	 */
-	public static enum Columns {
+	public static enum QuestionColumns {
 		ID, QUESTION, YES_VALUE, NO_VALUE, USED_COUNT
 	};
+
+	// -------------------------------------------------------------------------
+	// Question table column names
+	// -------------------------------------------------------------------------
 
 	/**
 	 * The name of the ID column in a questions table.
@@ -61,4 +65,18 @@ public class SqliteDataControllerConstants {
 	 * The name of the used count column in a questions table.
 	 */
 	public static final String USED_COUNT_COLUMN = "usedCount";
+
+	// -------------------------------------------------------------------------
+	// Scores table
+	// -------------------------------------------------------------------------
+
+	public static final String SCORE_TABLE_NAME = "Scores";
+	// TODO Documentation for each of the column names
+	public static enum ScoresColumns {
+		ID, SCORE, TIMESTAMP, TYPE
+	}
+	public static final String SCORE_ID_COLUMN = "_id";
+	public static final String SCORE_SCORE_COLUMN = "score";
+	public static final String SCORE_TIMESTAMP_COLUMN = "timestamp";
+	public static final String SCORE_TYPE_COLUMN = "type";
 }

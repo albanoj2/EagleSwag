@@ -8,8 +8,8 @@
     <position height="-1" width="-1" x="488" y="571"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
   <class id="2" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries" 
@@ -19,8 +19,8 @@
     <position height="-1" width="-1" x="762" y="571"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <class id="3" language="java" 
@@ -30,19 +30,20 @@
     <position height="-1" width="-1" x="508" y="432"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <enumeration id="4" language="java" 
-    name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants.Columns" project="EagleSwag" 
+    name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants.QuestionColumns" 
+    project="EagleSwag" 
     file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/SqliteDataControllerConstants.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="764" y="958"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </enumeration>  
   <class id="5" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerHelper" 
@@ -52,8 +53,8 @@
     <position height="-1" width="-1" x="1141" y="799"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <class id="6" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants" 
@@ -63,8 +64,8 @@
     <position height="-1" width="-1" x="762" y="758"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <class id="7" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.LfuRetrieveQuestionsStrategy" 
@@ -74,8 +75,8 @@
     <position height="-1" width="-1" x="487" y="691"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <class id="8" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController" 
@@ -85,8 +86,8 @@
     <position height="-1" width="-1" x="1143" y="571"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <dependency id="9">    
@@ -161,8 +162,8 @@
   </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
-    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
-    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
   </classifier-display>  
   <association-display labels="true" multiplicity="true"/>
 </class-diagram>

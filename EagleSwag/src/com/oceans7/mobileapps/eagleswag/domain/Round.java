@@ -39,7 +39,7 @@ public class Round {
 	 * this round.
 	 */
 	private LinkedList<Question> questionsAnsweredNo;
-	
+
 	/**
 	 * The score of the round.
 	 */
@@ -54,7 +54,7 @@ public class Round {
 		// Initialize the data structures to store the answered questions
 		this.questionsAnsweredYes = new LinkedList<Question>();
 		this.questionsAnsweredNo = new LinkedList<Question>();
-		
+
 		// Initialize the empty score
 		this.score = new Score();
 	}
@@ -134,10 +134,9 @@ public class Round {
 			runningTotal += question.getYesPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(
-				this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
-					question.getYesPointValue(), question.getNoPointValue()) + "]");
+			Log.i(this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
+					question.getNoPointValue()) + "]");
 		}
 
 		for (Question question : this.questionsAnsweredNo) {
@@ -145,16 +144,15 @@ public class Round {
 			runningTotal += question.getNoPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(
-				this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
-					question.getYesPointValue(), question.getNoPointValue()) + "]");
+			Log.i(this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
+					question.getNoPointValue()) + "]");
 		}
 
 		// Calculate the score as earned/possible * 100
 		double score = (runningTotal / totalPossiblePoints) * 100;
 		Log.i(this.getClass().getName(), "Score for round: " + score);
-		
+
 		// Set the score and timestamp for the score
 		this.score.setScore(score);
 		this.score.setTimestamp(System.currentTimeMillis() / 1000L);
@@ -166,10 +164,14 @@ public class Round {
 	 * Save the questions for the round. Before saving each question, the used
 	 * count for each question is incremented to reflect its use.
 	 * 
+	 * @param strategy
+	 *            The question strategy used to save the round. If the strategy
+	 *            is null, the score for the round will not be saved.
+	 * 
 	 * @param context
 	 *            The context used to save the questions.
 	 */
-	public void save (Context context) {
+	public void save (QuestionStrategy strategy, Context context) {
 
 		for (Question question : this.questionsAnsweredYes) {
 			// Iterate through the 'yes' questions and save each
@@ -192,9 +194,11 @@ public class Round {
 			// Log the saved question
 			Log.i(this.getClass().getName(), "Incremented used count and saved question: " + question);
 		}
-		
-		// Save the score object
-		this.score.save();
+
+		if (strategy != null) {
+			// Save the score object if a strategy is provided
+			this.score.save(strategy, context);
+		}
 	}
 
 	/***************************************************************************

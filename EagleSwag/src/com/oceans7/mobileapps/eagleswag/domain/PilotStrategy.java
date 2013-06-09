@@ -25,4 +25,13 @@ public class PilotStrategy extends QuestionStrategy {
 		return super.getQuestions(context, PilotQuestion.class, "pilot");
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy#getName()
+	 */
+	@Override
+	public String getName () {
+		return "pilot";
+	}
+	
 }

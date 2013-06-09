@@ -158,7 +158,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		cursor.moveToFirst();
 
 		// Retrieve the used count from the questions
-		long newUsedCount = cursor.getLong(SqliteDataControllerConstants.Columns.USED_COUNT.ordinal());
+		long newUsedCount = cursor.getLong(SqliteDataControllerConstants.QuestionColumns.USED_COUNT.ordinal());
 		Log.d(this.getClass().getName(), "New used count: " + newUsedCount);
 
 		// Ensure the used count was updated in the database

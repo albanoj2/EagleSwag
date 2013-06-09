@@ -96,19 +96,19 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 			try {
 				// Start a transaction for inserting the data in the database
 				db.beginTransaction();
-				
+
 				// Create each questions table in the database
 				SqliteDataControllerQueries.createQuestionsTable(db, table);
 
 				// Obtain the questions from the data parser
 				Queue<? extends Question> questions = parser.getQuestions(key, context);
-				
+
 				for (Question question : questions) {
 					// Insert the new general question
 					SqliteDataControllerQueries.insertIntoQuestionsTable(db, table, question);
 					Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName() + " into the " + table + " table: " + question);
 				}
-				
+
 				// Signal that the transaction was successful
 				db.setTransactionSuccessful();
 			}
@@ -122,6 +122,9 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 			}
 
 		}
+
+		// Create scores table
+		SqliteDataControllerQueries.createScoreTable(db);
 
 	}
 
@@ -152,6 +155,9 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 				db.execSQL("DROP TABLE IF EXISTS " + table);
 				Log.w(this.getClass().getName(), "Dropping table '" + table + "' from database");
 			}
+			
+			// Drop the scores table
+			db.execSQL("DROP TABLE IF EXISTS " + SqliteDataControllerConstants.SCORE_TABLE_NAME);
 
 			// Recreate the database
 			this.onCreate(db);

@@ -7,6 +7,8 @@
  *       EagleSwag Android Mobile App
  * 
  * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries
+ * 
+ *      TODO Add a test case for creating scores table
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
@@ -22,9 +24,11 @@ import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
+import com.oceans7.mobileapps.eagleswag.domain.EngineeringStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.domain.Score;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerHelper;
@@ -37,7 +41,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 **************************************************************************/
 
 	private Context context;
-	
+
 	/**
 	 * The database under test.
 	 */
@@ -60,7 +64,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	@Override
 	protected void setUp () throws Exception {
 		super.setUp();
-		
+
 		// Establish the context
 		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 
@@ -98,7 +102,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 */
 	public <T extends Question> void helperInsertIntoQuestionsTable (Class<T> key) throws Exception {
 
-		// Question name
+		// A test question
 		String text = "[testing] A test question";
 		int yesValue = 10;
 		int noValue = 5;
@@ -185,10 +189,10 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		// ensure that the new question has the same ID as the question that was
 		// just created, ensuring that the new question updates the question
 		// that was just inserted
-		Cursor cursorId = this.db.rawQuery(
-			"SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'", null);
+		Cursor cursorId = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'",
+			null);
 		cursorId.moveToFirst();
-		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.Columns.ID.ordinal());
+		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.QuestionColumns.ID.ordinal());
 
 		// Create a new question (using reflection)
 		Object[] newArgs = new Object[] { idOfInsertedQuestion, newText, newYesValue, newNoValue, newUsedCount };
@@ -202,10 +206,10 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 			new String[] { "" + idOfInsertedQuestion });
 		cursor.moveToFirst();
 
-		assertEquals("Question string updated:", newText, cursor.getString(SqliteDataControllerConstants.Columns.QUESTION.ordinal()));
-		assertEquals("Yes value updated:", newYesValue, cursor.getInt(SqliteDataControllerConstants.Columns.YES_VALUE.ordinal()));
-		assertEquals("No value updated:", newNoValue, cursor.getInt(SqliteDataControllerConstants.Columns.NO_VALUE.ordinal()));
-		assertEquals("Used count updated:", newUsedCount, cursor.getInt(SqliteDataControllerConstants.Columns.USED_COUNT.ordinal()));
+		assertEquals("Question string updated:", newText, cursor.getString(SqliteDataControllerConstants.QuestionColumns.QUESTION.ordinal()));
+		assertEquals("Yes value updated:", newYesValue, cursor.getInt(SqliteDataControllerConstants.QuestionColumns.YES_VALUE.ordinal()));
+		assertEquals("No value updated:", newNoValue, cursor.getInt(SqliteDataControllerConstants.QuestionColumns.NO_VALUE.ordinal()));
+		assertEquals("Used count updated:", newUsedCount, cursor.getInt(SqliteDataControllerConstants.QuestionColumns.USED_COUNT.ordinal()));
 
 		// Remove the test entry from the database
 		this.db.execSQL("DELETE FROM " + table + " WHERE _id = " + idOfInsertedQuestion);
@@ -223,7 +227,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 * the database. This test case creates a questions table, and then removes
 	 * the table once the test has been completed.
 	 */
-	public void testCreateDatabaseQuery () {
+	public void testCreateQuestionsTableQuery () {
 
 		// The name of the test database table
 		String table = "testTableRememberToRemove";
@@ -296,5 +300,23 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 */
 	public void testUpdatePilotQuestion () throws Exception {
 		this.helperUpdateQuestionTable(PilotQuestion.class);
+	}
+
+	public void testInsertScore () {
+
+		// Insert a test score into the database
+		Score score = new Score(10.0);
+		score.setTimestamp(0);
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), score);
+
+		// Obtain the score that was just placed in the database
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+			new String[] { "10.0" });
+
+		// Ensure the data is correct
+		cursor.moveToFirst();
+		assertEquals("Correct score:", 10.0, cursor.getDouble(SqliteDataControllerConstants.ScoresColumns.SCORE.ordinal()));
+		assertEquals("Correct type:", new EngineeringStrategy().getName(), cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
+		assertEquals("Correct timestamp:", 0, cursor.getLong(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP.ordinal()));
 	}
 }

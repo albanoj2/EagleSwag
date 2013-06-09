@@ -224,7 +224,7 @@ public class RoundTest extends InstrumentationTestCase {
 		this.round.submitNoQuestion(question2);
 
 		// Save the questions for the round
-		this.round.save(this.context);
+		this.round.save(null, this.context);
 
 		// Ensure that the used count of the saved questions have been
 		// incremented
