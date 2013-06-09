@@ -66,14 +66,14 @@ public interface DataController {
 	 * @param type
 	 * @return
 	 */
-	public double getTotalScore (String type);
+	public int getTotalScore (String type);
 	
 	/**
 	 * TODO Documentation
 	 * @param type
 	 * @return
 	 */
-	public double getAverageScore (String type);
+	public int getAverageScore (String type);
 
 	/**
 	 * Saves a question. The key parameter is used as a means of saving the

@@ -157,7 +157,7 @@ public class QuestionsActivity<T> extends Activity {
 				// No more questions left for the round
 
 				// Save the current round and obtain the score for the round
-				double score = this.roundController.endRound();
+				int score = this.roundController.endRound();
 
 				// Render the buttons unusable before the transition occurs
 				this.bYes.setOnClickListener(null);

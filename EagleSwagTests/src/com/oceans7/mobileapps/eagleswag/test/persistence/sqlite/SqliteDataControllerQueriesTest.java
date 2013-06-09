@@ -24,7 +24,6 @@ import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobileapps.eagleswag.domain.EngineeringStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
@@ -189,8 +188,8 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		// ensure that the new question has the same ID as the question that was
 		// just created, ensuring that the new question updates the question
 		// that was just inserted
-		Cursor cursorId = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'",
-			null);
+		Cursor cursorId = this.db.rawQuery(
+			"SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'", null);
 		cursorId.moveToFirst();
 		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.QuestionColumns.ID.ordinal());
 
@@ -308,53 +307,55 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	public void testInsertScore () {
 
 		// Insert a test score into the database
-		Score score = new Score(10.0);
+		Score score = new Score(10);
 		score.setTimestamp(0);
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), score);
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", score);
 
 		// Obtain the score that was just placed in the database
-		Cursor cursor = this.db.rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery(
+			"SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
 			new String[] { "10.0" });
 
 		// Ensure the data is correct
 		cursor.moveToFirst();
 		assertEquals("Correct score:", 10.0, cursor.getDouble(SqliteDataControllerConstants.ScoresColumns.SCORE.ordinal()));
-		assertEquals("Correct type:", new EngineeringStrategy().getName(), cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
+		assertEquals("Correct type:", "test",
+			cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
 		assertEquals("Correct timestamp:", 0, cursor.getLong(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP.ordinal()));
 	}
-	
+
 	/**
 	 * TODO Documentation
 	 */
-	public void testTotalScore () {
+	public void testGetTotalScore () {
 
 		// Insert a few test scores into the database
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(0.0));
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(100.0));
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(50.0));
-		
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", new Score(0));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", new Score(100));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", new Score(50));
+
 		// Obtain the total score for the entries placed in the database
-		double totalScore = SqliteDataControllerQueries.getTotalScore(this.db, new EngineeringStrategy().getName());
-		
+		int totalScore = SqliteDataControllerQueries.getTotalScore(this.db, "test");
+
 		// Ensure the total score is correct
-		assertEquals("Total score is correct:", 150.0, totalScore);
+		assertEquals("Total score is correct:", 150, totalScore);
 	}
-	
+
 	/**
 	 * TODO Documentation
 	 */
-	public void testAverageScore () {
+	public void testGetNumberOfScores () {
 
 		// Insert a few test scores into the database
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(0.0));
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(100.0));
-		SqliteDataControllerQueries.insertIntoScoreTable(this.db, new EngineeringStrategy().getName(), new Score(50.0));
-		
-		// Obtain the average score for the entries placed in the database
-		double averageScore = SqliteDataControllerQueries.getAverageScore(this.db, new EngineeringStrategy().getName());
-		
-		// Ensure the average score is correct
-		assertEquals("Average score is correct:", 50.0, averageScore);
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", new Score(0));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", new Score(100));
+		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", new Score(50));
+
+		// Obtain the number of score entries in the database
+		long entries = SqliteDataControllerQueries.getNumberOfScores(this.db, "test");
+
+		// Ensure the number of scores is correct
+		assertEquals("Number of scores is correct:", 3, entries);
 	}
-	
+
 }

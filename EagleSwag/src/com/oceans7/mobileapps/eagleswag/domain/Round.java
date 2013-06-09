@@ -120,7 +120,7 @@ public class Round {
 	 *         The score for the round based on the previously submitted 'yes'
 	 *         and 'no' answered questions.
 	 */
-	public double calculateScore () {
+	public int calculateScore () {
 
 		// Variables to store the running total and total possible points
 		double runningTotal = 0;
@@ -152,7 +152,7 @@ public class Round {
 			// Calculate the score as earned/possible * 100 (if there were
 			// questions answered). If there were no questions answered, the
 			// possible points would be 0, and the score would be NaN
-			double score = (runningTotal / totalPossiblePoints) * 100;
+			int score = (int) Math.round((runningTotal / totalPossiblePoints) * 100);
 			Log.i(this.getClass().getName(), "Score for round: " + score);
 
 			// Set the score for the round

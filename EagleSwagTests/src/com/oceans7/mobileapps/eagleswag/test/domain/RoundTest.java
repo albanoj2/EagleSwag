@@ -152,13 +152,13 @@ public class RoundTest extends InstrumentationTestCase {
 		// answered 'yes' and the second two were answered 'no'
 		double theoPossiblePoints = 10 + 3 + 6 + 7;
 		double theoEarnedPoints = 10 + 3 + 6 + 4;
-		double theoScore = (theoEarnedPoints / theoPossiblePoints) * 100;
+		int theoScore = (int) Math.round((theoEarnedPoints / theoPossiblePoints) * 100.0);
 
 		// Debugging: log the theoretical point value
 		Log.d(this.getClass().getName(), "Theoretical score: " + theoScore);
 
 		// The actual score received from the method under testing
-		double actualScore = this.round.calculateScore();
+		int actualScore = this.round.calculateScore();
 
 		// Ensure that the theoretical and actual scores match
 		assertEquals("Theoretical and actual scores match:", theoScore, actualScore);
@@ -189,17 +189,16 @@ public class RoundTest extends InstrumentationTestCase {
 		// The total possible points should be 10 + 0 + 6 + 7, since this is the
 		// total points a person can score on each question, combined. The
 		// points earned are 10 + (-3) + 6 + (-4), since the first two questions
-		// were
-		// answered 'yes' and the second two were answered 'no'
+		// were answered 'yes' and the second two were answered 'no'
 		double theoPossiblePoints = 10 + 0 + 6 + 7;
 		double theoEarnedPoints = 10 - 3 + 6 - 4;
-		double theoScore = (theoEarnedPoints / theoPossiblePoints) * 100;
+		int theoScore = (int) Math.round((theoEarnedPoints / theoPossiblePoints) * 100.0);
 
 		// Debugging: log the theoretical point value
 		Log.d(this.getClass().getName(), "Theoretical score: " + theoScore);
 
 		// The actual score received from the method under testing
-		double actualScore = this.round.calculateScore();
+		int actualScore = this.round.calculateScore();
 
 		// Ensure that the theoretical and actual scores match
 		assertEquals("Theoretical and actual scores match:", theoScore, actualScore);

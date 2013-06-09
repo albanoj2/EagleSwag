@@ -27,9 +27,9 @@ import com.oceans7.mobileapps.eagleswag.domain.EngineeringQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
+import com.oceans7.mobileapps.eagleswag.domain.Score;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
-import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
 
 public class SqliteDataControllerTest extends InstrumentationTestCase {
 
@@ -51,9 +51,10 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 */
 	protected void setUp () throws Exception {
 		super.setUp();
-		
+
 		// Establish the context to access the SQLite database
-		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
+		;
 
 		// Create the data controller
 		this.sqliteDataController = new SqliteDataController();
@@ -119,59 +120,6 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		assertEquals(numberOfQuestionsInDatabase, numberOfQuestionsFound);
 	}
 
-	/**
-	 * Helper method that supplies the logic for checking that the used count
-	 * for a question is updated in the database. Note that this method is
-	 * strictly for use with the SqliteDataController. If the implementation
-	 * (the data controller) for the system is changed (another data controller
-	 * is specified in the configuration), this test case is no longer relevant.
-	 * 
-	 * @param key
-	 *            The used to retrieve the database table in the SQLite data
-	 *            controller.
-	 */
-	public <T extends Question> void helperSavedRoundIncrementsUsedCountInTable (Class<T> key) {
-
-		// Obtain two questions of the type specified
-		Queue<T> questions = this.sqliteDataController.<T> getQuestions(key, 1);
-
-		// Obtain the questions and their original used count
-		T question = questions.remove();
-		int originalUsedCount = question.getUsedCount();
-
-		// Log the obtained data
-		Log.d(this.getClass().getName(), "Question ID: " + question.getId());
-		Log.d(this.getClass().getName(), "Original used count: " + originalUsedCount);
-
-		// Increment the used count
-		question.incrementUsedCount();
-
-		// Save the question
-		this.sqliteDataController.saveQuestion(key, question);
-
-		// The table to obtain the questions from
-		String table = ((SqliteDataController) this.sqliteDataController).getClassToTableMap().get(key);
-
-		// Retrieve the questions from the database table
-		Cursor cursor = ((SqliteDataController) this.sqliteDataController).getDatabase().rawQuery("SELECT * FROM " + table + " WHERE _id = ?",
-			new String[] { "" + question.getId() });
-		cursor.moveToFirst();
-
-		// Retrieve the used count from the questions
-		long newUsedCount = cursor.getLong(SqliteDataControllerConstants.QuestionColumns.USED_COUNT.ordinal());
-		Log.d(this.getClass().getName(), "New used count: " + newUsedCount);
-
-		// Ensure the used count was updated in the database
-		assertEquals("Used count updated:", originalUsedCount + 1, newUsedCount);
-
-		// Reset the used count for the obtained questions
-		question.setUsedCount(originalUsedCount);
-
-		// Update the questions (to the original used count)
-		SqliteDataControllerQueries.updateQuestion(((SqliteDataController) this.sqliteDataController).getDatabase(), table, question);
-
-	}
-
 	/***************************************************************************
 	 * Test Cases
 	 **************************************************************************/
@@ -180,33 +128,10 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Test method for {@link
 	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
 	 * extends Question>, int)}.
-	 * 
-	 * Ensures that positive (greater than 0) general questions are requested, 0
-	 * are returned.
 	 */
-	public void testCorrectNumberOfGeneralQuestionsAboveZero () throws Exception {
+	public void testCorrectNumberOfGeneralQuestions () throws Exception {
 		assertEquals(this.helperQuestionsFound(GeneralQuestion.class, 3), 3);
-	}
-
-	/**
-	 * Test method for {@link
-	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
-	 * extends Question>, int)}.
-	 * 
-	 * Ensures that if negative general questions are requested, 0 are returned.
-	 */
-	public void testCorrectNumberOfGeneralQuestionsBelowZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(GeneralQuestion.class, -1), 0);
-	}
-
-	/**
-	 * Test method for {@link
-	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
-	 * extends Question>, int)}.
-	 * 
-	 * Ensures that if 0 general questions are requested, 0 are returned.
-	 */
-	public void testCorrectNumberOfGeneralQuestionsZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(GeneralQuestion.class, 0), 0);
 	}
 
@@ -220,28 +145,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 */
 	public void testCorrectNumberOfEngineeringQuestionsAboveZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(EngineeringQuestion.class, 3), 3);
-	}
-
-	/**
-	 * Test method for {@link
-	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
-	 * extends Question>, int)}.
-	 * 
-	 * Ensures that if negative engineering questions are requested, 0 are
-	 * returned.
-	 */
-	public void testCorrectNumberOfEngineeringQuestionsBelowZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(EngineeringQuestion.class, -1), 0);
-	}
-
-	/**
-	 * Test method for {@link
-	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
-	 * extends Question>, int)}.
-	 * 
-	 * Ensures that if 0 engineering questions are requested, 0 are returned.
-	 */
-	public void testCorrectNumberOfEngineeringQuestionsZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(EngineeringQuestion.class, 0), 0);
 	}
 
@@ -255,27 +159,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 */
 	public void testCorrectNumberOfPilotQuestionsAboveZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(PilotQuestion.class, 3), 3);
-	}
-
-	/**
-	 * Test method for {@link
-	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
-	 * extends Question>, int)}.
-	 * 
-	 * Ensures that if negative pilot questions are requested, 0 are returned.
-	 */
-	public void testCorrectNumberOfPilotQuestionsBelowZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(PilotQuestion.class, -1), 0);
-	}
-
-	/**
-	 * Test method for {@link
-	 * com.oceans7.mobileapps.eagleswag.domain.Round#getQuestions(Class<?
-	 * extends Question>, int)}.
-	 * 
-	 * Ensures that if 0 pilot questions are requested, 0 are returned.
-	 */
-	public void testCorrectNumberOfPilotQuestionsZero () throws Exception {
 		assertEquals(this.helperQuestionsFound(PilotQuestion.class, 0), 0);
 	}
 
@@ -319,35 +203,59 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}.
-	 * 
-	 * General questions test case for ensuring that the used count value in
-	 * database is incremented when the round is saved.
+	 * TODO Documentation
 	 */
-	public void testSavedRoundIncrementUsedCountGeneralTable () {
-		this.<GeneralQuestion> helperSavedRoundIncrementsUsedCountInTable(GeneralQuestion.class);
+	public void testSavedScore () {
+
+		// Insert a test score into the database
+		Score score = new Score(10);
+		score.setTimestamp(0);
+		this.sqliteDataController.saveRoundScore(score, "test");
+
+		// Obtain the score that was just placed in the database
+		Cursor cursor = this.sqliteDataController.getDatabase().rawQuery(
+			"SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+			new String[] { "10.0" });
+
+		// Ensure the data is correct
+		cursor.moveToFirst();
+		assertEquals("Correct score:", 10.0, cursor.getDouble(SqliteDataControllerConstants.ScoresColumns.SCORE.ordinal()));
+		assertEquals("Correct type:", "test", cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
+		assertEquals("Correct timestamp:", 0, cursor.getLong(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP.ordinal()));
+
 	}
 
 	/**
-	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}.
-	 * 
-	 * Engineering questions test case for ensuring that the used count value in
-	 * database is incremented when the round is saved.
+	 * TODO Documentation
 	 */
-	public void testSavedRoundIncrementUsedCountEngineerTable () {
-		this.<EngineeringQuestion> helperSavedRoundIncrementsUsedCountInTable(EngineeringQuestion.class);
-	}
+	public void testTotalScore () {
+		
+		// Insert a few test scores into the database
+		this.sqliteDataController.saveRoundScore(new Score(0), "test");
+		this.sqliteDataController.saveRoundScore(new Score(50), "test");
+		this.sqliteDataController.saveRoundScore(new Score(100), "test");
 
+		// Obtain the total score for the entries placed in the database
+		int totalScore = this.sqliteDataController.getTotalScore("test");
+
+		// Ensure the total score is correct
+		assertEquals("Total score is correct:", 150, totalScore);
+	}
+	
 	/**
-	 * Test method for
-	 * {@link com.oceans7.mobileapps.eagleswag.domain.Round#save(android.content.Context)}.
-	 * 
-	 * Pilot questions test case for ensuring that the used count value in
-	 * database is incremented when the round is saved.
+	 * TODO Documentation
 	 */
-	public void testSavedRoundIncrementUsedCountPilotTable () {
-		this.<PilotQuestion> helperSavedRoundIncrementsUsedCountInTable(PilotQuestion.class);
+	public void testAverageScore () {
+		
+		// Insert a few test scores into the database
+		this.sqliteDataController.saveRoundScore(new Score(0), "test");
+		this.sqliteDataController.saveRoundScore(new Score(50), "test");
+		this.sqliteDataController.saveRoundScore(new Score(100), "test");
+
+		// Obtain the average score for the entries placed in the database
+		int average = this.sqliteDataController.getAverageScore("test");
+
+		// Ensure the average score is correct
+		assertEquals("Average score is correct:", 50, average);
 	}
 }

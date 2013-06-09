@@ -226,9 +226,8 @@ public class SqliteDataController implements DataController {
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getTotalScore(java.lang.String)
 	 */
 	@Override
-	public double getTotalScore (String type) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getTotalScore (String type) {
+		return SqliteDataControllerQueries.getTotalScore(database, type);
 	}
 
 	/**
@@ -236,9 +235,18 @@ public class SqliteDataController implements DataController {
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getAverageScore(java.lang.String)
 	 */
 	@Override
-	public double getAverageScore (String type) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getAverageScore (String type) {
+		
+		// Obtain the total score
+		double totalScore = SqliteDataControllerQueries.getTotalScore(this.database, type);
+		
+		// Obtain the number of entries
+		long entries = SqliteDataControllerQueries.getNumberOfScores(this.database, type);
+		
+		// Calculate the average
+		int average = (int) Math.round(totalScore / entries);
+		
+		return average;
 	}
 
 	/**
@@ -263,7 +271,6 @@ public class SqliteDataController implements DataController {
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveRoundScore(com.oceans7.mobileapps.eagleswag.domain.Score,
 	 *      java.lang.String)
-	 *      TODO Implement a mechanism to save the round
 	 */
 	@Override
 	public void saveRoundScore (Score score, String type) {

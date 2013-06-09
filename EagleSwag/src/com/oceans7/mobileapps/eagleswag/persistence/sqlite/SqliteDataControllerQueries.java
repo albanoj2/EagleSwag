@@ -18,6 +18,7 @@ package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -103,7 +104,8 @@ public class SqliteDataControllerQueries {
 		// Execute the statement
 		long id = statement.executeInsert();
 
-		Log.i(SqliteDataControllerConstants.class.getName(),
+		Log.i(
+			SqliteDataControllerConstants.class.getName(),
 			"Inserting question into '" + table + "' where id -> " + id + ": " + builder + " -> (" + question.getQuestionString() + ", " + question.getYesPointValue() + ", " + question.getNoPointValue() + ", " + question.getUsedCount() + ")");
 
 		return id;
@@ -179,7 +181,7 @@ public class SqliteDataControllerQueries {
 		StringBuilder builder = new StringBuilder();
 		builder.append("CREATE TABLE IF NOT EXISTS " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " (");
 		builder.append(SqliteDataControllerConstants.SCORE_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT,");
-		builder.append(SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " FLOAT NOT NULL,");
+		builder.append(SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " INTEGER NOT NULL,");
 		builder.append(SqliteDataControllerConstants.SCORE_TIMESTAMP_COLUMN + " BIGINT NOT NULL,");
 		builder.append(SqliteDataControllerConstants.SCORE_TYPE_COLUMN + " TEXT NOT NULL");
 		builder.append(");");
@@ -200,6 +202,7 @@ public class SqliteDataControllerQueries {
 
 	/**
 	 * TODO Complete documentation
+	 * 
 	 * @param db
 	 * @param type
 	 * @param score
@@ -219,7 +222,7 @@ public class SqliteDataControllerQueries {
 		SQLiteStatement statement = db.compileStatement(builder.toString());
 
 		// Bind the values to the statement
-		statement.bindDouble(1, score.getScore());
+		statement.bindLong(1, score.getScore());
 		statement.bindLong(2, score.getTimestamp());
 		statement.bindString(3, type);
 
@@ -227,7 +230,8 @@ public class SqliteDataControllerQueries {
 		long id = statement.executeInsert();
 
 		// Log the insertion
-		Log.i(SqliteDataControllerConstants.class.getName(),
+		Log.i(
+			SqliteDataControllerConstants.class.getName(),
 			"Inserting score into '" + SqliteDataControllerConstants.SCORE_TABLE_NAME + "' where id -> " + id + ": " + builder + " -> (" + score.getScore() + ", " + score.getTimestamp() + ", " + type + ")");
 
 		return id;
@@ -235,21 +239,38 @@ public class SqliteDataControllerQueries {
 
 	/**
 	 * TODO Complete method
+	 * 
 	 * @param db
 	 * @param type
 	 * @return
 	 */
-	public static double getTotalScore (SQLiteDatabase db, String type) {
-		return 0.0;
+	public static int getTotalScore (SQLiteDatabase db, String type) {
+
+		// Obtain the sum of the scores for a type
+		Cursor cursor = db.rawQuery(
+			"SELECT SUM(" + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?",
+			new String[] { type });
+
+		// Default value
+		int totalScore = 0;
+
+		if (cursor.moveToFirst()) {
+			// Reassign the value if one is present
+			totalScore = cursor.getInt(0);
+			cursor.close();
+		}
+
+		return totalScore;
 	}
 
 	/**
 	 * TODO Complete method
+	 * 
 	 * @param db
 	 * @param type
 	 * @return
 	 */
-	public static double getAverageScore (SQLiteDatabase db, String type) {
-		return 0.0;
+	public static long getNumberOfScores (SQLiteDatabase db, String type) {
+		return DatabaseUtils.queryNumEntries(db, SqliteDataControllerConstants.SCORE_TABLE_NAME, "type=?", new String[] { type });
 	}
 }

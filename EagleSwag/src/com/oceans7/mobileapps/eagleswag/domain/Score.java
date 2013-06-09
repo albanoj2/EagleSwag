@@ -26,7 +26,7 @@ public class Score {
 	/**
 	 * The value of the score.
 	 */
-	private double score;
+	private int score;
 
 	/**
 	 * The timestamp of when the score was recorded.
@@ -52,7 +52,7 @@ public class Score {
 	 * @param score
 	 *            The score value.
 	 */
-	public Score (double score) {
+	public Score (int score) {
 
 		// Set the data for the round score
 		this.setScore(score);
@@ -94,7 +94,7 @@ public class Score {
 	 * @return
 	 *         The score.
 	 */
-	public double getScore () {
+	public int getScore () {
 		return score;
 	}
 
@@ -102,7 +102,7 @@ public class Score {
 	 * @param score
 	 *            The score to set.
 	 */
-	public void setScore (double score) {
+	public void setScore (int score) {
 		this.score = score;
 	}
 

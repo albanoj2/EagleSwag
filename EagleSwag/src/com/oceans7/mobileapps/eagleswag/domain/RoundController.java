@@ -177,7 +177,7 @@ public class RoundController {
 	 * @throws RoundNotStartedException
 	 *             A round has not been started.
 	 */
-	public synchronized double endRound () throws RoundNotStartedException {
+	public synchronized int endRound () throws RoundNotStartedException {
 
 		if (!this.hasRoundBeenStarted) {
 			// A round has not be started yet
@@ -186,7 +186,7 @@ public class RoundController {
 		else {
 
 			// Record the score for the round
-			double score = this.currentRound.calculateScore();
+			int score = this.currentRound.calculateScore();
 
 			// Save the current round
 			this.currentRound.save(this.currentStrategy, this.context);
