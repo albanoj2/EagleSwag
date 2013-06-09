@@ -36,7 +36,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	/**
 	 * The asset location of the question controller configuration resource.
 	 */
-	private static final String QUESTION_CONTROLLER_CONFIG_ASSET = "config/domain/question-controller.cfg";
+	private static final String QUESTION_CONTROLLER_CONFIG_ASSET = "config/domain/question-distribution.cfg";
 
 	/***************************************************************************
 	 * Setup & Tear Down

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationParser" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationParser.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="87" width="157" x="21" y="206"/>    
+    <display autosize="false" stereotype="false" package="false" initial-value="false" signature="false" 
+      accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="2" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationController" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="158" y="94"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="3" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationProxy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="269" y="239"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" name="com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/NoSuchQuestionTypeException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="554" y="256"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationHelper.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="476" y="95"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="true" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" name="com.oceans7.mobileapps.eagleswag.config.QuestionType" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/QuestionType.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="271" y="482"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/DataConfiguration.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="22" y="812"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.NoSqliteConfigurationException" 
+    project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/NoSqliteConfigurationException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="556" y="346"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration" 
+    project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/SqliteConfiguration.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="272" y="781"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/JsonConfiguration.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="435" y="780"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="11" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.NoJsonConfigurationException" 
+    project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/NoJsonConfigurationException.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="554" y="433"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <association id="12">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="13" name="instance"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="5" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="15">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="16" name="questionTypeMap"/>      
+      <multiplicity id="17" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="18">    
+    <bendpoint x="97" y="208"/>    
+    <bendpoint x="97" y="177"/>    
+    <bendpoint x="158" y="177"/>    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="19">    
+    <bendpoint x="274" y="206"/>    
+    <bendpoint x="274" y="106"/>    
+    <bendpoint x="237" y="106"/>    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="20" name="delegate">        
+        <position height="18" width="49" x="276" y="105"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="16" width="23" x="244" y="109"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="22">    
+    <bendpoint x="271" y="665"/>    
+    <bendpoint x="22" y="665"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="23" name="dataConfiguration">        
+        <position height="18" width="93" x="-74" y="705"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="25">    
+    <bendpoint x="432" y="173"/>    
+    <bendpoint x="432" y="258"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="26">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="27" name="sqliteConfiguration"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="29">    
+    <bendpoint x="415" y="173"/>    
+    <bendpoint x="415" y="433"/>    
+    <bendpoint x="424" y="433"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <realization id="30">    
+    <bendpoint x="270" y="177"/>    
+    <bendpoint x="158" y="177"/>    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+  <association id="31">    
+    <bendpoint x="271" y="665"/>    
+    <bendpoint x="435" y="665"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="32" name="jsonConfiguration"/>      
+      <multiplicity id="33" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="34">    
+    <bendpoint x="423" y="174"/>    
+    <bendpoint x="423" y="347"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <association id="35">    
+    <bendpoint x="409" y="75"/>    
+    <bendpoint x="238" y="75"/>    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="36" name="configurationController">        
+        <position height="18" width="117" x="240" y="57"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="1">        
+        <position height="16" width="23" x="244" y="77"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

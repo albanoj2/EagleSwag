@@ -39,6 +39,11 @@ public class Round {
 	 * this round.
 	 */
 	private LinkedList<Question> questionsAnsweredNo;
+	
+	/**
+	 * The score of the round.
+	 */
+	private Score score;
 
 	/***************************************************************************
 	 * Constructors
@@ -49,6 +54,9 @@ public class Round {
 		// Initialize the data structures to store the answered questions
 		this.questionsAnsweredYes = new LinkedList<Question>();
 		this.questionsAnsweredNo = new LinkedList<Question>();
+		
+		// Initialize the empty score
+		this.score = new Score();
 	}
 
 	/***************************************************************************
@@ -146,6 +154,10 @@ public class Round {
 		// Calculate the score as earned/possible * 100
 		double score = (runningTotal / totalPossiblePoints) * 100;
 		Log.i(this.getClass().getName(), "Score for round: " + score);
+		
+		// Set the score and timestamp for the score
+		this.score.setScore(score);
+		this.score.setTimestamp(System.currentTimeMillis() / 1000L);
 
 		return score;
 	}
@@ -180,6 +192,9 @@ public class Round {
 			// Log the saved question
 			Log.i(this.getClass().getName(), "Incremented used count and saved question: " + question);
 		}
+		
+		// Save the score object
+		this.score.save();
 	}
 
 	/***************************************************************************
