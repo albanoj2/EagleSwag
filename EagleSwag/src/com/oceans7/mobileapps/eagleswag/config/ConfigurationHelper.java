@@ -1,21 +1,3 @@
-/**
- * @author Justin Albano
- * @date Jun 1, 2013
- * @file ConfigurationHelper.java
- * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
- * 
- *       A helper class that contains methods for obtaining specific
- *       configuration data for a question type. This encapsulates the logic for
- *       obtaining the configuration data for a question type in a singular
- *       location.
- * 
- * @note As more data is added to the configuration file, this class can be
- *       expanded in order to encapsulate the logic for obtaining the new
- *       configuration data for a question type.
- */
-
 package com.oceans7.mobileapps.eagleswag.config;
 
 import java.util.Map;
@@ -30,6 +12,19 @@ import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
 
+/**
+ * A helper class that contains methods for obtaining specific configuration
+ * data for a question type. This encapsulates the logic for obtaining the
+ * configuration data for a question type in a singular location.
+ * 
+ * <p>
+ * <strong>Note:</strong> As more data is added to the configuration file, this
+ * class can be expanded in order to encapsulate the logic for obtaining the new
+ * configuration data for a question type.
+ * </p>
+ * 
+ * @author Justin Albano
+ */
 public class ConfigurationHelper {
 
 	/***************************************************************************

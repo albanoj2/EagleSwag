@@ -1,22 +1,3 @@
-/**
- * @author Justin Albano
- * @date May 31, 2013
- * @file QuestionTypeConfigParser.java
- * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
- * 
- *       A parser for the question type configuration data. This parser acts as
- *       the real subject in the proxy pattern established for parsing the
- *       question type configuration file. In order to extract the configuration
- *       data from the question type configuration file, a question type object
- *       is created for each of the question types found in the configuration
- *       file.
- * 
- *       Cited sources:
- *       - http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
- */
-
 package com.oceans7.mobileapps.eagleswag.config;
 
 import java.io.IOException;
@@ -43,6 +24,22 @@ import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParserStrategy;
 
+/**
+ * A parser for the question type configuration data. This parser acts as the
+ * real subject in the proxy pattern established for parsing the question type
+ * configuration file. In order to extract the configuration data from the
+ * question type configuration file, a question type object is created for each
+ * of the question types found in the configuration file.
+ * 
+ * <p>
+ * <em>Cited sources:</em>
+ * <ul>
+ * <li>http://www.mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/</li>
+ * </ul>
+ * </p>
+ * 
+ * @author Justin Albano
+ */
 public class ConfigurationParser implements ConfigurationController {
 
 	/***************************************************************************

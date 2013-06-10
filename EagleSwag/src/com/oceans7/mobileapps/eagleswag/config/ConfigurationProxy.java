@@ -1,35 +1,3 @@
-/**
- * @author Justin Albano
- * @date May 31, 2013
- * @file ConfigurationProxy.java
- * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
- * 
- *       A proxy for the ConfigurationParser. This proxy acts a cache for the
- *       parser. If the configuration has not been parsed, it will be parsed.
- *       Once the configuration file has been parsed, and loaded into memory,
- *       the proxy simply obtains the configuration data from the in-memory
- *       configuration data. This reduces the overhead associated with accessing
- *       the data in the configuration file. A visualization of this proxied
- *       cache is illustrated below:
- * 
- *       <pre>
- *       	  Proxy				 Parser
- *   ==========>|					|	1st access
- *       		|==================>|
- *       		|<==================|
- *   <==========|					|
- *       		|					|
- * 	 ==========>|					|	2nd access
- * 	 <==========|					|
- * 				|					|
- * 	 ==========>|					|	3rd access
- * 	 <==========|					|
- * 				|					|
- * </pre>
- */
-
 package com.oceans7.mobileapps.eagleswag.config;
 
 import java.util.Map;
@@ -39,6 +7,36 @@ import android.util.Log;
 
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
+/**
+ * A proxy for the ConfigurationParser. This proxy acts a cache for the parser.
+ * If the configuration has not been parsed, it will be parsed. Once the
+ * configuration file has been parsed, and loaded into memory, the proxy simply
+ * obtains the configuration data from the in-memory configuration data. This
+ * reduces the overhead associated with accessing the data in the configuration
+ * file. A visualization of this proxied cache is illustrated below:
+ * 
+ * <pre>
+ *            Proxy               Parser
+ *   ==========>|                   |   1st access
+ *              |==================>|
+ *              |<==================|
+ *   <==========|                   |
+ *              |                   |
+ *   ==========>|                   |   2nd access
+ *   <==========|                   |
+ *              |                   |
+ *   ==========>|                   |   3rd access
+ *   <==========|                   |
+ *              |                   |
+ * </pre>
+ * 
+ * <p>
+ * <strong>Note:</strong> If a new question type is added to the system, a new
+ * class must be created that extends this abstract class.
+ * </p>
+ * 
+ * @author Justin Albano
+ */
 public class ConfigurationProxy implements ConfigurationController {
 
 	/***************************************************************************

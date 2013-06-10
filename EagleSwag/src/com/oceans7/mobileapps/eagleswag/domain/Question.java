@@ -18,14 +18,8 @@ import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
  * class must be created that extends this abstract class.
  * </p>
  * 
- * <p>
- * Oceans7 Software<br />
- * EagleSwag Android Mobile App
- * </p>
- * 
  * @author Justin Albano
  */
-
 public abstract class Question {
 
 	/***************************************************************************

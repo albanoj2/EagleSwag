@@ -1,25 +1,18 @@
-/**
- * @author Justin Albano
- * @date May 31, 2013
- * @file QuestionType.java
- * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
- * 
- *       A question type specification that mimics a question type found in the
- *       question type configuration file. This question type has pluggable
- *       components for the persistence configuration of a question type. This
- *       allows for new persistence configuration data to be added to the
- *       configuration file and be, likewise, added to this question type
- *       object.
- */
-
 package com.oceans7.mobileapps.eagleswag.config;
 
 import com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration;
 import com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration;
 import com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration;
 
+/**
+ * A question type specification that mimics a question type found in the
+ * question type configuration file. This question type has pluggable components
+ * for the persistence configuration of a question type. This allows for new
+ * persistence configuration data to be added to the configuration file and be,
+ * likewise, added to this question type object.
+ * 
+ * @author Justin Albano
+ */
 public class QuestionType {
 
 	/***************************************************************************
