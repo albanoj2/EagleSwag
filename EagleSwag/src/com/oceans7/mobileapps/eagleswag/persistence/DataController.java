@@ -1,7 +1,7 @@
 /**
  * @author Justin Albano
- * @date May 27, 2013
- * @file DataManager.java
+ * @date Jun 9, 2013
+ * @file DataController.java
  * 
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
@@ -60,25 +60,43 @@ public interface DataController {
 	 *         A queue containing the specified number of questions of type, T.
 	 */
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, int number);
-	
+
 	/**
-	 * TODO Documentation
+	 * Obtains the total score (total number of points earned) for a specified
+	 * type. A type is essentially a key that groups saved rounds together. For
+	 * example, if an engineering round is started and saved, the round type is
+	 * "engineering" (or whichever type is defined for an engineering round).
+	 * 
 	 * @param type
+	 *            The type of round to retrieve the total score for.
 	 * @return
+	 *         The total score for the specified type.
 	 */
 	public int getTotalScore (String type);
-	
+
 	/**
-	 * TODO Documentation
+	 * Obtains the arithmetic average score (total number of points divided by
+	 * the number of scores) for a specified type. A type is essentially a key
+	 * that groups saved rounds together. For example, if an engineering round
+	 * is started and saved, the round type is "engineering" (or whichever type
+	 * is defined for an engineering round).
+	 * 
 	 * @param type
+	 *            The type of round to retrieve the arithmetic average for.
 	 * @return
+	 *         The arithmetic average for a specified key.
 	 */
 	public int getAverageScore (String type);
 
 	/**
 	 * Saves a question. The key parameter is used as a means of saving the
 	 * question object to the correct location in the data controller (correct
-	 * file, database table, etc.).
+	 * file, database table, etc.).<br />
+	 * <br />
+	 * <strong>Postconditions</strong>
+	 * <ul>
+	 * <li>The supplied question is permanently saved in persistent storage.</li>
+	 * </ul>
 	 * 
 	 * @param key
 	 *            The key to correlate the data to a specific location (file,
@@ -87,11 +105,26 @@ public interface DataController {
 	 *            The question object to store.
 	 */
 	public void saveQuestion (Class<? extends Question> key, Question question);
-	
+
 	/**
-	 * TODO Documentation
+	 * Saves a score for a round. Upon saving the score, the score, and the data
+	 * associated with the score, the data is permanently saved in persistent
+	 * storage. <br />
+	 * <br />
+	 * <strong>Postconditions</strong>
+	 * <ul>
+	 * <li>The supplied score is permanently saved in persistent storage.</li>
+	 * </ul>
+	 * 
 	 * @param score
+	 *            The score object to store in persistent storage.
 	 * @param type
+	 *            The type of the round that the score originated from. For
+	 *            example, if the score originated from an engineering round,
+	 *            the type would be the type that correlates the score to an
+	 *            engineering round, such as "engineering." Commonly, the name
+	 *            of the question strategy used to begin a round is used due to
+	 *            its consistency.
 	 */
 	public void saveRoundScore (Score score, String type);
 }

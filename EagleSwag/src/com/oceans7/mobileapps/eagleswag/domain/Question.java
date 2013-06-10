@@ -1,19 +1,30 @@
-/**
- * @author Justin Albano
- * @date May 17, 2013
- * @file Question.java
- * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
- * 
- */
-
 package com.oceans7.mobileapps.eagleswag.domain;
+
+import android.content.Context;
 
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
 
-import android.content.Context;
+
+/**
+ * An abstract class that defines the interface for a question. All common
+ * implementation for questions, such as saving the question, are present in
+ * this class. The attributes of this class map directly to the question data
+ * specified in the data file. To create a new type of question, simply extend
+ * this class and provide a custom constructor for the new question type.
+ * 
+ * <p>
+ * <strong>Note:</strong> If a new question type is added to the system, a new
+ * class must be created that extends this abstract class.
+ * </p>
+ * 
+ * <p>
+ * Oceans7 Software<br />
+ * EagleSwag Android Mobile App
+ * </p>
+ * 
+ * @author Justin Albano
+ */
 
 public abstract class Question {
 
@@ -78,8 +89,15 @@ public abstract class Question {
 	 **************************************************************************/
 
 	/**
-	 * TODO Documentation
+	 * Saves the question in persistent storage.<br />
+	 * <br />
+	 * <strong>Postconditions</strong>
+	 * <ul>
+	 * <li>This question will be permanently stored in persistent storage</li>
+	 * </ul>
+	 * 
 	 * @param context
+	 *            The context used to store this question in persistent storage.
 	 */
 	public void save (Context context) {
 
@@ -89,7 +107,7 @@ public abstract class Question {
 
 		// Save the question
 		controller.saveQuestion(this.getClass(), this);
-		
+
 		// Close the controller
 		controller.close();
 	}
