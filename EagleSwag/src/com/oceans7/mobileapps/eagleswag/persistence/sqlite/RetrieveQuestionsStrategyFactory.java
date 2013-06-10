@@ -9,6 +9,8 @@
  *       Factory to create strategy for retrieving questions from the database.
  *       The strategy created varies depending on the class specified in the
  *       SQLite configuration file.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

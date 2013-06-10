@@ -11,6 +11,8 @@
  *       is used as the variable which dictates the frequency of use for a
  *       question (a question with a lower used count is considered to have been
  *       used less frequently than a question with a higher used count).
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

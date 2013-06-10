@@ -7,6 +7,8 @@
  *       EagleSwag Android Mobile App
  * 
  *       A score for a round of questions.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;

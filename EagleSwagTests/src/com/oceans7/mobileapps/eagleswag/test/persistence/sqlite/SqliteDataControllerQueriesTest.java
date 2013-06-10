@@ -9,6 +9,7 @@
  * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries
  * 
  *      TODO Add a test case for creating scores table
+ *      FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;

@@ -6,6 +6,8 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ *       TODO Documentation
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.config;
@@ -108,7 +110,8 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 
 		for (Class<? extends Question> clazz : this.questionClasses) {
 			// Ensure the data asset is correctly set for the question types
-			assertEquals(clazz.getCanonicalName() + " data asset:", "data/questions.json",
+			assertEquals(clazz.getCanonicalName() + " data asset:",
+				"data/questions.json",
 				ConfigurationHelper.getInstance().getDataAsset(clazz, this.context));
 		}
 	}
@@ -122,7 +125,8 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 
 		for (Class<? extends Question> clazz : this.questionClasses) {
 			// Ensure the parser strategy is correct for the question types
-			assertEquals(clazz.getCanonicalName() + " parser strategy:", JsonDataFileParserStrategy.class.getName(),
+			assertEquals(clazz.getCanonicalName() + " parser strategy:",
+				JsonDataFileParserStrategy.class.getName(),
 				ConfigurationHelper.getInstance().getParserStrategy(clazz, this.context).getName());
 		}
 	}
@@ -139,7 +143,8 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 
 		for (Class<? extends Question> clazz : this.questionClasses) {
 			// Ensure the table name is correct for the question types
-			assertEquals(clazz.getCanonicalName() + " SQLite table name:", this.tableNames.get(i),
+			assertEquals(clazz.getCanonicalName() + " SQLite table name:",
+				this.tableNames.get(i),
 				ConfigurationHelper.getInstance().getTableName(clazz, this.context));
 
 			i++;
@@ -158,7 +163,8 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 
 		for (Class<? extends Question> clazz : this.questionClasses) {
 			// Ensure the JSON ID is correct for the question types
-			assertEquals(clazz.getCanonicalName() + " JSON ID:", this.jsonIds.get(i),
+			assertEquals(clazz.getCanonicalName() + " JSON ID:",
+				this.jsonIds.get(i),
 				ConfigurationHelper.getInstance().getJsonId(clazz, this.context));
 
 			i++;

@@ -18,6 +18,8 @@
  *       Note that all queries are found in the SqliteDataControllerQueries
  *       class, and all data controller constants, such as table names, column
  *       numbers, etc., are found in the SqliteDataControllerConstants class.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

@@ -9,6 +9,8 @@
  *       Domain class responsible for retrieving the data (such as average score
  *       and total score) for scores that were previously saved in persistent
  *       storage.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;

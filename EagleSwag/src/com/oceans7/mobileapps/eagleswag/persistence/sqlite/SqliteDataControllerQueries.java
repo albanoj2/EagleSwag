@@ -11,6 +11,8 @@
  *       data from tables, etc. This catalog has been created in order to
  *       encapsulate the queries requires to perform common tasks in a single
  *       location.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

@@ -9,6 +9,8 @@
  *       Interface for a strategy defining how to retrieve questions from the
  *       database. This strategy returns a query that dictates how questions
  *       should be retrieved from the database.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

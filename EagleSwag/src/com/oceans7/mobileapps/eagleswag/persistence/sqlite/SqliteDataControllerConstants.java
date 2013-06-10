@@ -8,6 +8,8 @@
  * 
  *       A lookup dictionary for queries and table/column names to be used in
  *       the SqliteDataController.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

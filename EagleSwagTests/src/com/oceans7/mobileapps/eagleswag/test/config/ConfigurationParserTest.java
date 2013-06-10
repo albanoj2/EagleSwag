@@ -9,6 +9,8 @@
  *       Test fixture for ConfigurationParser.
  * 
  * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationParser
+ * 
+ * FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.config;

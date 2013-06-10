@@ -3,9 +3,11 @@
  * @date Jun 6, 2013
  * @file HelperMethods.java
  * 
- * Oceans7 Software
- * EagleSwag Android Mobile App
- *
+ *       Oceans7 Software
+ *       EagleSwag Android Mobile App
+ * 
+ *       TODO Documentation
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.config;
@@ -27,7 +29,7 @@ public class HelperMethods extends AndroidTestCase {
 	/***************************************************************************
 	 * Helper Methods
 	 **************************************************************************/
-	
+
 	/**
 	 * Helper method that ensures the data in the question type configuration
 	 * file is correctly parsed by the configuration proxy.

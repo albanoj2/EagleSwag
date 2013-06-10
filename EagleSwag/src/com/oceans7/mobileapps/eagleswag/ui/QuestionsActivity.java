@@ -9,6 +9,8 @@
  *       questions is started for the type specified. Once the round of
  *       questions has been completed, the score for the round is passed to a
  *       ScoreActivity to display the score for the user.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.ui;

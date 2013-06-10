@@ -15,6 +15,8 @@
  *       updates the database.
  * 
  * @see android.database.sqlite.SQLiteOpenHelper
+ * 
+ *      FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;

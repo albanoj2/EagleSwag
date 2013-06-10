@@ -9,6 +9,8 @@
  *       Test fixture for ConfigurationProxy.
  * 
  * @see com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy
+ * 
+ *      FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.config;

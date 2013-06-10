@@ -6,6 +6,8 @@
  *       Oceans7 Software
  *       EagleSwag Android Mobile App
  * 
+ *       TODO Documentation
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -96,7 +98,7 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 		// Ensure the average matches the combined scores previously saved
 		assertEquals("Average score is correct:", 50, average);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobileapps.eagleswag.domain.ScoreController#getAverageScore(com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy)}

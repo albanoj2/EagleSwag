@@ -9,6 +9,8 @@
  *       Test fixture for SqliteDataController.
  * 
  * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController
+ * 
+ *      FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
@@ -213,8 +215,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		this.sqliteDataController.saveRoundScore(score, "test");
 
 		// Obtain the score that was just placed in the database
-		Cursor cursor = this.sqliteDataController.getDatabase().rawQuery(
-			"SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+		Cursor cursor = this.sqliteDataController.getDatabase().rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
 			new String[] { "10.0" });
 
 		// Ensure the data is correct
@@ -229,7 +230,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * TODO Documentation
 	 */
 	public void testTotalScore () {
-		
+
 		// Insert a few test scores into the database
 		this.sqliteDataController.saveRoundScore(new Score(0), "test");
 		this.sqliteDataController.saveRoundScore(new Score(50), "test");
@@ -241,12 +242,12 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		// Ensure the total score is correct
 		assertEquals("Total score is correct:", 150, totalScore);
 	}
-	
+
 	/**
 	 * TODO Documentation
 	 */
 	public void testAverageScore () {
-		
+
 		// Insert a few test scores into the database
 		this.sqliteDataController.saveRoundScore(new Score(0), "test");
 		this.sqliteDataController.saveRoundScore(new Score(50), "test");
@@ -258,12 +259,12 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		// Ensure the average score is correct
 		assertEquals("Average score is correct:", 50, average);
 	}
-	
+
 	/**
 	 * TODO Documentation
 	 */
 	public void testAverageScoreRounding () {
-		
+
 		// Insert a few test scores into the database
 		this.sqliteDataController.saveRoundScore(new Score(10), "test");
 		this.sqliteDataController.saveRoundScore(new Score(10), "test");

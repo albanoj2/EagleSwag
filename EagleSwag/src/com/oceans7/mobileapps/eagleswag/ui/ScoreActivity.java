@@ -7,6 +7,8 @@
  *       user. The score is supplied as data from the QuestionsActivity and a
  *       comment is added by the ScoreActivity based on the user's score (a
  *       comment displayed to the user about his score) for the round.
+ *       
+ *       FIXME Properly update Javadocs
  */
 
 package com.oceans7.mobileapps.eagleswag.ui;
