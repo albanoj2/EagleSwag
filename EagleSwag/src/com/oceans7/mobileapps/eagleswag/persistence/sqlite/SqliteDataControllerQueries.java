@@ -1,18 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 20, 2013
- * @file SqliteDataControllerQueries.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       A catalog of queries for the SQLite database. This catalog contains
- *       static methods for creating tables, storing data in tables, retrieving
- *       data from tables, etc. This catalog has been created in order to
- *       encapsulate the queries requires to perform common tasks in a single
- *       location.
- *       
- *       FIXME Properly update Javadocs
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -29,7 +30,19 @@ import android.util.Log;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.domain.Score;
 
+/**
+ * A catalog of queries for the SQLite database. This catalog contains static
+ * methods for creating tables, storing data in tables, retrieving data from
+ * tables, etc. This catalog has been created in order to encapsulate the
+ * queries requires to perform common tasks in a single location.
+ * 
+ * @author Justin Albano
+ */
 public class SqliteDataControllerQueries {
+	
+	/***************************************************************************
+	 * Static Methods
+	 **************************************************************************/
 
 	/**
 	 * Creates a new questions table in the database supplied. The table
@@ -254,7 +267,7 @@ public class SqliteDataControllerQueries {
 		// Obtain the sum of the scores for a type
 		String query = "SELECT SUM(" + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?";
 		Cursor cursor = db.rawQuery(query, new String[] { type });
-		
+
 		// Obtained the sum data from the database
 		Log.i(SqliteDataControllerQueries.class.getName(), "Obtained sum of scores using the query: " + query);
 

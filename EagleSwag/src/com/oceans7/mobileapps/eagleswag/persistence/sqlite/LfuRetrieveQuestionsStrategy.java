@@ -1,24 +1,38 @@
-/**
- * @author Justin Albano
- * @date May 29, 2013
- * @file LfuRetrieveQuestionsStrategy.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       A least frequently used (LFU) strategy for obtaining questions from a
- *       questions table in an SQLite database. The used count of the questions
- *       is used as the variable which dictates the frequency of use for a
- *       question (a question with a lower used count is considered to have been
- *       used less frequently than a question with a higher used count).
- *       
- *       FIXME Properly update Javadocs
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
+/**
+ * A least frequently used (LFU) strategy for obtaining questions from a
+ * questions table in an SQLite database. The used count of the questions is
+ * used as the variable which dictates the frequency of use for a question (a
+ * question with a lower used count is considered to have been used less
+ * frequently than a question with a higher used count).
+ * 
+ * @author Justin Albano
+ */
 public class LfuRetrieveQuestionsStrategy implements RetrieveQuestionsStrategy {
 
+	/***************************************************************************
+	 * Methods
+	 **************************************************************************/
+	
 	/**
 	 * {@inheritDoc}
 	 * 

@@ -1,14 +1,19 @@
-/**
- * @author Justin Albano
- * @date Jun 7, 2013
- * @file ScoreActivity.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Android activity that displays the score for a round completed by a
- *       user. The score is supplied as data from the QuestionsActivity and a
- *       comment is added by the ScoreActivity based on the user's score (a
- *       comment displayed to the user about his score) for the round.
- *       
- *       FIXME Properly update Javadocs
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
+ * 
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.ui;
@@ -24,6 +29,14 @@ import android.widget.TextView;
 
 import com.oceans7.mobileapps.eagleswag.R;
 
+/**
+ * Android activity that displays the score for a round completed by a user. The
+ * score is supplied as data from the QuestionsActivity and a comment is added
+ * by the ScoreActivity based on the user's score (a comment displayed to the
+ * user about his score) for the round.
+ * 
+ * @author Justin Albano
+ */
 public class ScoreActivity extends Activity {
 
 	/***************************************************************************

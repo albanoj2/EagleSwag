@@ -1,22 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 18, 2013
- * @file SqliteDataControllerHelper.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       A helper class used to create, update, and management the SQLite
- *       database. This helper class is an implementation of the
- *       SQLiteOpenHelper class provided by the SQLite framework for Android.
- *       This class deals with updating and crating the SQLite database used by
- *       the application. When the version number of the database is incremented
- *       in the SqliteDataControllerConstants class, this helper automatically
- *       updates the database.
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
  * 
- * @see android.database.sqlite.SQLiteOpenHelper
- * 
- *      FIXME Properly update Javadocs
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -35,6 +32,18 @@ import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
 
+/**
+ * A helper class used to create, update, and management the SQLite database.
+ * This helper class is an implementation of the SQLiteOpenHelper class provided
+ * by the SQLite framework for Android. This class deals with updating and
+ * crating the SQLite database used by the application. When the version number
+ * of the database is incremented in the SqliteDataControllerConstants class,
+ * this helper automatically updates the database.
+ * 
+ * @author Justin Albano
+ * 
+ * @see android.database.sqlite.SQLiteOpenHelper
+ */
 public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 
 	/***************************************************************************

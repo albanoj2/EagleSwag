@@ -1,16 +1,19 @@
-/**
- * @author Justin Albano
- * @date Jun 7, 2013
- * @file QuestionActivity.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Android activity that displays questions to the user and provides
- *       buttons for answering the questions. The SplashScreenActivity passes
- *       the type of questions to answer. Based on the type supplied, a round of
- *       questions is started for the type specified. Once the round of
- *       questions has been completed, the score for the round is passed to a
- *       ScoreActivity to display the score for the user.
- *       
- *       FIXME Properly update Javadocs
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
+ * 
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.ui;
@@ -34,6 +37,16 @@ import com.oceans7.mobileapps.eagleswag.domain.RoundController;
 import com.oceans7.mobileapps.eagleswag.domain.RoundNotStartedException;
 import com.oceans7.mobileapps.eagleswag.ui.SplashScreenActivity.Usertype;
 
+/**
+ * Android activity that displays questions to the user and provides buttons for
+ * answering the questions. The SplashScreenActivity passes the type of
+ * questions to answer. Based on the type supplied, a round of questions is
+ * started for the type specified. Once the round of questions has been
+ * completed, the score for the round is passed to a ScoreActivity to display
+ * the score for the user.
+ * 
+ * @author Justin Albano
+ */
 public class QuestionsActivity<T> extends Activity {
 
 	/***************************************************************************
@@ -92,9 +105,9 @@ public class QuestionsActivity<T> extends Activity {
 			public void onClick (View v) {
 
 				try {
-					// Answer the current question as yes 
+					// Answer the current question as yes
 					roundController.answerCurrentQuestionYes();
-					
+
 					// Display next question if another question is available
 					nextQuestionIfPossible();
 
@@ -113,9 +126,9 @@ public class QuestionsActivity<T> extends Activity {
 			public void onClick (View v) {
 
 				try {
-					// Answer the current question as no 
+					// Answer the current question as no
 					roundController.answerCurrentQuestionNo();
-					
+
 					// Display next question if another question is available
 					nextQuestionIfPossible();
 
@@ -246,7 +259,7 @@ public class QuestionsActivity<T> extends Activity {
 			Usertype type = Usertype.values()[getIntent().getExtras().getInt("QuestionType")];
 
 			switch (type) {
-				// Load the correct questions based on the type supplied
+			// Load the correct questions based on the type supplied
 
 				case ENGINEER:
 					// Engineer was selected

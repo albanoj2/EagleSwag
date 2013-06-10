@@ -1,3 +1,21 @@
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
+ * 
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
+ * 
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
+ */
+
 package com.oceans7.mobileapps.eagleswag.domain;
 
 import android.content.Context;
@@ -5,18 +23,15 @@ import android.content.Context;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 import com.oceans7.mobileapps.eagleswag.persistence.DataControllerFactory;
 
-
 /**
  * An abstract class that defines the interface for a question. All common
  * implementation for questions, such as saving the question, are present in
  * this class. The attributes of this class map directly to the question data
  * specified in the data file. To create a new type of question, simply extend
  * this class and provide a custom constructor for the new question type.
- * 
- * <p>
+ * <p/>
  * <strong>Note:</strong> If a new question type is added to the system, a new
  * class must be created that extends this abstract class.
- * </p>
  * 
  * @author Justin Albano
  */

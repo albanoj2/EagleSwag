@@ -1,18 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 19, 2013
- * @file RoundTest.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       Test fixture for {@link com.oceans7.mobileapps.eagleswag.domain.Round}.
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
  * 
- *       Ensures that the submission of 'yes' and 'no' answered questions is
- *       properly recorded and that the score for a round is properly
- *       calculated, based on the answered questions submitted to the round.
- *       
- *       FIXME Properly update Javadocs
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -26,6 +27,15 @@ import com.oceans7.mobileapps.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.domain.Round;
 
+/**
+ * Test fixture for {@link com.oceans7.mobileapps.eagleswag.domain.Round}.
+ * 
+ * Ensures that the submission of 'yes' and 'no' answered questions is properly
+ * recorded and that the score for a round is properly calculated, based on the
+ * answered questions submitted to the round.
+ * 
+ * @author Justin Albano
+ */
 public class RoundTest extends InstrumentationTestCase {
 
 	/***************************************************************************
@@ -59,7 +69,8 @@ public class RoundTest extends InstrumentationTestCase {
 		this.round = new Round();
 
 		// Set the context of the test fixture
-		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");;
+		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
+		;
 	}
 
 	/**
@@ -96,9 +107,7 @@ public class RoundTest extends InstrumentationTestCase {
 		int countAfterAddition = this.round.numberOfQuestionsAnsweredYes();
 
 		// Ensure that the number of 'yes' answers has been incremented
-		assertEquals("The number of questions answered 'yes' incremented:",
-			countBeforeAddition + 1,
-			countAfterAddition);
+		assertEquals("The number of questions answered 'yes' incremented:", countBeforeAddition + 1, countAfterAddition);
 	}
 
 	/**
@@ -121,9 +130,7 @@ public class RoundTest extends InstrumentationTestCase {
 		int countAfterAddition = this.round.numberOfQuestionsAnsweredNo();
 
 		// Ensure that the number of 'no' answers has been incremented
-		assertEquals("The number of questions answered 'no' incremented:",
-			countBeforeAddition + 1,
-			countAfterAddition);
+		assertEquals("The number of questions answered 'no' incremented:", countBeforeAddition + 1, countAfterAddition);
 	}
 
 	/**

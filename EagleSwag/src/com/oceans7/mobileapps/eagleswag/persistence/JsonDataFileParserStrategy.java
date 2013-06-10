@@ -1,17 +1,19 @@
-/**
- * @author Justin Albano
- * @date Jun 7, 2013
- * @file JsonDataFileParserStrategy.java
- * @version 1.1.0
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *          Oceans7 Software
- *          EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *          A data parser strategy for a JSON data file. This parser strategy
- *          extracts the data for a question type from a JSON file and returns
- *          the extracted data in a queue of questions.
- *          
- *          FIXME Properly update Javadocs
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -36,6 +38,13 @@ import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 
+/**
+ * A data parser strategy for a JSON data file. This parser strategy extracts
+ * the data for a question type from a JSON file and returns the extracted data
+ * in a queue of questions.
+ * 
+ * @author Justin Albano
+ */
 public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 
 	/***************************************************************************
@@ -86,7 +95,7 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 		try {
 			// RECORD: time stamp of the beginning of the parsing
 			long start = System.currentTimeMillis();
-			
+
 			// Obtain the JSON ID to parse for the key provided
 			String id = ConfigurationHelper.getInstance().getJsonId(key, context);
 
@@ -135,7 +144,7 @@ public class JsonDataFileParserStrategy implements DataFileParserStrategy {
 
 				// Add the new general question (ignoring the ID)
 				questions.add(questionToAdd);
-				
+
 				// RECORD: time stamp of the end of the parsing
 				long end = System.currentTimeMillis();
 				Log.i(this.getClass().getName(), "JSON parsing took " + (end - start) + "ms");

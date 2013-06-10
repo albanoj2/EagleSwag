@@ -1,15 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 19, 2013
- * @file SqliteDataControllerQueriesTest.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
  * 
- *      TODO Add a test case for creating scores table
- *      FIXME Properly update Javadocs
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
@@ -34,6 +38,14 @@ import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerC
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerHelper;
 import com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
 
+/**
+ * TODO Documentation
+ * TODO Add a test case for creating scores table
+ * 
+ * @author Justin Albano
+ * 
+ * @see com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries
+ */
 public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/***************************************************************************

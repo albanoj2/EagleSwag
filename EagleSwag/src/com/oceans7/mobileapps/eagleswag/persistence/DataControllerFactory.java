@@ -1,16 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 18, 2013
- * @file DataControllerFactory.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       Factory used to create the data controller for persistent storage. The
- *       data controller created varies depending on the class specified in the
- *       data controller configuration file.
- *       
- *       FIXME Properly update Javadocs
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence;
@@ -23,6 +26,13 @@ import java.util.Properties;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * Factory used to create the data controller for persistent storage. The data
+ * controller created varies depending on the class specified in the data
+ * controller configuration file.
+ * 
+ * @author Justin Albano
+ */
 public class DataControllerFactory {
 
 	/***************************************************************************
@@ -84,7 +94,7 @@ public class DataControllerFactory {
 			Properties properties = new Properties();
 			properties.load(is);
 			is.close();
-			
+
 			// Obtain the data controller class name
 			String dataControllerName = properties.getProperty("dataController.classname");
 			Log.i(this.getClass().getName(), "Configuration file specified data controller as " + dataControllerName);

@@ -1,16 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 29, 2013
- * @file RoundControllerTest.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       Test fixture for RoundController.
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
  * 
- * @see com.oceans7.mobileapps.eagleswag.domain.RoundController
- * 
- *      FIXME Properly update Javadocs
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.test.domain;
@@ -25,6 +28,13 @@ import com.oceans7.mobileapps.eagleswag.domain.PilotStrategy;
 import com.oceans7.mobileapps.eagleswag.domain.RoundController;
 import com.oceans7.mobileapps.eagleswag.domain.RoundNotStartedException;
 
+/**
+ * Test fixture for RoundController.
+ * 
+ * @author Justin Albano
+ * 
+ * @see com.oceans7.mobileapps.eagleswag.domain.RoundController
+ */
 public class RoundControllerTest extends InstrumentationTestCase {
 
 	/***************************************************************************

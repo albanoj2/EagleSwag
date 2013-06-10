@@ -1,20 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 19, 2013
- * @file Round.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       A round of questions. This round is started when a set of questions is
- *       requested, and each time a question is answered, it is submitted to the
- *       Round. Once all the questions in this set have been answered, the total
- *       score for the round is calculated. Once the score is calculated, the
- *       round is saved. When the round is saved, the questions submitted to the
- *       Round are stored back in the database. Before storing the questions in
- *       the database, the 'used count' of the question is incremented.
- *       
- *       FIXME Properly update Javadocs
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
+ * 
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.domain;
@@ -24,6 +23,17 @@ import java.util.LinkedList;
 import android.content.Context;
 import android.util.Log;
 
+/**
+ * A round of questions. This round is started when a set of questions is
+ * requested, and each time a question is answered, it is submitted to the
+ * Round. Once all the questions in this set have been answered, the total score
+ * for the round is calculated. Once the score is calculated, the round is
+ * saved. When the round is saved, the questions submitted to the Round are
+ * stored back in the database. Before storing the questions in the database,
+ * the 'used count' of the question is incremented.
+ * 
+ * @author Justin Albano
+ */
 public class Round {
 
 	/***************************************************************************
@@ -133,10 +143,9 @@ public class Round {
 			runningTotal += question.getYesPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(
-				this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
-					question.getYesPointValue(), question.getNoPointValue()) + "]");
+			Log.i(this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
+					question.getNoPointValue()) + "]");
 		}
 
 		for (Question question : this.questionsAnsweredNo) {
@@ -144,10 +153,9 @@ public class Round {
 			runningTotal += question.getNoPointValue();
 			totalPossiblePoints += Math.max(question.getYesPointValue(), question.getNoPointValue());
 
-			Log.i(
-				this.getClass().getName(),
-				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(
-					question.getYesPointValue(), question.getNoPointValue()) + "]");
+			Log.i(this.getClass().getName(),
+				"Calculating possible points between [" + question.getYesPointValue() + "] [" + question.getNoPointValue() + "]: " + "[" + Math.max(question.getYesPointValue(),
+					question.getNoPointValue()) + "]");
 		}
 
 		if ((this.getNumberOfYesQuestions() + this.getNumberOfNoQuestions()) > 0) {

@@ -1,25 +1,19 @@
-/**
- * @author Justin Albano
- * @date May 27, 2013
- * @file SqliteDataController.java
+/*
+ * EagleSwag Android Mobile Application
+ * Copyright (C) 2013 Oceans7
+ * Oceans7 Mobile Applications Development Team
  * 
- *       Oceans7 Software
- *       EagleSwag Android Mobile App
+ * This software is free and governed by the terms of the GNU General Public
+ * License as published by the Free Software Foundation. This software may be
+ * redistributed and/or modified in accordance with version 3, or any later
+ * version, of the GNU General Public License.
  * 
- *       A data controller that implements data storage and retrieval using a
- *       SQLite database; data is stored using a relational database schema. The
- *       SQLiteDataControllerMappingsParser is used to generate the table of
- *       mappings from class type (for each question type: General, Engineering,
- *       etc.) and the SqliteDataControllerConstants and
- *       SqliteDataControllerQueries are combined to encapsulate the SQLite
- *       queries, table names, database version, etc. used by the SQLite data
- *       controller.
+ * This software is distributed without any warranty; without even the implied
+ * warranty of merchantability or fitness for a particular purpose. For further
+ * detail, refer to the GNU General Public License, which can be found in the
+ * LICENSE.txt file at the root directory of this project, or online at:
  * 
- *       Note that all queries are found in the SqliteDataControllerQueries
- *       class, and all data controller constants, such as table names, column
- *       numbers, etc., are found in the SqliteDataControllerConstants class.
- *       
- *       FIXME Properly update Javadocs
+ * <http://www.gnu.org/licenses/>
  */
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
@@ -43,6 +37,21 @@ import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.domain.Score;
 import com.oceans7.mobileapps.eagleswag.persistence.DataController;
 
+/**
+ * A data controller that implements data storage and retrieval using a SQLite
+ * database; data is stored using a relational database schema. The
+ * SQLiteDataControllerMappingsParser is used to generate the table of mappings
+ * from class type (for each question type: General, Engineering, etc.) and the
+ * SqliteDataControllerConstants and SqliteDataControllerQueries are combined to
+ * encapsulate the SQLite queries, table names, database version, etc. used by
+ * the SQLite data controller.
+ * <p/>
+ * <strong>Note:</strong> all queries are found in the SqliteDataControllerQueries class, and
+ * all data controller constants, such as column names, column numbers, etc., are
+ * found in the SqliteDataControllerConstants class.
+ * 
+ * @author Justin Albano
+ */
 public class SqliteDataController implements DataController {
 
 	/***************************************************************************
@@ -222,10 +231,10 @@ public class SqliteDataController implements DataController {
 
 		return questions;
 	}
-	
+
 	/**
-	 * TODO Add caching to obtain the total score
-	 * {@inheritDoc}
+	 * TODO Add caching to obtain the total score {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getTotalScore(java.lang.String)
 	 */
 	@Override
@@ -234,22 +243,22 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
-	 * TODO Add caching to obtain the average score
-	 * {@inheritDoc}
+	 * TODO Add caching to obtain the average score {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#getAverageScore(java.lang.String)
 	 */
 	@Override
 	public int getAverageScore (String type) {
-		
+
 		// Obtain the total score
 		double totalScore = SqliteDataControllerQueries.getTotalScore(this.database, type);
-		
+
 		// Obtain the number of entries
 		long entries = SqliteDataControllerQueries.getNumberOfScores(this.database, type);
-		
+
 		// Calculate the average
 		int average = (int) Math.round(totalScore / entries);
-		
+
 		return average;
 	}
 
@@ -271,8 +280,7 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
-	 * TODO Update the cache (see above) when saving scores
-	 * {@inheritDoc}
+	 * TODO Update the cache (see above) when saving scores {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.persistence.DataController#saveRoundScore(com.oceans7.mobileapps.eagleswag.domain.Score,
 	 *      java.lang.String)
