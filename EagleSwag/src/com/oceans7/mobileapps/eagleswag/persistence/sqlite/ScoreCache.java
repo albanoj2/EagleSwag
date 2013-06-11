@@ -16,7 +16,7 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobileapps.eagleswag.persistence;
+package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
 import java.util.HashMap;
 import java.util.Map;

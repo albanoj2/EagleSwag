@@ -23,31 +23,43 @@ import java.util.List;
 import android.content.Context;
 
 /**
- * TODO Documentation
+ * A concrete implementation of a question strategy for engineering. This
+ * strategy is designed to obtain questions from the database for a engineering
+ * round of questions. This question strategy will return a combination of
+ * engineering and general questions (there may not be engineering questions, or
+ * there may not be general questions, but there is the possibility of returning
+ * both). The name of this engineering strategy is commonly used as a string key
+ * used to associate scores in persistent storage with round of questions for an
+ * engineering.
  * 
  * @author Justin Albano
  */
-public class EngineeringStrategy extends QuestionStrategy {
-	
+public class EngineeringStrategy implements QuestionStrategy {
+
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy#getQuestions()
 	 */
 	@Override
 	public List<Question> getQuestions (Context context) {
-		return super.getQuestions(context, EngineeringQuestion.class, "engineer");
+		
+		// Create a delegate for obtaining questions from persistent storage
+		QuestionStrategyDelegate delegate = new QuestionStrategyDelegate();
+		return delegate.getQuestions(context, EngineeringQuestion.class, "engineer");
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy#getName()
 	 */
 	@Override
 	public String getName () {
 		return "engineering";
-	} 
+	}
 }

@@ -39,7 +39,7 @@ import com.oceans7.mobileapps.eagleswag.domain.Score;
  * @author Justin Albano
  */
 public class SqliteDataControllerQueries {
-	
+
 	/***************************************************************************
 	 * Static Methods
 	 **************************************************************************/
@@ -185,9 +185,10 @@ public class SqliteDataControllerQueries {
 	}
 
 	/**
-	 * TODO Documentation
+	 * Creates a SQLite database table to store scores.
 	 * 
 	 * @param db
+	 *            The database to in which to create the scores table.
 	 */
 	public static void createScoreTable (SQLiteDatabase db) {
 
@@ -215,14 +216,19 @@ public class SqliteDataControllerQueries {
 	}
 
 	/**
-	 * TODO Complete documentation
+	 * Inserts a score into the scores table in the SQLite database.
 	 * 
 	 * @param db
-	 * @param type
+	 *            The database to add the score to.
+	 * @param key
+	 *            The key that associates the score with a type of round (a
+	 *            round for an engineer, for example).
 	 * @param score
+	 *            The score object to store in the SQLite database.
 	 * @return
+	 *         The ID of the newly stored score object.
 	 */
-	public static long insertIntoScoreTable (SQLiteDatabase db, String type, Score score) {
+	public static long insertIntoScoreTable (SQLiteDatabase db, String key, Score score) {
 
 		// Build the SQL statement
 		StringBuilder builder = new StringBuilder();
@@ -238,26 +244,30 @@ public class SqliteDataControllerQueries {
 		// Bind the values to the statement
 		statement.bindLong(1, score.getScore());
 		statement.bindLong(2, score.getTimestamp());
-		statement.bindString(3, type);
+		statement.bindString(3, key);
 
 		// Execute the statement
 		long id = statement.executeInsert();
 
 		// Log the insertion
 		Log.i(SqliteDataControllerConstants.class.getName(),
-			"Inserting score into '" + SqliteDataControllerConstants.SCORE_TABLE_NAME + "' where id -> " + id + ": " + builder + " -> (" + score.getScore() + ", " + score.getTimestamp() + ", " + type + ")");
+			"Inserting score into '" + SqliteDataControllerConstants.SCORE_TABLE_NAME + "' where id -> " + id + ": " + builder + " -> (" + score.getScore() + ", " + score.getTimestamp() + ", " + key + ")");
 
 		return id;
 	}
 
 	/**
-	 * TODO Complete method
+	 * Obtains the total score for all scores associated with a key.
 	 * 
 	 * @param db
-	 * @param type
+	 *            The database storing the scores.
+	 * @param key
+	 *            The key associate with the scores for which the total is being
+	 *            calculated.
 	 * @return
+	 *         The total score for all scores associated with the provided key.
 	 */
-	public static int getTotalScore (SQLiteDatabase db, String type) {
+	public static int getTotalScore (SQLiteDatabase db, String key) {
 
 		if (db == null) {
 			// The database was not set
@@ -266,7 +276,7 @@ public class SqliteDataControllerQueries {
 
 		// Obtain the sum of the scores for a type
 		String query = "SELECT SUM(" + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?";
-		Cursor cursor = db.rawQuery(query, new String[] { type });
+		Cursor cursor = db.rawQuery(query, new String[] { key });
 
 		// Obtained the sum data from the database
 		Log.i(SqliteDataControllerQueries.class.getName(), "Obtained sum of scores using the query: " + query);
@@ -284,13 +294,19 @@ public class SqliteDataControllerQueries {
 	}
 
 	/**
-	 * TODO Complete method
+	 * Obtains the number of scores associated with the provided key in the
+	 * provided database.
 	 * 
 	 * @param db
-	 * @param type
+	 *            The database to obtain the scores from.
+	 * @param key
+	 *            The key associated with the scores for which the number of
+	 *            elements are being counted.
 	 * @return
+	 *         The number of scores associated with the provided key in the
+	 *         provided database.
 	 */
-	public static long getNumberOfScores (SQLiteDatabase db, String type) {
-		return DatabaseUtils.queryNumEntries(db, SqliteDataControllerConstants.SCORE_TABLE_NAME, "type=?", new String[] { type });
+	public static long getNumberOfScores (SQLiteDatabase db, String key) {
+		return DatabaseUtils.queryNumEntries(db, SqliteDataControllerConstants.SCORE_TABLE_NAME, "type=?", new String[] { key });
 	}
 }

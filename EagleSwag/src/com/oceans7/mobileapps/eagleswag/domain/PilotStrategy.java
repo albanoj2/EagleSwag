@@ -23,12 +23,18 @@ import java.util.List;
 import android.content.Context;
 
 /**
- * TODO Documentation
+ * A concrete implementation of a question strategy for pilot. This strategy is
+ * designed to obtain questions from the database for a pilot round of
+ * questions. This question strategy will return a combination of pilot and
+ * general questions (there may not be pilot questions, or there may not be
+ * general questions, but there is the possibility of returning both). The name
+ * of this pilot strategy is commonly used as a string key used to associate
+ * scores in persistent storage with round of questions for an pilot.
  * 
  * @author Justin Albano
  */
-public class PilotStrategy extends QuestionStrategy {
-	
+public class PilotStrategy implements QuestionStrategy {
+
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
@@ -40,7 +46,10 @@ public class PilotStrategy extends QuestionStrategy {
 	 */
 	@Override
 	public List<Question> getQuestions (Context context) {
-		return super.getQuestions(context, PilotQuestion.class, "pilot");
+		
+		// Create a delegate for obtaining questions from persistent storage
+		QuestionStrategyDelegate delegate = new QuestionStrategyDelegate();
+		return delegate.getQuestions(context, PilotQuestion.class, "pilot");
 	}
 
 	/**
