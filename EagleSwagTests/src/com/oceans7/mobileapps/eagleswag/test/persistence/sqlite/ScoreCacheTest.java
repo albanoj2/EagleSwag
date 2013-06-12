@@ -20,69 +20,118 @@ package com.oceans7.mobileapps.eagleswag.test.persistence.sqlite;
 
 import junit.framework.TestCase;
 
+import com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache;
+
 /**
  * TODO Class documentation
- *
+ * 
  * @author Justin Albano
  */
 public class ScoreCacheTest extends TestCase {
 
+	/***************************************************************************
+	 * Attributes
+	 **************************************************************************/
+
+	private ScoreCache cache;
+
+	/***************************************************************************
+	 * Setup & Tear Down
+	 **************************************************************************/
+
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see junit.framework.TestCase#setUp()
 	 */
 	protected void setUp () throws Exception {
 		super.setUp();
+
+		// Create the cache
+		this.cache = new ScoreCache();
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see junit.framework.TestCase#tearDown()
 	 */
 	protected void tearDown () throws Exception {
 		super.tearDown();
 	}
 
+	/***************************************************************************
+	 * Test Cases
+	 **************************************************************************/
+
 	/**
-	 * Test method for {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#getTotal(java.lang.String)}.
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#getTotal(java.lang.String)}
+	 * .
 	 */
 	public void testGetTotal () {
 		fail("Not yet implemented");
 	}
 
 	/**
-	 * Test method for {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#getAverage(java.lang.String)}.
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#getAverage(java.lang.String)}
+	 * .
 	 */
 	public void testGetAverage () {
 		fail("Not yet implemented");
 	}
 
 	/**
-	 * Test method for {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoTotal(java.lang.String, int)}.
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoTotal(java.lang.String, int)}
+	 * .
 	 */
 	public void testFactorIntoTotal () {
 		fail("Not yet implemented");
 	}
 
 	/**
-	 * Test method for {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoAverage(java.lang.String, int)}.
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoAverage(java.lang.String, int)}
+	 * .
 	 */
 	public void testFactorIntoAverage () {
 		fail("Not yet implemented");
 	}
 
 	/**
-	 * Test method for {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#isTotalInCache(java.lang.String)}.
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#isTotalInCache(java.lang.String)}
+	 * .
 	 */
 	public void testIsTotalInCache () {
-		fail("Not yet implemented");
+
+		// Ensure that the cache does not contain the test data
+		assertEquals("Cache does not contain data:", false, this.cache.isTotalInCache("test"));
+
+		// Add the test data into the cache
+		this.cache.setTotal("test", 10);
+
+		// Ensure that the cache now contains the test data
+		assertEquals("Cache contains data:", true, this.cache.isTotalInCache("test"));
 	}
 
 	/**
-	 * Test method for {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#isAverageInCache(java.lang.String)}.
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#isAverageInCache(java.lang.String)}
+	 * .
 	 */
 	public void testIsAverageInCache () {
-		fail("Not yet implemented");
+
+		// Ensure that the cache does not contain the test data
+		assertEquals("Cache does not contain data:", false, this.cache.isAverageInCache("test"));
+
+		// Add the test data into the cache
+		this.cache.setAverage("test", 10);
+
+		// Ensure that the cache now contains the test data
+		assertEquals("Cache contains data:", true, this.cache.isAverageInCache("test"));
 	}
 
 }

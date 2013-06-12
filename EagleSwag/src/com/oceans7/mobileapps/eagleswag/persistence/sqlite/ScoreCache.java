@@ -63,11 +63,59 @@ public class ScoreCache {
 
 	public void factorIntoAverage (String key, int value) {}
 
+	/**
+	 * Returns true if there is a total set for the key.
+	 * 
+	 * @param key
+	 *            The key for cached total value.
+	 * @return
+	 *         True if there is a non-null total associated with the key.
+	 */
 	public boolean isTotalInCache (String key) {
-		return false;
+
+		// Return if the value in the totals is null for the provided key
+		return this.totalsMap.get(key) != null;
 	}
 
+	/**
+	 * Returns true if there is an average set for the key.
+	 * 
+	 * @param key
+	 *            The key for the cached average value.
+	 * @return
+	 *         True if there is a non-null total associated with the key.
+	 */
 	public boolean isAverageInCache (String key) {
-		return false;
+
+		// Return if the value in the averages is null for the provided key
+		return this.averagesMap.get(key) != null;
+	}
+
+	/**
+	 * Sets the total value for a key in the cache.
+	 * 
+	 * @param key
+	 *            The key for the total value.
+	 * @param value
+	 *            The total value.
+	 */
+	public void setTotal (String key, int value) {
+
+		// Set the total value associated with the key
+		this.totalsMap.put(key, value);
+	}
+
+	/**
+	 * Sets the average value for a key in the cache.
+	 * 
+	 * @param key
+	 *            The key for the average value.
+	 * @param value
+	 *            The average value.
+	 */
+	public void setAverage (String key, int value) {
+
+		// Set the average value associated with the key
+		this.averagesMap.put(key, value);
 	}
 }

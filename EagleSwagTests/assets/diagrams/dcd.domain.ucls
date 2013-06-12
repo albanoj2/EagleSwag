@@ -79,7 +79,7 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy" project="EagleSwag" 
+  <interface id="9" language="java" name="com.oceans7.mobileapps.eagleswag.domain.QuestionStrategy" project="EagleSwag" 
     file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/domain/QuestionStrategy.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="803" y="191"/>    
@@ -88,7 +88,7 @@
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
-  </class>  
+  </interface>  
   <class id="10" language="java" name="com.oceans7.mobileapps.eagleswag.domain.EngineeringStrategy" project="EagleSwag" 
     file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/domain/EngineeringStrategy.java" binary="false" 
     corner="BOTTOM_RIGHT">    
@@ -111,129 +111,151 @@
   <class id="12" language="java" name="com.oceans7.mobileapps.eagleswag.domain.ScoreController" project="EagleSwag" 
     file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/domain/ScoreController.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="799" y="23"/>    
+    <position height="-1" width="-1" x="804" y="21"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true"/>      
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <dependency id="13">    
-    <end type="SOURCE" refId="12"/>    
+  <class id="13" language="java" name="com.oceans7.mobileapps.eagleswag.domain.QuestionStrategyDelegate" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/domain/QuestionStrategyDelegate.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="793" y="586"/>    
+    <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
+    </display>  
+  </class>  
+  <dependency id="14">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="15">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="17">    
+    <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="9"/>  
   </dependency>  
-  <association id="14">    
+  <generalization id="18">    
+    <bendpoint x="679" y="819"/>    
+    <bendpoint x="517" y="819"/>    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <association id="19">    
     <bendpoint x="275" y="530"/>    
     <bendpoint x="373" y="530"/>    
     <bendpoint x="452" y="530"/>    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="15" name="questionsAnsweredYes">        
+      <attribute id="20" name="questionsAnsweredYes">        
         <position height="18" width="126" x="319" y="512"/>      
       </attribute>      
-      <multiplicity id="16" minimum="0" maximum="2147483647">        
+      <multiplicity id="21" minimum="0" maximum="2147483647">        
         <position height="16" width="21" x="424" y="533"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="17">    
-    <bendpoint x="679" y="819"/>    
-    <bendpoint x="517" y="819"/>    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <association id="18">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="19" name="score"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="21">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
   <generalization id="22">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="6"/>  
   </generalization>  
   <association id="23">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="24" name="score"/>      
+      <multiplicity id="25" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="26">    
+    <bendpoint x="864" y="275"/>    
+    <bendpoint x="803" y="275"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <association id="27">    
     <bendpoint x="355" y="366"/>    
     <bendpoint x="175" y="366"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="24" name="currentRound"/>      
-      <multiplicity id="25" minimum="0" maximum="1"/>    
+      <attribute id="28" name="currentRound"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="26">    
-    <bendpoint x="716" y="300"/>    
-    <bendpoint x="803" y="300"/>    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <generalization id="27">    
-    <bendpoint x="367" y="819"/>    
-    <bendpoint x="517" y="819"/>    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <association id="28">    
+  <association id="30">    
     <bendpoint x="376" y="496"/>    
     <bendpoint x="452" y="496"/>    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="29" name="questionsAnsweredNo">        
+      <attribute id="31" name="questionsAnsweredNo">        
         <position height="18" width="120" x="324" y="478"/>      
       </attribute>      
-      <multiplicity id="30" minimum="0" maximum="2147483647">        
+      <multiplicity id="32" minimum="0" maximum="2147483647">        
         <position height="16" width="21" x="422" y="497"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="31">    
-    <bendpoint x="451" y="325"/>    
-    <bendpoint x="519" y="325"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="32" name="currentQuestions">        
-        <position height="18" width="92" x="524" y="376"/>      
-      </attribute>      
-      <multiplicity id="33" minimum="0" maximum="2147483647">        
-        <position height="16" width="21" x="525" y="363"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="34">    
-    <bendpoint x="863" y="300"/>    
-    <bendpoint x="803" y="300"/>    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="35">    
+  <association id="33">    
     <bendpoint x="355" y="366"/>    
     <bendpoint x="473" y="366"/>    
     <bendpoint x="473" y="395"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="36" name="currentQuestion">        
+      <attribute id="34" name="currentQuestion">        
         <position height="18" width="86" x="384" y="373"/>      
       </attribute>      
-      <multiplicity id="37" minimum="0" maximum="1">        
+      <multiplicity id="35" minimum="0" maximum="1">        
         <position height="16" width="23" x="476" y="375"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="36">    
+    <bendpoint x="367" y="819"/>    
+    <bendpoint x="517" y="819"/>    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
+  <dependency id="37">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
   <dependency id="38">    
-    <end type="SOURCE" refId="1"/>    
+    <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="9"/>  
   </dependency>  
+  <realization id="39">    
+    <bendpoint x="716" y="275"/>    
+    <bendpoint x="803" y="275"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </realization>  
+  <association id="40">    
+    <bendpoint x="451" y="325"/>    
+    <bendpoint x="519" y="325"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="41" name="currentQuestions">        
+        <position height="18" width="92" x="524" y="376"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="2147483647">        
+        <position height="16" width="21" x="525" y="363"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true"/>    
