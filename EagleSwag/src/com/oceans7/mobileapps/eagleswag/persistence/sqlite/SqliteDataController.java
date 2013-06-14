@@ -46,9 +46,10 @@ import com.oceans7.mobileapps.eagleswag.persistence.DataController;
  * encapsulate the SQLite queries, table names, database version, etc. used by
  * the SQLite data controller.
  * <p/>
- * <strong>Note:</strong> all queries are found in the SqliteDataControllerQueries class, and
- * all data controller constants, such as column names, column numbers, etc., are
- * found in the SqliteDataControllerConstants class.
+ * <strong>Note:</strong> all queries are found in the
+ * SqliteDataControllerQueries class, and all data controller constants, such as
+ * column names, column numbers, etc., are found in the
+ * SqliteDataControllerConstants class.
  * 
  * @author Justin Albano
  */
@@ -88,6 +89,12 @@ public class SqliteDataController implements DataController {
 	 */
 	private Map<Class<? extends Question>, String> classToTableMap;
 
+	/**
+	 * Internal cache to speed up the retrieval of score data from the SQLite
+	 * database.
+	 */
+	private ScoreCache cache;
+
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
@@ -102,6 +109,9 @@ public class SqliteDataController implements DataController {
 
 		// Store the context
 		this.context = context;
+
+		// Create the score cache
+		this.cache = new ScoreCache();
 
 		// Create the database helper
 		this.helper = new SqliteDataControllerHelper(context);
@@ -239,7 +249,20 @@ public class SqliteDataController implements DataController {
 	 */
 	@Override
 	public int getTotalScore (String type) {
-		return SqliteDataControllerQueries.getTotalScore(this.database, type);
+
+		if (!this.cache.isTotalInCache(type)) {
+			// Obtain the total from database if it is not cached
+			int total = SqliteDataControllerQueries.getTotalScore(this.database, type);
+
+			// Set the value in cache
+			this.cache.loadTotal(type, total);
+
+			return total;
+		}
+		else {
+			// Obtain the value from cache
+			return this.cache.getTotal(type);
+		}
 	}
 
 	/**
@@ -250,16 +273,25 @@ public class SqliteDataController implements DataController {
 	@Override
 	public int getAverageScore (String type) {
 
-		// Obtain the total score
-		double totalScore = SqliteDataControllerQueries.getTotalScore(this.database, type);
+		if (!this.cache.isAverageInCache(type)) {
+			// Obtain the total score from database since it is not yet cached
+			double totalScore = SqliteDataControllerQueries.getTotalScore(this.database, type);
 
-		// Obtain the number of entries
-		long entries = SqliteDataControllerQueries.getNumberOfScores(this.database, type);
+			// Obtain the number of entries
+			int entries = (int) SqliteDataControllerQueries.getNumberOfScores(this.database, type);
 
-		// Calculate the average
-		int average = (int) Math.round(totalScore / entries);
+			// Calculate the average
+			int average = (int) Math.round(totalScore / entries);
+			
+			// Set the average in cache
+			this.cache.loadAverage(type, average, entries);
 
-		return average;
+			return average;
+		}
+		else {
+			// Return the cached value of the average
+			return this.cache.getAverage(type);
+		}
 	}
 
 	/**
@@ -290,6 +322,10 @@ public class SqliteDataController implements DataController {
 
 		// Save the score in the database
 		SqliteDataControllerQueries.insertIntoScoreTable(this.database, type, score);
+		
+		// Factor in the total and average values for this score
+		this.cache.factorIntoTotal(type, score.getScore());
+		this.cache.factorIntoAverage(type, score.getScore());
 
 	}
 

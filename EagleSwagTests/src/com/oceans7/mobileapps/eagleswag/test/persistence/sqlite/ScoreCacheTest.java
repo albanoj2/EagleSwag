@@ -58,6 +58,9 @@ public class ScoreCacheTest extends TestCase {
 	 */
 	protected void tearDown () throws Exception {
 		super.tearDown();
+
+		// Destroy the cache
+		this.cache = null;
 	}
 
 	/***************************************************************************
@@ -70,7 +73,12 @@ public class ScoreCacheTest extends TestCase {
 	 * .
 	 */
 	public void testGetTotal () {
-		fail("Not yet implemented");
+
+		// Add test total value into the cache
+		this.cache.loadTotal("test", 10);
+
+		// Ensure the correct value is returned
+		assertEquals("Total value is set:", 10, (int) this.cache.getTotal("test"));
 	}
 
 	/**
@@ -79,7 +87,12 @@ public class ScoreCacheTest extends TestCase {
 	 * .
 	 */
 	public void testGetAverage () {
-		fail("Not yet implemented");
+
+		// Add test average value into the cache
+		this.cache.loadAverage("test", 10, 1);
+
+		// Ensure the correct value is returned
+		assertEquals("Average value is set:", 10, (int) this.cache.getAverage("test"));
 	}
 
 	/**
@@ -88,7 +101,61 @@ public class ScoreCacheTest extends TestCase {
 	 * .
 	 */
 	public void testFactorIntoTotal () {
-		fail("Not yet implemented");
+
+		// Ensure a total is not associated with the key
+		assertNull("Total is empty:", this.cache.getTotal("test"));
+
+		// Factor in a single value and ensure that is the total value
+		this.cache.factorIntoTotal("test", 25);
+		assertNotNull("Total is defined:", this.cache.getTotal("test"));
+		assertEquals("First factor set value:", 25, (int) this.cache.getTotal("test"));
+
+		// Factor in another value and ensure new total is the sum of the two
+		this.cache.factorIntoTotal("test", 50);
+		assertNotNull("Total is defined:", this.cache.getTotal("test"));
+		assertEquals("Total is sum of two factors:", 75, (int) this.cache.getTotal("test"));
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoTotal(java.lang.String, int)}
+	 * .
+	 */
+	public void testFactorIntoTotalNegative () {
+
+		// Ensure a total is not associated with the key
+		assertNull("Total is empty:", this.cache.getTotal("test"));
+
+		// Factor in a single value and ensure that is the total value
+		this.cache.factorIntoTotal("test", 25);
+		assertNotNull("Total is defined:", this.cache.getTotal("test"));
+		assertEquals("First factor set value:", 25, (int) this.cache.getTotal("test"));
+
+		// Factor in another value and ensure new total is the sum of the two
+		this.cache.factorIntoTotal("test", -50);
+		assertNotNull("Total is defined:", this.cache.getTotal("test"));
+		assertEquals("Total is sum of two factors:", -25, (int) this.cache.getTotal("test"));
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoTotal(java.lang.String, int)}
+	 * .
+	 */
+	public void testFactorIntoTotalZero () {
+
+		// Ensure a total is not associated with the key
+		assertNull("Total is empty:", this.cache.getTotal("test"));
+
+		// Factor in a single value and ensure that is the total value
+		this.cache.factorIntoTotal("test", 25);
+		assertNotNull("Total is defined:", this.cache.getTotal("test"));
+		assertEquals("First factor set value:", 25, (int) this.cache.getTotal("test"));
+
+		// Factor in another value and ensure new total is the sum of the two
+		this.cache.factorIntoTotal("test", 0);
+		assertNotNull("Total is defined:", this.cache.getTotal("test"));
+		assertEquals("Total is sum of two factors:", 25, (int) this.cache.getTotal("test"));
 	}
 
 	/**
@@ -97,7 +164,66 @@ public class ScoreCacheTest extends TestCase {
 	 * .
 	 */
 	public void testFactorIntoAverage () {
-		fail("Not yet implemented");
+
+		// Ensure an average is not associated with the key
+		assertNull("Average is empty:", this.cache.getAverage("test"));
+
+		// Factor in a single value and ensure that is the average value
+		this.cache.factorIntoAverage("test", 25);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("First factor set value:", 25, (int) this.cache.getAverage("test"));
+
+		// Factor in another value and ensure new average is correct
+		this.cache.factorIntoAverage("test", 70);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("Average is correct:", 48, (int) this.cache.getAverage("test"));
+
+		// Factor in another value and ensure new average is correct
+		this.cache.factorIntoAverage("test", 100);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("Average is correct:", 65, (int) this.cache.getAverage("test"));
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoAverage(java.lang.String, int)}
+	 * .
+	 */
+	public void testFactorIntoAverageNegative () {
+
+		// Ensure an average is not associated with the key
+		assertNull("Average is empty:", this.cache.getAverage("test"));
+
+		// Factor in a single value and ensure that is the average value
+		this.cache.factorIntoAverage("test", 25);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("First factor set value:", 25, (int) this.cache.getAverage("test"));
+
+		// Factor in another value and ensure new average is correct
+		this.cache.factorIntoAverage("test", -10);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("Average is correct:", 8, (int) this.cache.getAverage("test"));
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobileapps.eagleswag.persistence.sqlite.ScoreCache#factorIntoAverage(java.lang.String, int)}
+	 * .
+	 */
+	public void testFactorIntoAverageZero () {
+
+		// Ensure an average is not associated with the key
+		assertNull("Average is empty:", this.cache.getAverage("test"));
+
+		// Factor in a single value and ensure that is the average value
+		this.cache.factorIntoAverage("test", 50);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("First factor set value:", 50, (int) this.cache.getAverage("test"));
+
+		// Factor in another value and ensure new average is correct
+		this.cache.factorIntoAverage("test", 0);
+		assertNotNull("Average is defined:", this.cache.getAverage("test"));
+		assertEquals("Average is correct:", 25, (int) this.cache.getAverage("test"));
 	}
 
 	/**
@@ -111,7 +237,7 @@ public class ScoreCacheTest extends TestCase {
 		assertEquals("Cache does not contain data:", false, this.cache.isTotalInCache("test"));
 
 		// Add the test data into the cache
-		this.cache.setTotal("test", 10);
+		this.cache.loadTotal("test", 10);
 
 		// Ensure that the cache now contains the test data
 		assertEquals("Cache contains data:", true, this.cache.isTotalInCache("test"));
@@ -128,7 +254,7 @@ public class ScoreCacheTest extends TestCase {
 		assertEquals("Cache does not contain data:", false, this.cache.isAverageInCache("test"));
 
 		// Add the test data into the cache
-		this.cache.setAverage("test", 10);
+		this.cache.loadAverage("test", 10, 1);
 
 		// Ensure that the cache now contains the test data
 		assertEquals("Cache contains data:", true, this.cache.isAverageInCache("test"));
