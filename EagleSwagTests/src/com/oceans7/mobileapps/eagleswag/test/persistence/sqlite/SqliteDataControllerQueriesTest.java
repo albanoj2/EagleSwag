@@ -52,6 +52,9 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * TODO Documentation
+	 */
 	private Context context;
 
 	/**

@@ -33,6 +33,7 @@ import com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobileapps.eagleswag.config.QuestionType;
 import com.oceans7.mobileapps.eagleswag.domain.Question;
 import com.oceans7.mobileapps.eagleswag.persistence.DataFileParser;
+import com.oceans7.mobileapps.eagleswag.util.LoadingListener;
 
 /**
  * A helper class used to create, update, and management the SQLite database.
@@ -65,8 +66,12 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 * the registered observers.
 	 */
 	private static final int UPDATE_THRESHOLD = 5;
-	
-	private List<LoadingListener> observers;
+
+	/**
+	 * The list of observers that are notified when the threshold for loading
+	 * questions is met.
+	 */
+	private ArrayList<LoadingListener> observers;
 
 	/***************************************************************************
 	 * Constructors
@@ -90,15 +95,15 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 **************************************************************************/
 
 	/**
+	 * The configuration data from the question type configuration file is used
+	 * to specify the name of the table the data for each question type is
+	 * placed into. The configuration data is obtained from the configuration
+	 * controller and a questions table in the database is created for each
+	 * question type.
+	 * 
 	 * {@inheritDoc}
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
-	 * 
-	 *      The configuration data from the question type configuration file is
-	 *      used to specify the name of the table the data for each question
-	 *      type is placed into. The configuration data is obtained from the
-	 *      configuration controller and a questions table in the database is
-	 *      created for each question type/
 	 */
 	@Override
 	public void onCreate (SQLiteDatabase db) {
@@ -150,7 +155,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 
 					if (questionsLoaded % UPDATE_THRESHOLD == 0 || questionsLoaded == totalNumberOfQuestions) {
 						// Notify observers if needed
-						this.nofityObservers(totalNumberOfQuestions, questionsLoaded);
+						this.updateListners(totalNumberOfQuestions, questionsLoaded);
 					}
 				}
 			}
@@ -215,8 +220,68 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	/**
 	 * A helper method that updates the observers with the progress of creating
 	 * the database.
+	 * 
+	 * @param total
+	 *            The total number of questions that are being loaded into the
+	 *            database.
+	 * @param currentNumber
+	 *            The number of questions that have already been loaded into the
+	 *            database.
 	 */
-	private void nofityObservers (int total, int currentNumber) {
-		Log.d(this.getClass().getName(), "Notified observers: loaded (" + currentNumber + ") of (" + total + ") questions...");
+	@SuppressWarnings("unchecked")
+	public synchronized void updateListners (int total, int currentNumber) {
+
+		// Local copy of the list of loading listeners
+		ArrayList<LoadingListener> list;
+
+		synchronized (this) {
+			// Return from method if the loading listener list is null
+			if (this.observers == null) return;
+
+			// Copy the list of loading listeners to the local copy
+			list = (ArrayList<LoadingListener>) this.observers.clone();
+		}
+
+		for (LoadingListener listener : list) {
+			// Repeat for each of the loading listeners
+			listener.update(total, currentNumber);
+
+			// Log the update
+			Log.i(this.getClass().getName(), "Notified listener '" + listener + "': " + currentNumber + " of " + total + " questions loaded");
+		}
+	}
+
+	/**
+	 * Adds a loading listener to the helper.
+	 * 
+	 * @param listener
+	 *            The listener to add to the helper.
+	 */
+	public void addLoadingListener (LoadingListener listener) {
+
+		if (this.observers == null) {
+			// Create list of listeners if it has not yet been created
+			this.observers = new ArrayList<LoadingListener>();
+		}
+
+		if (!this.observers.contains(listener)) {
+			// Add the listener to the list if it is not already in the list
+			this.observers.add(listener);
+		}
+	}
+
+	/**
+	 * Removes a loading listener from the helper.
+	 * 
+	 * @param listener
+	 *            The loading listener to remove from the helper.
+	 */
+	public void removeLoadingListener (LoadingListener listener) {
+
+		if (this.observers != null && this.observers.contains(listener)) {
+			// Remove the listener if the list has been created and contains the
+			// listener specified
+			this.observers.remove(listener);
+		}
 	}
 }

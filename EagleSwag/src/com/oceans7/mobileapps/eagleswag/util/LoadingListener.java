@@ -16,13 +16,25 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
+package com.oceans7.mobileapps.eagleswag.util;
 
 /**
- * TODO Class documentation
- *
+ * An interface for an observer of a load event while the SQLite database helper
+ * is loading questions into the database.
+ * 
  * @author Justin Albano
  */
 public interface LoadingListener {
 
+	/**
+	 * Update method called when an observer is notified of when loading
+	 * questions in the database.
+	 * 
+	 * @param total
+	 *            The total of number of questions that are being loaded.
+	 * @param current
+	 *            The number of questions that have already been loaded into the
+	 *            database.
+	 */
+	public void update (int total, int current);
 }
