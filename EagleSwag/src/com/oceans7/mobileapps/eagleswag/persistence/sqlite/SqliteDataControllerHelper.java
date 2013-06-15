@@ -18,7 +18,7 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -60,9 +60,13 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 
 	/**
 	 * The number of questions inserted into the database before the observer is
-	 * notified of the insertion progress.
+	 * notified of the insertion progress. For example, if the threshold is set
+	 * to 5, every 5th insert (5, 10, 15, ...) will trigger a notification to
+	 * the registered observers.
 	 */
 	private static final int UPDATE_THRESHOLD = 5;
+	
+	private List<LoadingListener> observers;
 
 	/***************************************************************************
 	 * Constructors
@@ -103,62 +107,13 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 		DataFileParser parser = new DataFileParser();
 		Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
 
-		/**
-		 * for (Class<? extends Question> key : qtMap.keySet()) {
-		 * // Loop through each of the question type entries and make a table
-		 * // in the database to store each of the entries
-		 * 
-		 * // Get the SQLite database table name for the key
-		 * String table = ConfigurationHelper.getInstance().getTableName(key,
-		 * this.context);
-		 * 
-		 * try {
-		 * // Start a transaction for inserting the data in the database
-		 * db.beginTransaction();
-		 * 
-		 * // Create each questions table in the database
-		 * SqliteDataControllerQueries.createQuestionsTable(db, table);
-		 * 
-		 * // Obtain the questions from the data parser
-		 * Queue<? extends Question> questions = parser.getQuestions(key,
-		 * context);
-		 * 
-		 * for (Question question : questions) {
-		 * // Insert the new general question
-		 * SqliteDataControllerQueries.insertIntoQuestionsTable(db, table,
-		 * question);
-		 * Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName()
-		 * + " into the " + table + " table: " + question);
-		 * }
-		 * 
-		 * // Signal that the transaction was successful
-		 * db.setTransactionSuccessful();
-		 * }
-		 * catch (SQLException e) {
-		 * // An exception occurred while trying to create the database
-		 * Log.e(this.getClass().getName(),
-		 * "Error while creating the database '" + table + "': " + e);
-		 * }
-		 * finally {
-		 * // End the previously started transaction
-		 * db.endTransaction();
-		 * }
-		 * 
-		 * // RECORD: time stamp of the end of the creation
-		 * long end = System.currentTimeMillis();
-		 * Log.i(this.getClass().getName(), "SQLite database creation took " +
-		 * (end - start) + "ms");
-		 * 
-		 * }
-		 */
-
 		// A list to store the queues of questions (and counter of questions)
-		List<Queue<? extends Question>> questionQueueList = new LinkedList<Queue<? extends Question>>();
+		List<Queue<? extends Question>> questionQueueList = new ArrayList<Queue<? extends Question>>();
 		int totalNumberOfQuestions = 0;
 		int questionsLoaded = 0;
 
 		// A list of table names for each question type
-		List<String> tables = new LinkedList<String>();
+		List<String> tables = new ArrayList<String>();
 
 		for (Class<? extends Question> key : qtMap.keySet()) {
 			// Loop through each of the question types in configuration
@@ -193,9 +148,9 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 					// Increment loaded count
 					questionsLoaded++;
 
-					if (questionsLoaded % UPDATE_THRESHOLD == 0) {
+					if (questionsLoaded % UPDATE_THRESHOLD == 0 || questionsLoaded == totalNumberOfQuestions) {
 						// Notify observers if needed
-						this.nofityObservers();
+						this.nofityObservers(totalNumberOfQuestions, questionsLoaded);
 					}
 				}
 			}
@@ -261,7 +216,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 * A helper method that updates the observers with the progress of creating
 	 * the database.
 	 */
-	private void nofityObservers () {
-		Log.d(this.getClass().getName(), "Notified observers");
+	private void nofityObservers (int total, int currentNumber) {
+		Log.d(this.getClass().getName(), "Notified observers: loaded (" + currentNumber + ") of (" + total + ") questions...");
 	}
 }
