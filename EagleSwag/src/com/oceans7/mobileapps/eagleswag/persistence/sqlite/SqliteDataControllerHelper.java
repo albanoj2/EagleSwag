@@ -18,6 +18,8 @@
 
 package com.oceans7.mobileapps.eagleswag.persistence.sqlite;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -56,6 +58,12 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 */
 	private Context context;
 
+	/**
+	 * The number of questions inserted into the database before the observer is
+	 * notified of the insertion progress.
+	 */
+	private static final int UPDATE_THRESHOLD = 5;
+
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
@@ -91,54 +99,117 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate (SQLiteDatabase db) {
 
-		// RECORD: time stamp of the beginning of the creation
-		long start = System.currentTimeMillis();
-
-		// Obtain a data file parser
+		// Obtain a data file parser and question types from configuration
 		DataFileParser parser = new DataFileParser();
-
-		// Obtain the question types from the configuration file
 		Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
 
+		/**
+		 * for (Class<? extends Question> key : qtMap.keySet()) {
+		 * // Loop through each of the question type entries and make a table
+		 * // in the database to store each of the entries
+		 * 
+		 * // Get the SQLite database table name for the key
+		 * String table = ConfigurationHelper.getInstance().getTableName(key,
+		 * this.context);
+		 * 
+		 * try {
+		 * // Start a transaction for inserting the data in the database
+		 * db.beginTransaction();
+		 * 
+		 * // Create each questions table in the database
+		 * SqliteDataControllerQueries.createQuestionsTable(db, table);
+		 * 
+		 * // Obtain the questions from the data parser
+		 * Queue<? extends Question> questions = parser.getQuestions(key,
+		 * context);
+		 * 
+		 * for (Question question : questions) {
+		 * // Insert the new general question
+		 * SqliteDataControllerQueries.insertIntoQuestionsTable(db, table,
+		 * question);
+		 * Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName()
+		 * + " into the " + table + " table: " + question);
+		 * }
+		 * 
+		 * // Signal that the transaction was successful
+		 * db.setTransactionSuccessful();
+		 * }
+		 * catch (SQLException e) {
+		 * // An exception occurred while trying to create the database
+		 * Log.e(this.getClass().getName(),
+		 * "Error while creating the database '" + table + "': " + e);
+		 * }
+		 * finally {
+		 * // End the previously started transaction
+		 * db.endTransaction();
+		 * }
+		 * 
+		 * // RECORD: time stamp of the end of the creation
+		 * long end = System.currentTimeMillis();
+		 * Log.i(this.getClass().getName(), "SQLite database creation took " +
+		 * (end - start) + "ms");
+		 * 
+		 * }
+		 */
+
+		// A list to store the queues of questions (and counter of questions)
+		List<Queue<? extends Question>> questionQueueList = new LinkedList<Queue<? extends Question>>();
+		int totalNumberOfQuestions = 0;
+		int questionsLoaded = 0;
+
+		// A list of table names for each question type
+		List<String> tables = new LinkedList<String>();
+
 		for (Class<? extends Question> key : qtMap.keySet()) {
-			// Loop through each of the question type entries and make a table
-			// in the database to store each of the entries
+			// Loop through each of the question types in configuration
 
-			// Get the SQLite database table name for the key
+			// Obtain questions from data file parser and add them to the list
+			Queue<? extends Question> questions = parser.getQuestions(key, context);
+			questionQueueList.add(questions);
+			totalNumberOfQuestions += questions.size();
+
+			// Obtain the table name for each question type
 			String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
+			tables.add(table);
+		}
 
-			try {
-				// Start a transaction for inserting the data in the database
-				db.beginTransaction();
+		try {
+			// Begin SQL insertion transaction
+			db.beginTransaction();
 
-				// Create each questions table in the database
-				SqliteDataControllerQueries.createQuestionsTable(db, table);
+			for (int i = 0; i < questionQueueList.size(); i++) {
+				// Loop through the list and add each queue of questions
 
-				// Obtain the questions from the data parser
-				Queue<? extends Question> questions = parser.getQuestions(key, context);
+				// Create the database table for this set of questions
+				SqliteDataControllerQueries.createQuestionsTable(db, tables.get(i));
 
-				for (Question question : questions) {
-					// Insert the new general question
-					SqliteDataControllerQueries.insertIntoQuestionsTable(db, table, question);
-					Log.i(this.getClass().getName(), "Inserted " + key.getCanonicalName() + " into the " + table + " table: " + question);
+				for (Question question : questionQueueList.get(i)) {
+					// Loop through the questions within the queue
+
+					// Insert the question into the database
+					SqliteDataControllerQueries.insertIntoQuestionsTable(db, tables.get(i), question);
+					Log.i(this.getClass().getName(), "Inserted question into the " + tables.get(i) + " table: " + question);
+
+					// Increment loaded count
+					questionsLoaded++;
+
+					if (questionsLoaded % UPDATE_THRESHOLD == 0) {
+						// Notify observers if needed
+						this.nofityObservers();
+					}
 				}
-
-				// Signal that the transaction was successful
-				db.setTransactionSuccessful();
-			}
-			catch (SQLException e) {
-				// An exception occurred while trying to create the database
-				Log.e(this.getClass().getName(), "Error while creating the database '" + table + "': " + e);
-			}
-			finally {
-				// End the previously started transaction
-				db.endTransaction();
 			}
 
-			// RECORD: time stamp of the end of the creation
-			long end = System.currentTimeMillis();
-			Log.i(this.getClass().getName(), "SQLite database creation took " + (end - start) + "ms");
-
+			// Mark SQL insertion transaction as successfully completed
+			db.setTransactionSuccessful();
+		}
+		catch (SQLException e) {
+			// An exception occurred while trying to create the database
+			Log.e(this.getClass().getName(), "SQL Error while creating the database: " + e);
+		}
+		finally {
+			// End SQL insertion transaction
+			db.endTransaction();
 		}
 
 		// Create scores table
@@ -184,5 +255,13 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 			// An exception occurred while dropping tables from the database
 			Log.e(this.getClass().getName(), "Error while dropping tables from the database: " + e);
 		}
+	}
+
+	/**
+	 * A helper method that updates the observers with the progress of creating
+	 * the database.
+	 */
+	private void nofityObservers () {
+		Log.d(this.getClass().getName(), "Notified observers");
 	}
 }
