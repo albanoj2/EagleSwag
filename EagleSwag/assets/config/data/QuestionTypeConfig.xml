@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <types>
     <type name="generalQuestions">
-        <key package="com.oceans7.mobileapps.eagleswag.domain">GeneralQuestion</key>
+        <key package="com.oceans7.mobile.eagleswag.domain">GeneralQuestion</key>
         <data>
         	<asset path="data/">questions.json</asset>
-        	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
+        	<parserStrategy package="com.oceans7.mobile.eagleswag.persistence">
         	    JsonDataFileParserStrategy
         	</parserStrategy>
         </data>
@@ -19,10 +19,10 @@
     </type>
     
     <type name="engineeringQuestions">
-        <key package="com.oceans7.mobileapps.eagleswag.domain">EngineeringQuestion</key>
+        <key package="com.oceans7.mobile.eagleswag.domain">EngineeringQuestion</key>
         <data>
         	<asset path="data/">questions.json</asset>
-        	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
+        	<parserStrategy package="com.oceans7.mobile.eagleswag.persistence">
         	    JsonDataFileParserStrategy
         	</parserStrategy>
         </data>
@@ -37,10 +37,10 @@
     </type>
     
     <type name="pilotQuestions">
-        <key package="com.oceans7.mobileapps.eagleswag.domain">PilotQuestion</key>
+        <key package="com.oceans7.mobile.eagleswag.domain">PilotQuestion</key>
         <data>
         	<asset path="data/">questions.json</asset>
-        	<parserStrategy package="com.oceans7.mobileapps.eagleswag.persistence">
+        	<parserStrategy package="com.oceans7.mobile.eagleswag.persistence">
         	    JsonDataFileParserStrategy
         	</parserStrategy>
         </data>

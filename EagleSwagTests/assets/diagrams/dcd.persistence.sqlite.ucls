@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <interface id="1" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.RetrieveQuestionsStrategy" 
+  <interface id="1" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.RetrieveQuestionsStrategy" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/RetrieveQuestionsStrategy.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/RetrieveQuestionsStrategy.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="488" y="571"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -12,9 +12,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="2" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerQueries" 
+  <class id="2" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/SqliteDataControllerQueries.java" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/SqliteDataControllerQueries.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="762" y="571"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
@@ -23,9 +23,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" 
-    name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.RetrieveQuestionsStrategyFactory" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/RetrieveQuestionsStrategyFactory.java" 
+  <class id="3" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.RetrieveQuestionsStrategyFactory" 
+    project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/RetrieveQuestionsStrategyFactory.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="508" y="432"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
@@ -35,9 +35,9 @@
     </display>  
   </class>  
   <enumeration id="4" language="java" 
-    name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants.QuestionColumns" 
+    name="com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants.QuestionColumns" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/SqliteDataControllerConstants.java" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/SqliteDataControllerConstants.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="764" y="958"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
@@ -46,10 +46,10 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </enumeration>  
-  <class id="5" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerHelper" 
+  <class id="5" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerHelper" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/SqliteDataControllerHelper.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/SqliteDataControllerHelper.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1141" y="799"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -57,9 +57,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataControllerConstants" 
+  <class id="6" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/SqliteDataControllerConstants.java" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/SqliteDataControllerConstants.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="762" y="758"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
@@ -68,9 +68,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.LfuRetrieveQuestionsStrategy" 
+  <class id="7" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.LfuRetrieveQuestionsStrategy" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/LfuRetrieveQuestionsStrategy.java" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/LfuRetrieveQuestionsStrategy.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="487" y="691"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
@@ -79,10 +79,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.oceans7.mobileapps.eagleswag.persistence.sqlite.SqliteDataController" 
-    project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/persistence/sqlite/SqliteDataController.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/sqlite/SqliteDataController.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1143" y="571"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      

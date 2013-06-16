@@ -1,116 +1,115 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationParser" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationParser.java" binary="false" 
+  <class id="1" language="java" name="com.oceans7.mobile.eagleswag.config.ConfigurationParser" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/ConfigurationParser.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="87" width="157" x="21" y="206"/>    
     <display autosize="false" stereotype="false" package="false" initial-value="false" signature="false" 
       accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationController" 
-    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationController.java" 
+  <interface id="2" language="java" name="com.oceans7.mobile.eagleswag.config.ConfigurationController" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/ConfigurationController.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="158" y="94"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationProxy" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationProxy.java" binary="false" 
+  <class id="3" language="java" name="com.oceans7.mobile.eagleswag.config.ConfigurationProxy" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/ConfigurationProxy.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="269" y="239"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.oceans7.mobileapps.eagleswag.config.NoSuchQuestionTypeException" 
-    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/NoSuchQuestionTypeException.java" 
+  <class id="4" language="java" name="com.oceans7.mobile.eagleswag.config.NoSuchQuestionTypeException" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/NoSuchQuestionTypeException.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="554" y="256"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.oceans7.mobileapps.eagleswag.config.ConfigurationHelper" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/ConfigurationHelper.java" binary="false" 
+  <class id="5" language="java" name="com.oceans7.mobile.eagleswag.config.ConfigurationHelper" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/ConfigurationHelper.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="476" y="95"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="true" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.oceans7.mobileapps.eagleswag.config.QuestionType" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/QuestionType.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="com.oceans7.mobile.eagleswag.config.QuestionType" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/QuestionType.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="271" y="482"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.DataConfiguration" 
-    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/DataConfiguration.java" 
+  <class id="7" language="java" name="com.oceans7.mobile.eagleswag.config.components.DataConfiguration" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/components/DataConfiguration.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="22" y="812"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.NoSqliteConfigurationException" 
+  <class id="8" language="java" name="com.oceans7.mobile.eagleswag.config.components.NoSqliteConfigurationException" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/NoSqliteConfigurationException.java" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/components/NoSqliteConfigurationException.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="556" y="346"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.SqliteConfiguration" 
-    project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/SqliteConfiguration.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/components/SqliteConfiguration.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="272" y="781"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.JsonConfiguration" 
-    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/JsonConfiguration.java" 
+  <class id="10" language="java" name="com.oceans7.mobile.eagleswag.config.components.JsonConfiguration" 
+    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/components/JsonConfiguration.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="435" y="780"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.oceans7.mobileapps.eagleswag.config.components.NoJsonConfigurationException" 
+  <class id="11" language="java" name="com.oceans7.mobile.eagleswag.config.components.NoJsonConfigurationException" 
     project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobileapps/eagleswag/config/components/NoJsonConfigurationException.java" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/config/components/NoJsonConfigurationException.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="554" y="433"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="true" package="true" protected="true" private="true"/>      
+      <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
   <association id="12">    
@@ -222,8 +221,8 @@
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
-    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
-    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
   </classifier-display>  
   <association-display labels="true" multiplicity="true"/>
 </class-diagram>
