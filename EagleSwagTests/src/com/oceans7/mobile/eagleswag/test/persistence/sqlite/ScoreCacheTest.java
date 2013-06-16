@@ -23,7 +23,8 @@ import junit.framework.TestCase;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.ScoreCache;
 
 /**
- * TODO Class documentation
+ * Test cases for
+ * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.ScoreCache}.
  * 
  * @author Justin Albano
  */
@@ -33,6 +34,9 @@ public class ScoreCacheTest extends TestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The score cache under test.
+	 */
 	private ScoreCache cache;
 
 	/***************************************************************************

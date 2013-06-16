@@ -28,8 +28,8 @@ import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Round;
 
 /**
- * Test fixture for {@link com.oceans7.mobile.eagleswag.domain.Round}.
- * 
+ * Test cases for {@link com.oceans7.mobile.eagleswag.domain.Round}.
+ * <p/>
  * Ensures that the submission of 'yes' and 'no' answered questions is properly
  * recorded and that the score for a round is properly calculated, based on the
  * answered questions submitted to the round.
@@ -90,7 +90,8 @@ public class RoundTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.Round#submitYesQuestion(com.oceans7.mobile.eagleswag.domain.Question)}
-	 * 
+	 * .
+	 * <p/>
 	 * Ensures that a question submitted as having been answered 'yes' is
 	 * properly recorded by the Round, and the number of 'yes' answers for the
 	 * Round has been incremented.
@@ -113,7 +114,8 @@ public class RoundTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.Round#submitNoQuestion(com.oceans7.mobile.eagleswag.domain.Question)}
-	 * 
+	 * .
+	 * <p/>
 	 * Ensures that a question submitted as having been answered 'no' is
 	 * properly recorded by the Round, and the number of 'no' answers for the
 	 * Round has been incremented.
@@ -135,8 +137,8 @@ public class RoundTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.Round#calculateScore()}
-	 * 
+	 * {@link com.oceans7.mobile.eagleswag.domain.Round#calculateScore()}.
+	 * <p/>
 	 * Ensures that the score for an example set of questions (with strictly
 	 * positive point values) has been properly calculated.
 	 */
@@ -175,8 +177,8 @@ public class RoundTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.Round#calculateScore()}
-	 * 
+	 * {@link com.oceans7.mobile.eagleswag.domain.Round#calculateScore()}.
+	 * <p/>
 	 * Ensures that the score for an example set of questions (with negative
 	 * point values included) has been properly calculated.
 	 */
@@ -216,7 +218,8 @@ public class RoundTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.Round#save(android.content.Context)}
-	 * 
+	 * .
+	 * <p/>
 	 * Ensure that the used count for each of the submitted and saved questions
 	 * for a round are incremented after the saved method of the Round has been
 	 * called.

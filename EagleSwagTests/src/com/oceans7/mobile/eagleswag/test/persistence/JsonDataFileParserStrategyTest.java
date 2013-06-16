@@ -29,9 +29,8 @@ import com.oceans7.mobile.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy;
 
 /**
- * Test fixture for the JSON data file parser.
- * 
- * TODO Complete documentation
+ * Test cases for
+ * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy}.
  * 
  * @author Justin Albano
  */
@@ -40,14 +39,21 @@ public class JsonDataFileParserStrategyTest extends InstrumentationTestCase {
 	/***************************************************************************
 	 * Attributes
 	 **************************************************************************/
-	
+
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
+
+	/**
+	 * The JSON data file parser strategy under test.
+	 */
 	private JsonDataFileParserStrategy parser;
 
 	/***************************************************************************
 	 * Setup & Tear Down
 	 **************************************************************************/
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -56,7 +62,7 @@ public class JsonDataFileParserStrategyTest extends InstrumentationTestCase {
 	@Override
 	protected void setUp () throws Exception {
 		super.setUp();
-		
+
 		// Establish the context for the test
 		this.context = this.getInstrumentation().getContext();
 
@@ -73,15 +79,15 @@ public class JsonDataFileParserStrategyTest extends InstrumentationTestCase {
 	protected void tearDown () throws Exception {
 		super.tearDown();
 	}
-	
+
 	/***************************************************************************
 	 * Test Cases
 	 **************************************************************************/
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy#getGeneralQuestions()}
-	 * 
+	 * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy#getGeneralQuestions()}.
+	 * <p/>
 	 * Parsers a test JSON file with the same format as the actual JSON file
 	 * containing the questions data and ensures that the correct data for the
 	 * questions are retrieved.
@@ -111,8 +117,8 @@ public class JsonDataFileParserStrategyTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy#getEngineeringQuestions()}
-	 * 
+	 * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy#getEngineeringQuestions()}.
+	 * <p/>
 	 * Parses a test JSON file containing data in the same format as the actual
 	 * JSON data file that contains the questions, and ensures that the data is
 	 * parsed correctly.
@@ -142,8 +148,8 @@ public class JsonDataFileParserStrategyTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy#getPilotQuestions()}
-	 * 
+	 * {@link com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy#getPilotQuestions()}.
+	 * <p/>
 	 * Parses a test JSON file containing data in the same format as the actual
 	 * JSON data file that contains the questions, and ensures that the data is
 	 * parsed correctly.

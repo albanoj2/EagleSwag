@@ -29,11 +29,9 @@ import com.oceans7.mobile.eagleswag.domain.RoundController;
 import com.oceans7.mobile.eagleswag.domain.RoundNotStartedException;
 
 /**
- * Test fixture for RoundController.
+ * Test cases for {@link com.oceans7.mobile.eagleswag.domain.RoundController}
  * 
  * @author Justin Albano
- * 
- * @see com.oceans7.mobile.eagleswag.domain.RoundController
  */
 public class RoundControllerTest extends InstrumentationTestCase {
 
@@ -41,8 +39,15 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
-	private RoundController manager;
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
+
+	/**
+	 * The round controller under test.
+	 */
+	private RoundController manager;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -77,7 +82,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.RoundController#startEngineeringRound()}
-	 * 
+	 * .
 	 */
 	public void testStartEngineeringRound () throws Exception {
 
@@ -93,7 +98,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.RoundController#startPilotRound()}
-	 * 
+	 * .
 	 */
 	public void testStartPilotRound () throws Exception {
 
@@ -109,7 +114,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.RoundController#answerCurrentQuestionYes()}
-	 * 
+	 * .
 	 */
 	public void testAnswerCurrentQuestionYes () throws Exception {
 
@@ -129,7 +134,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.domain.RoundController#answerCurrentQuestionNo()}
-	 * 
+	 * .
 	 */
 	public void testAnswerCurrentQuestionNo () throws Exception {
 
@@ -148,7 +153,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.RoundController#endRound()}
+	 * {@link com.oceans7.mobile.eagleswag.domain.RoundController#endRound()}.
 	 */
 	public void testEndRound () throws Exception {
 

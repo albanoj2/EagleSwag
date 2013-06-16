@@ -31,7 +31,7 @@ import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy;
 
 /**
- * TODO Documentation
+ * Helper methods for configuration test cases.
  * 
  * @author Justin Albano
  */

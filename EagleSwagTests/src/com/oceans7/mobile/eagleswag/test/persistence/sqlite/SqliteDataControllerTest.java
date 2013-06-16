@@ -38,11 +38,10 @@ import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConst
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
- * Test fixture for SqliteDataController.
+ * Test cases for
+ * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController}.
  * 
  * @author Justin Albano
- * 
- * @see com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController
  */
 public class SqliteDataControllerTest extends InstrumentationTestCase {
 
@@ -50,9 +49,24 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The context for the test cases.
+	 */
 	private Context context;
+
+	/**
+	 * The SQLite data controller under test.
+	 */
 	private SqliteDataController sqliteDataController;
+
+	/**
+	 * Variable used to track if a loading listener (1) has been called.
+	 */
 	private boolean listener1Called;
+
+	/**
+	 * Variable used to track if a loading listener (2) has been called.
+	 */
 	private boolean listener2Called;
 
 	/***************************************************************************
@@ -92,6 +106,19 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Helper Methods
 	 **************************************************************************/
 
+	/**
+	 * Helper method that counts the number of questions retrieved from the
+	 * database for a certain key. For example, if EngineeringQuestion.class is
+	 * supplied as the key, this method will return the number of question
+	 * actually returned based on the requested number of questions.
+	 * 
+	 * @param key
+	 *            The key for the type of questions to retrieve.
+	 * @param number
+	 *            The requested number of questions.
+	 * @return
+	 *         The actual number of questions obtained from the database.
+	 */
 	private <T extends Question> int helperQuestionsFound (Class<T> key, int number) throws Exception {
 
 		// The queue to store the pilot questions
@@ -154,7 +181,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Test method for {@link
 	 * com.oceans7.mobile.eagleswag.domain.Round#getQuestions(Class<?
 	 * extends Question>, int)}.
-	 * 
+	 * <p/>
 	 * Ensures that positive (greater than 0) engineering questions are
 	 * requested, 0 are returned.
 	 */
@@ -168,7 +195,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Test method for {@link
 	 * com.oceans7.mobile.eagleswag.domain.Round#getQuestions(Class<?
 	 * extends Question>, int)}.
-	 * 
+	 * <p/>
 	 * Ensures that positive (greater than 0) pilot questions are requested, 0
 	 * are returned.
 	 */
@@ -182,7 +209,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Test method for {@link
 	 * com.oceans7.mobile.eagleswag.domain.Round#getQuestions(Class<?
 	 * extends Question>, int)}.
-	 * 
+	 * <p/>
 	 * Ensures that if more questions are requested from the database than are
 	 * available, only the maximum number of questions in the database are
 	 * actually returned.
@@ -195,7 +222,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Test method for {@link
 	 * com.oceans7.mobile.eagleswag.domain.Round#getQuestions(Class<?
 	 * extends Question>, int)}.
-	 * 
+	 * <p/>
 	 * Ensures that if more questions are requested from the database than are
 	 * available, only the maximum number of questions in the database are
 	 * actually returned.
@@ -208,7 +235,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 * Test method for {@link
 	 * com.oceans7.mobile.eagleswag.domain.Round#getQuestions(Class<?
 	 * extends Question>, int)}.
-	 * 
+	 * <p/>
 	 * Ensures that if more questions are requested from the database than are
 	 * available, only the maximum number of questions in the database are
 	 * actually returned.
@@ -218,7 +245,9 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#saveRoundScore(com.oceans7.mobile.eagleswag.domain.Score, java.lang.String)}
+	 * .
 	 */
 	public void testSavedScore () {
 
@@ -240,9 +269,11 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#getTotalScore(String)}
+	 * .
 	 */
-	public void testTotalScore () {
+	public void testGetTotalScore () {
 
 		// Insert a few test scores into the database
 		this.sqliteDataController.saveRoundScore(new Score(0), "test");
@@ -257,9 +288,11 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#getAverageScore(String)}
+	 * .
 	 */
-	public void testAverageScore () {
+	public void testGetAverageScore () {
 
 		// Insert a few test scores into the database
 		this.sqliteDataController.saveRoundScore(new Score(0), "test");
@@ -274,7 +307,9 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#getAverageScore(String)}
+	 * .
 	 */
 	public void testAverageScoreRounding () {
 
@@ -289,7 +324,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		// Ensure the average score is correct
 		assertEquals("Average score is correct:", 13, average);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#addLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)}
@@ -326,7 +361,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		assertTrue("Loading listener 1 was called:", listener1Called);
 		assertTrue("Loading listener 2 was called:", listener2Called);
 	}
-	
+
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#removeLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)}
@@ -355,7 +390,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		// Add loading listeners to the helper
 		this.sqliteDataController.addLoadingListener(ll1);
 		this.sqliteDataController.addLoadingListener(ll2);
-		
+
 		// Remove the loading listener from the helper
 		this.sqliteDataController.removeLoadingListener(ll1);
 		this.sqliteDataController.removeLoadingListener(ll2);

@@ -96,7 +96,7 @@ public class SqliteDataController implements DataController {
 	 * database.
 	 */
 	private ScoreCache cache;
-	
+
 	/**
 	 * The list of observers that are notified the update method is called.
 	 */
@@ -110,6 +110,8 @@ public class SqliteDataController implements DataController {
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#open()
+	 * 
+	 * FIXME See if this can be moved into the constructor
 	 */
 	@Override
 	public void open (Context context) {
@@ -165,20 +167,24 @@ public class SqliteDataController implements DataController {
 			// Close the helper if it has been set
 			this.helper.close();
 		}
+		
+		if (this.database != null) {
+			// Close the database if it has been opened
+			this.database.close();
+		}
 	}
 
 	/**
 	 * The data for the questions is retrieved from the SQLite database.
 	 * The mappings from the question class (for example, GeneralQuestion.class)
 	 * to the database table are retrieved from the
-	 * SQLiteDataControllerMappingsParser. <br />
-	 * <br/ >
+	 * SQLiteDataControllerMappingsParser.
+	 * <p/>
 	 * 
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#getQuestions(java.lang.Class,
 	 *      int)
-	 * 
 	 */
 	@Override
 	public <T extends Question> Queue<T> getQuestions (Class<T> key, int number) {
@@ -250,7 +256,7 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
-	 * TODO Add caching to obtain the total score {@inheritDoc}
+	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#getTotalScore(java.lang.String)
 	 */
@@ -273,7 +279,7 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
-	 * TODO Add caching to obtain the average score {@inheritDoc}
+	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#getAverageScore(java.lang.String)
 	 */
@@ -289,7 +295,7 @@ public class SqliteDataController implements DataController {
 
 			// Calculate the average
 			int average = (int) Math.round(totalScore / entries);
-			
+
 			// Set the average in cache
 			this.cache.loadAverage(type, average, entries);
 
@@ -319,7 +325,7 @@ public class SqliteDataController implements DataController {
 	}
 
 	/**
-	 * TODO Update the cache (see above) when saving scores {@inheritDoc}
+	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#saveRoundScore(com.oceans7.mobile.eagleswag.domain.Score,
 	 *      java.lang.String)
@@ -329,15 +335,16 @@ public class SqliteDataController implements DataController {
 
 		// Save the score in the database
 		SqliteDataControllerQueries.insertIntoScoreTable(this.database, type, score);
-		
+
 		// Factor in the total and average values for this score
 		this.cache.factorIntoTotal(type, score.getScore());
 		this.cache.factorIntoAverage(type, score.getScore());
 
 	}
-	
+
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#updateLoadingListeners()
 	 */
 	@Override
@@ -366,6 +373,7 @@ public class SqliteDataController implements DataController {
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#addLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)
 	 */
 	@Override
@@ -387,6 +395,7 @@ public class SqliteDataController implements DataController {
 
 	/**
 	 * {@inheritDoc}
+	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#removeLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)
 	 */
 	@Override
@@ -408,12 +417,16 @@ public class SqliteDataController implements DataController {
 
 	/**
 	 * @return
-	 *         The classToTableMap.
+	 *         The map of classes to table names.
 	 */
 	public Map<Class<? extends Question>, String> getClassToTableMap () {
 		return this.classToTableMap;
 	}
 
+	/**
+	 * @return
+	 *         The internal database used by the
+	 */
 	public SQLiteDatabase getDatabase () {
 		return this.database;
 	}

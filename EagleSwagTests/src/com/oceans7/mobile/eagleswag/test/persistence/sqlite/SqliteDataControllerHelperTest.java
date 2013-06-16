@@ -26,7 +26,7 @@ import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerHelpe
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
- * TODO Class documentation
+ * Test cases for {@link com.oceans7.mobile.eagleswag.domain.SqliteDataControllerHelper}.
  * 
  * @author Justin Albano
  */
@@ -36,9 +36,24 @@ public class SqliteDataControllerHelperTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
+	
+	/**
+	 * The SQLite data controller helper under test.
+	 */
 	private SqliteDataControllerHelper helper;
+	
+	/**
+	 * Variable used to track if a loading listener (1) has been called.
+	 */
 	private boolean listener1Called;
+	
+	/**
+	 * Variable used to track if a loading listener (2) has been called.
+	 */
 	private boolean listener2Called;
 
 	/***************************************************************************

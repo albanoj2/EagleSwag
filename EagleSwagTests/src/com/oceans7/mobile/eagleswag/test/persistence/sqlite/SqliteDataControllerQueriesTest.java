@@ -39,12 +39,12 @@ import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerHelpe
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
 
 /**
- * TODO Documentation
+ * Test cases for
+ * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries}
+ * .
  * TODO Add a test case for creating scores table
  * 
  * @author Justin Albano
- * 
- * @see com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries
  */
 public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
@@ -53,7 +53,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 **************************************************************************/
 
 	/**
-	 * TODO Documentation
+	 * The context used for the test cases.
 	 */
 	private Context context;
 
@@ -204,8 +204,8 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		// ensure that the new question has the same ID as the question that was
 		// just created, ensuring that the new question updates the question
 		// that was just inserted
-		Cursor cursorId = this.db.rawQuery(
-			"SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'", null);
+		Cursor cursorId = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'",
+			null);
 		cursorId.moveToFirst();
 		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.QuestionColumns.ID.ordinal());
 
@@ -237,7 +237,8 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	/**
 	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#createQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String)}
-	 * 
+	 * .
+	 * <p/>
 	 * Ensures that a table (formatted for questions) can be properly written to
 	 * the database. This test case creates a questions table, and then removes
 	 * the table once the test has been completed.
@@ -274,7 +275,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)
 	 * .
 	 */
 	public void testInsertIntoEngineeringQuestionsTable () throws Exception {
@@ -292,8 +293,8 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * 
 	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
+	 * .
 	 */
 	public void testUpdateGeneralQuestion () throws Exception {
 		this.helperUpdateQuestionTable(GeneralQuestion.class);
@@ -301,8 +302,8 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * 
 	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
+	 * .
 	 */
 	public void testUpdateEngineeringQuestion () throws Exception {
 		this.helperUpdateQuestionTable(EngineeringQuestion.class);
@@ -310,15 +311,17 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * 
 	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
+	 * .
 	 */
 	public void testUpdatePilotQuestion () throws Exception {
 		this.helperUpdateQuestionTable(PilotQuestion.class);
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoScoreTable(android.database.sqlite.SQLiteDatabase, String, String)}
+	 * .
 	 */
 	public void testInsertScore () {
 
@@ -328,20 +331,20 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", score);
 
 		// Obtain the score that was just placed in the database
-		Cursor cursor = this.db.rawQuery(
-			"SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
 			new String[] { "10.0" });
 
 		// Ensure the data is correct
 		cursor.moveToFirst();
 		assertEquals("Correct score:", 10.0, cursor.getDouble(SqliteDataControllerConstants.ScoresColumns.SCORE.ordinal()));
-		assertEquals("Correct type:", "test",
-			cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
+		assertEquals("Correct type:", "test", cursor.getString(SqliteDataControllerConstants.ScoresColumns.TYPE.ordinal()));
 		assertEquals("Correct timestamp:", 0, cursor.getLong(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP.ordinal()));
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#getTotalScore(android.database.sqlite.SQLiteDatabase, String)}
+	 * .
 	 */
 	public void testGetTotalScore () {
 
@@ -358,7 +361,9 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	}
 
 	/**
-	 * TODO Documentation
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#getNumberOfScores(android.database.sqlite.SQLiteDatabase, String)}
+	 * .
 	 */
 	public void testGetNumberOfScores () {
 

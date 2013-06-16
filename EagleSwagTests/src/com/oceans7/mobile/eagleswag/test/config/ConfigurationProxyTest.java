@@ -26,11 +26,9 @@ import com.oceans7.mobile.eagleswag.config.ConfigurationController;
 import com.oceans7.mobile.eagleswag.config.ConfigurationProxy;
 
 /**
- * Test fixture for ConfigurationProxy.
+ * Test cases for {@link com.oceans7.mobile.eagleswag.config.ConfigurationProxy}.
  * 
  * @author Justin Albano
- * 
- * @see com.oceans7.mobile.eagleswag.config.ConfigurationProxy
  */
 public class ConfigurationProxyTest extends InstrumentationTestCase {
 
@@ -38,7 +36,14 @@ public class ConfigurationProxyTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
+	
+	/**
+	 * The configuration controller under test.
+	 */
 	private ConfigurationController controller;
 
 	/***************************************************************************

@@ -27,7 +27,7 @@ import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.domain.ScoreController;
 
 /**
- * TODO Documentation
+ * Test cases for {@link com.oceans7.mobile.eagleswag.domain.ScoreController}.
  * 
  * @author Justin Albano
  */
@@ -37,6 +37,9 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
 
 	/***************************************************************************

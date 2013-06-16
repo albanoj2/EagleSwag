@@ -26,11 +26,10 @@ import com.oceans7.mobile.eagleswag.config.ConfigurationController;
 import com.oceans7.mobile.eagleswag.config.ConfigurationParser;
 
 /**
- * Test fixture for ConfigurationParser.
+ * Test cases for
+ * {@link com.oceans7.mobile.eagleswag.config.ConfigurationParser}.
  * 
  * @author Justin Albano
- * 
- * @see com.oceans7.mobile.eagleswag.config.ConfigurationParser
  */
 public class ConfigurationParserTest extends InstrumentationTestCase {
 
@@ -38,7 +37,14 @@ public class ConfigurationParserTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
+
+	/**
+	 * The configuration controller under test.
+	 */
 	private ConfigurationController controller;
 
 	/***************************************************************************
@@ -52,14 +58,14 @@ public class ConfigurationParserTest extends InstrumentationTestCase {
 	 */
 	protected void setUp () throws Exception {
 		super.setUp();
-		
+
 		// Establish the context for this test case
 		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
 
 		// Setup the controller as the configuration parser
 		this.controller = new ConfigurationParser();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 

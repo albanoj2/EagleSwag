@@ -34,7 +34,8 @@ import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy;
 
 /**
- * TODO Documentation
+ * Test cases for
+ * {@link com.oceans7.mobile.eagleswag.config.ConfigurationHelper}.
  * 
  * @author Justin Albano
  */
@@ -44,9 +45,27 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The context used for the test cases.
+	 */
 	private Context context;
+
+	/**
+	 * The question classes to use as parameters for the test.
+	 */
 	private ArrayList<Class<? extends Question>> questionClasses;
+
+	/**
+	 * The table names for each question class (the first table name in this
+	 * list corresponds to the first question class in the question class list).
+	 */
 	private ArrayList<String> tableNames;
+
+	/**
+	 * The names of the JSON element IDs for each of the question classes (the
+	 * first JSON element ID in this list corresponds to the first question
+	 * class in the question class list).
+	 */
 	private ArrayList<String> jsonIds;
 
 	/***************************************************************************
