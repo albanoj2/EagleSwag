@@ -35,6 +35,7 @@ import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
+import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
  * Test fixture for SqliteDataController.
@@ -51,6 +52,8 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 	private Context context;
 	private SqliteDataController sqliteDataController;
+	private boolean listener1Called;
+	private boolean listener2Called;
 
 	/***************************************************************************
 	 * Setup & Tear Down
@@ -285,5 +288,83 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 		// Ensure the average score is correct
 		assertEquals("Average score is correct:", 13, average);
+	}
+	
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#addLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)}
+	 * .
+	 */
+	public void testAddLoadingListener () {
+
+		// Create loading listener 1
+		LoadingListener ll1 = new LoadingListener() {
+
+			@Override
+			public void update (int total, int current) {
+				listener1Called = true;
+			}
+		};
+
+		// Create loading listener 2
+		LoadingListener ll2 = new LoadingListener() {
+
+			@Override
+			public void update (int total, int current) {
+				listener2Called = true;
+			}
+		};
+
+		// Add loading listeners to the helper
+		this.sqliteDataController.addLoadingListener(ll1);
+		this.sqliteDataController.addLoadingListener(ll2);
+
+		// Call the loading listeners
+		this.sqliteDataController.updateLoadingListeners(0, 0);
+
+		// Ensure the listeners were called
+		assertTrue("Loading listener 1 was called:", listener1Called);
+		assertTrue("Loading listener 2 was called:", listener2Called);
+	}
+	
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#removeLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)}
+	 * .
+	 */
+	public void testRemoveLoadingListener () {
+
+		// Create loading listener 1
+		LoadingListener ll1 = new LoadingListener() {
+
+			@Override
+			public void update (int total, int current) {
+				listener1Called = true;
+			}
+		};
+
+		// Create loading listener 2
+		LoadingListener ll2 = new LoadingListener() {
+
+			@Override
+			public void update (int total, int current) {
+				listener2Called = true;
+			}
+		};
+
+		// Add loading listeners to the helper
+		this.sqliteDataController.addLoadingListener(ll1);
+		this.sqliteDataController.addLoadingListener(ll2);
+		
+		// Remove the loading listener from the helper
+		this.sqliteDataController.removeLoadingListener(ll1);
+		this.sqliteDataController.removeLoadingListener(ll2);
+
+		// Call the loading listeners
+		this.sqliteDataController.updateLoadingListeners(0, 0);
+
+		// Ensure the listeners were not called
+		assertFalse("Loading listener 1 was not called:", listener1Called);
+		assertFalse("Loading listener 2 was not called:", listener2Called);
 	}
 }

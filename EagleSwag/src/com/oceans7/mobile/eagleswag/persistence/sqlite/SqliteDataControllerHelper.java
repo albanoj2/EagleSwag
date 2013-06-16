@@ -155,7 +155,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 
 					if (questionsLoaded % UPDATE_THRESHOLD == 0 || questionsLoaded == totalNumberOfQuestions) {
 						// Notify observers if needed
-						this.notifyLoadingListeners(totalNumberOfQuestions, questionsLoaded);
+						this.updateLoadingListeners(totalNumberOfQuestions, questionsLoaded);
 					}
 				}
 			}
@@ -229,7 +229,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 *            database.
 	 */
 	@SuppressWarnings("unchecked")
-	public synchronized void notifyLoadingListeners (int total, int currentNumber) {
+	public synchronized void updateLoadingListeners (int total, int currentNumber) {
 
 		// Local copy of the list of loading listeners
 		ArrayList<LoadingListener> list;

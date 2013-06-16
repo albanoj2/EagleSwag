@@ -105,7 +105,7 @@ public class SqliteDataControllerHelperTest extends InstrumentationTestCase {
 		this.helper.addLoadingListener(ll2);
 
 		// Call the loading listeners
-		this.helper.notifyLoadingListeners(0, 0);
+		this.helper.updateLoadingListeners(0, 0);
 
 		// Ensure the listeners were called
 		assertTrue("Loading listener 1 was called:", listener1Called);
@@ -146,7 +146,7 @@ public class SqliteDataControllerHelperTest extends InstrumentationTestCase {
 		this.helper.removeLoadingListener(ll2);
 
 		// Call the loading listeners
-		this.helper.notifyLoadingListeners(0, 0);
+		this.helper.updateLoadingListeners(0, 0);
 
 		// Ensure the listeners were not called
 		assertFalse("Loading listener 1 was not called:", listener1Called);

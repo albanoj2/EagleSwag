@@ -20,6 +20,7 @@ package com.oceans7.mobile.eagleswag.persistence.sqlite;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -95,6 +96,11 @@ public class SqliteDataController implements DataController {
 	 * database.
 	 */
 	private ScoreCache cache;
+	
+	/**
+	 * The list of observers that are notified the update method is called.
+	 */
+	private ArrayList<LoadingListener> observers;
 
 	/***************************************************************************
 	 * Methods
@@ -335,9 +341,27 @@ public class SqliteDataController implements DataController {
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#updateLoadingListeners()
 	 */
 	@Override
-	public void updateLoadingListeners () {
-		// TODO Auto-generated method stub
-		
+	@SuppressWarnings("unchecked")
+	public synchronized void updateLoadingListeners (int total, int currentNumber) {
+
+		// Local copy of the list of loading listeners
+		ArrayList<LoadingListener> list;
+
+		synchronized (this) {
+			// Return from method if the loading listener list is null
+			if (this.observers == null) return;
+
+			// Copy the list of loading listeners to the local copy
+			list = (ArrayList<LoadingListener>) this.observers.clone();
+		}
+
+		for (LoadingListener listener : list) {
+			// Repeat for each of the loading listeners
+			listener.update(total, currentNumber);
+
+			// Log the update
+			Log.i(this.getClass().getName(), "Notified listener '" + listener + "': " + currentNumber + " of " + total + " questions loaded");
+		}
 	}
 
 	/**
@@ -346,8 +370,19 @@ public class SqliteDataController implements DataController {
 	 */
 	@Override
 	public void addLoadingListener (LoadingListener listener) {
-		// TODO Auto-generated method stub
-		
+
+		if (this.observers == null) {
+			// Create list of listeners if it has not yet been created
+			this.observers = new ArrayList<LoadingListener>();
+		}
+
+		if (!this.observers.contains(listener)) {
+			// Add the listener to the list if it is not already in the list
+			this.observers.add(listener);
+
+			// Log the addition
+			Log.i(this.getClass().getName(), "Added listener " + listener);
+		}
 	}
 
 	/**
@@ -356,8 +391,15 @@ public class SqliteDataController implements DataController {
 	 */
 	@Override
 	public void removeLoadingListener (LoadingListener listener) {
-		// TODO Auto-generated method stub
-		
+
+		if (this.observers != null && this.observers.contains(listener)) {
+			// Remove the listener if the list has been created and contains the
+			// listener specified
+			this.observers.remove(listener);
+
+			// Log the removal
+			Log.i(this.getClass().getName(), "Removed listener " + listener);
+		}
 	}
 
 	/***************************************************************************

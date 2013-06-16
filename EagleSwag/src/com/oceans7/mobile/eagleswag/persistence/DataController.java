@@ -148,8 +148,13 @@ public interface DataController {
 	/**
 	 * Notifies all registered loading listeners of the data controller of an
 	 * update to the loading status of the controller.
+	 * 
+	 * @param total
+	 *            The total number of questions to load.
+	 * @param current
+	 *            The number of questions that have been loaded thus far.
 	 */
-	public void updateLoadingListeners ();
+	public void updateLoadingListeners (int total, int current);
 
 	/**
 	 * Add (register) a loading listener to the data controller.
