@@ -110,8 +110,6 @@ public class SqliteDataController implements DataController {
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#open()
-	 * 
-	 * FIXME See if this can be moved into the constructor
 	 */
 	@Override
 	public void open (Context context) {
@@ -205,11 +203,11 @@ public class SqliteDataController implements DataController {
 				// Loop through the cursor
 
 				// Question data
-				int id = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.ID.ordinal());
-				String text = cursor.getString(SqliteDataControllerConstants.QuestionColumns.QUESTION.ordinal());
-				int yesValue = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.YES_VALUE.ordinal());
-				int noValue = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.NO_VALUE.ordinal());
-				int usedCount = cursor.getInt(SqliteDataControllerConstants.QuestionColumns.USED_COUNT.ordinal());
+				int id = cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.ID.ordinal());
+				String text = cursor.getString(SqliteDataControllerConstants.QuestionsColumns.QUESTION.ordinal());
+				int yesValue = cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.YES_VALUE.ordinal());
+				int noValue = cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.NO_VALUE.ordinal());
+				int usedCount = cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.USED_COUNT.ordinal());
 
 				try {
 					// Obtain the constructor for the supplied class

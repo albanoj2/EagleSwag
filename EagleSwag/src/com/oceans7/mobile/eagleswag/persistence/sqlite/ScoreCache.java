@@ -24,8 +24,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import android.util.Log;
 
 /**
- * TODO Documentation
- * TODO Complete implementation
+ * A cache containing the score data from the database, include total scores and
+ * average scores. The total and average scores for each score type are accessed
+ * through a key.
  * 
  * @author Justin Albano
  */
@@ -35,14 +36,30 @@ public class ScoreCache {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * The cached total score data.
+	 */
 	private Map<String, Integer> totalsMap;
+
+	/**
+	 * The cache average score data.
+	 */
 	private Map<String, Integer> averagesMap;
+
+	/**
+	 * The cached number of scores data (which is used for calculating the
+	 * average cached score).
+	 */
 	private Map<String, Integer> numberOfValuesMap;
 
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
 
+	/**
+	 * Default constructor that creates the necessary data structures for
+	 * storing the cached score data.
+	 */
 	public ScoreCache () {
 
 		// Initialize the empty maps

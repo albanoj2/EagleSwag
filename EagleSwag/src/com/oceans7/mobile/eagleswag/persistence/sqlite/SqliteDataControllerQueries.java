@@ -60,11 +60,11 @@ public class SqliteDataControllerQueries {
 		// The query used to create the table
 		StringBuilder builder = new StringBuilder();
 		builder.append("CREATE TABLE IF NOT EXISTS " + table + " (");
-		builder.append(SqliteDataControllerConstants.ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT,");
-		builder.append(SqliteDataControllerConstants.QUESTION_COLUMN + " TEXT NOT NULL,");
-		builder.append(SqliteDataControllerConstants.YES_VALUE_COLUMN + " INTEGER NOT NULL,");
-		builder.append(SqliteDataControllerConstants.NO_VALUE_COLUMN + " INTEGER NOT NULL,");
-		builder.append(SqliteDataControllerConstants.USED_COUNT_COLUMN + " INTEGER NOT NULL");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.QUESTION + " TEXT NOT NULL,");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.YES_VALUE + " INTEGER NOT NULL,");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.NO_VALUE + " INTEGER NOT NULL,");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.USED_COUNT + " INTEGER NOT NULL");
 		builder.append(");");
 
 		try {
@@ -101,10 +101,10 @@ public class SqliteDataControllerQueries {
 		// Build the SQL statement
 		StringBuilder builder = new StringBuilder();
 		builder.append("INSERT INTO " + table + " (");
-		builder.append(SqliteDataControllerConstants.QUESTION_COLUMN + ", ");
-		builder.append(SqliteDataControllerConstants.YES_VALUE_COLUMN + ", ");
-		builder.append(SqliteDataControllerConstants.NO_VALUE_COLUMN + ", ");
-		builder.append(SqliteDataControllerConstants.USED_COUNT_COLUMN + " ");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.QUESTION + ", ");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.YES_VALUE + ", ");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.NO_VALUE + ", ");
+		builder.append(SqliteDataControllerConstants.QuestionsColumns.USED_COUNT + " ");
 		builder.append(") VALUES (?,?,?,?)");
 
 		// Create a compiled SQL statement
@@ -171,13 +171,13 @@ public class SqliteDataControllerQueries {
 
 		// Create the mapping of values for the question
 		ContentValues content = new ContentValues();
-		content.put(SqliteDataControllerConstants.QUESTION_COLUMN, question.getQuestionString());
-		content.put(SqliteDataControllerConstants.YES_VALUE_COLUMN, question.getYesPointValue());
-		content.put(SqliteDataControllerConstants.NO_VALUE_COLUMN, question.getNoPointValue());
-		content.put(SqliteDataControllerConstants.USED_COUNT_COLUMN, question.getUsedCount());
+		content.put(SqliteDataControllerConstants.QuestionsColumns.QUESTION.toString(), question.getQuestionString());
+		content.put(SqliteDataControllerConstants.QuestionsColumns.YES_VALUE.toString(), question.getYesPointValue());
+		content.put(SqliteDataControllerConstants.QuestionsColumns.NO_VALUE.toString(), question.getNoPointValue());
+		content.put(SqliteDataControllerConstants.QuestionsColumns.USED_COUNT.toString(), question.getUsedCount());
 
 		// Update the database
-		db.update(table, content, SqliteDataControllerConstants.ID_COLUMN + " = ?", new String[] { "" + question.getId() });
+		db.update(table, content, SqliteDataControllerConstants.QuestionsColumns.ID + " = ?", new String[] { "" + question.getId() });
 
 		// Log the update
 		Log.i(SqliteDataControllerQueries.class.getName(),
@@ -195,10 +195,10 @@ public class SqliteDataControllerQueries {
 		// The query used to create the table
 		StringBuilder builder = new StringBuilder();
 		builder.append("CREATE TABLE IF NOT EXISTS " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " (");
-		builder.append(SqliteDataControllerConstants.SCORE_ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT,");
-		builder.append(SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " INTEGER NOT NULL,");
-		builder.append(SqliteDataControllerConstants.SCORE_TIMESTAMP_COLUMN + " BIGINT NOT NULL,");
-		builder.append(SqliteDataControllerConstants.SCORE_TYPE_COLUMN + " TEXT NOT NULL");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.SCORE + " INTEGER NOT NULL,");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP + " BIGINT NOT NULL,");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.TYPE + " TEXT NOT NULL");
 		builder.append(");");
 
 		try {
@@ -233,9 +233,9 @@ public class SqliteDataControllerQueries {
 		// Build the SQL statement
 		StringBuilder builder = new StringBuilder();
 		builder.append("INSERT INTO " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " (");
-		builder.append(SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ", ");
-		builder.append(SqliteDataControllerConstants.SCORE_TIMESTAMP_COLUMN + ", ");
-		builder.append(SqliteDataControllerConstants.SCORE_TYPE_COLUMN + " ");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.SCORE + ", ");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.TIMESTAMP + ", ");
+		builder.append(SqliteDataControllerConstants.ScoresColumns.TYPE + " ");
 		builder.append(") VALUES (?,?,?)");
 
 		// Create a compiled SQL statement
@@ -275,7 +275,7 @@ public class SqliteDataControllerQueries {
 		}
 
 		// Obtain the sum of the scores for a type
-		String query = "SELECT SUM(" + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?";
+		String query = "SELECT SUM(" + SqliteDataControllerConstants.ScoresColumns.SCORE + ") FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + " WHERE type = ?";
 		Cursor cursor = db.rawQuery(query, new String[] { key });
 
 		// Obtained the sum data from the database

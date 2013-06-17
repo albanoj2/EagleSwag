@@ -42,7 +42,7 @@ public class LfuRetrieveQuestionsStrategy implements RetrieveQuestionsStrategy {
 	public String getQuery (String table, int numberOfQuestions) {
 
 		// Use a LFU query to obtain the questions
-		return "SELECT * FROM " + table + " " + "ORDER BY " + SqliteDataControllerConstants.USED_COUNT_COLUMN + " ASC " + "LIMIT " + numberOfQuestions;
+		return "SELECT * FROM " + table + " " + "ORDER BY " + SqliteDataControllerConstants.QuestionsColumns.USED_COUNT + " ASC " + "LIMIT " + numberOfQuestions;
 	}
 
 }

@@ -45,9 +45,20 @@ public class SqliteDataControllerConstants {
 	/**
 	 * A numerical reference for each of the columns in a questions table.
 	 */
-	public static enum QuestionColumns {
-		ID, QUESTION, YES_VALUE, NO_VALUE, USED_COUNT
-	};
+	public static enum QuestionsColumns {
+		
+		ID("_id"), QUESTION("question"), YES_VALUE("yesValue"), NO_VALUE("noValue"), USED_COUNT("usedCount");
+		
+		private final String name;
+
+		private QuestionsColumns (String name) {
+			this.name = name;
+		}
+
+		public String toString () {
+			return this.name;
+		}
+	}
 
 	// -------------------------------------------------------------------------
 	// Question table column names
@@ -56,42 +67,55 @@ public class SqliteDataControllerConstants {
 	/**
 	 * The name of the ID column in a questions table.
 	 */
-	public static final String ID_COLUMN = "_id";
+	//public static final String ID_COLUMN = "_id";
 
 	/**
 	 * The name of the question text column in a questions table.
 	 */
-	public static final String QUESTION_COLUMN = "question";
+	//public static final String QUESTION_COLUMN = "question";
 
 	/**
 	 * The name of the yes point value column in a questions table.
 	 */
-	public static final String YES_VALUE_COLUMN = "yesValue";
+	//public static final String YES_VALUE_COLUMN = "yesValue";
 
 	/**
 	 * The name of the no point value column in a questions table.
 	 */
-	public static final String NO_VALUE_COLUMN = "noValue";
+	//public static final String NO_VALUE_COLUMN = "noValue";
 
 	/**
 	 * The name of the used count column in a questions table.
 	 */
-	public static final String USED_COUNT_COLUMN = "usedCount";
+	//public static final String USED_COUNT_COLUMN = "usedCount";
 
 	// -------------------------------------------------------------------------
 	// Scores table
 	// -------------------------------------------------------------------------
 
+	/**
+	 * The name of the SQLite table containing score data.
+	 */
 	public static final String SCORE_TABLE_NAME = "Scores";
 
-	// TODO Documentation for each of the column names
+	/**
+	 * Enumeration of the table column names for the SQLite database table
+	 * containing the scores data.
+	 * 
+	 * @author Justin Albano
+	 */
 	public static enum ScoresColumns {
-		ID, SCORE, TIMESTAMP, TYPE
-	}
 
-	// TODO Documentation
-	public static final String SCORE_ID_COLUMN = "_id";
-	public static final String SCORE_SCORE_COLUMN = "score";
-	public static final String SCORE_TIMESTAMP_COLUMN = "timestamp";
-	public static final String SCORE_TYPE_COLUMN = "type";
+		ID("_id"), SCORE("score"), TIMESTAMP("timestamp"), TYPE("type");
+
+		private final String name;
+
+		private ScoresColumns (String name) {
+			this.name = name;
+		}
+
+		public String toString () {
+			return this.name;
+		}
+	}
 }
