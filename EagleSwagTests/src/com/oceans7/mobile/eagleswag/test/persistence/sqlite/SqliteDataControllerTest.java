@@ -257,7 +257,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		this.sqliteDataController.saveRoundScore(score, "test");
 
 		// Obtain the score that was just placed in the database
-		Cursor cursor = this.sqliteDataController.getDatabase().rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+		Cursor cursor = this.sqliteDataController.getDatabase().rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.ScoresColumns.SCORE + " = ?",
 			new String[] { "10.0" });
 
 		// Ensure the data is correct

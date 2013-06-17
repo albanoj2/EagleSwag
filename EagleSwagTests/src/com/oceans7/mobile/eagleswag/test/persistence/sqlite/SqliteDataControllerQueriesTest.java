@@ -139,7 +139,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		Log.d(this.getClass().getName(), "ID of added quetion: " + id);
 
 		// Attempt to retrieve the data from the database
-		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + "" + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + "" + " WHERE " + SqliteDataControllerConstants.QuestionsColumns.QUESTION + " = ?",
 			new String[] { text });
 
 		// Reset cursor
@@ -155,7 +155,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		assertEquals("Used count is equal", usedCount, cursor.getLong(4));
 
 		// Remove the item from the database
-		this.db.delete(table, SqliteDataControllerConstants.QUESTION_COLUMN + "='" + text + "'", null);
+		this.db.delete(table, SqliteDataControllerConstants.QuestionsColumns.QUESTION + "='" + text + "'", null);
 
 		// Close the cursor
 		cursor.close();
@@ -204,10 +204,10 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		// ensure that the new question has the same ID as the question that was
 		// just created, ensuring that the new question updates the question
 		// that was just inserted
-		Cursor cursorId = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QUESTION_COLUMN + " = '" + originalText + "'",
+		Cursor cursorId = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QuestionsColumns.QUESTION + " = '" + originalText + "'",
 			null);
 		cursorId.moveToFirst();
-		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.QuestionColumns.ID.ordinal());
+		int idOfInsertedQuestion = cursorId.getInt(SqliteDataControllerConstants.QuestionsColumns.ID.ordinal());
 
 		// Create a new question (using reflection)
 		Object[] newArgs = new Object[] { idOfInsertedQuestion, newText, newYesValue, newNoValue, newUsedCount };
@@ -217,14 +217,14 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		SqliteDataControllerQueries.updateQuestion(this.db, table, newQuestion);
 
 		// Retrieve the same question from the database
-		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.ID_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + table + " WHERE " + SqliteDataControllerConstants.QuestionsColumns.ID + " = ?",
 			new String[] { "" + idOfInsertedQuestion });
 		cursor.moveToFirst();
 
-		assertEquals("Question string updated:", newText, cursor.getString(SqliteDataControllerConstants.QuestionColumns.QUESTION.ordinal()));
-		assertEquals("Yes value updated:", newYesValue, cursor.getInt(SqliteDataControllerConstants.QuestionColumns.YES_VALUE.ordinal()));
-		assertEquals("No value updated:", newNoValue, cursor.getInt(SqliteDataControllerConstants.QuestionColumns.NO_VALUE.ordinal()));
-		assertEquals("Used count updated:", newUsedCount, cursor.getInt(SqliteDataControllerConstants.QuestionColumns.USED_COUNT.ordinal()));
+		assertEquals("Question string updated:", newText, cursor.getString(SqliteDataControllerConstants.QuestionsColumns.QUESTION.ordinal()));
+		assertEquals("Yes value updated:", newYesValue, cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.YES_VALUE.ordinal()));
+		assertEquals("No value updated:", newNoValue, cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.NO_VALUE.ordinal()));
+		assertEquals("Used count updated:", newUsedCount, cursor.getInt(SqliteDataControllerConstants.QuestionsColumns.USED_COUNT.ordinal()));
 
 		// Remove the test entry from the database
 		this.db.execSQL("DELETE FROM " + table + " WHERE _id = " + idOfInsertedQuestion);
@@ -331,7 +331,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		SqliteDataControllerQueries.insertIntoScoreTable(this.db, "test", score);
 
 		// Obtain the score that was just placed in the database
-		Cursor cursor = this.db.rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.SCORE_SCORE_COLUMN + " = ?",
+		Cursor cursor = this.db.rawQuery("SELECT * FROM " + SqliteDataControllerConstants.SCORE_TABLE_NAME + "" + " WHERE " + SqliteDataControllerConstants.ScoresColumns.SCORE + " = ?",
 			new String[] { "10.0" });
 
 		// Ensure the data is correct
