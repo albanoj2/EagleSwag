@@ -6,6 +6,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="C:/Eclipse/plugins/org.aspectj.runtime_1.7.2.20130214224500/aspectjrt.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
