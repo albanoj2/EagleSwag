@@ -29,8 +29,10 @@ import android.widget.Button;
 import com.oceans7.mobileapps.eagleswag.R;
 
 /**
- * TODO: Documentation
- *
+ * The main activity that is displayed to the user as the splash screen for the
+ * application. This activity contains the components that allow the user to
+ * select which type of questions that he or she will answer.
+ * 
  * @author Justin Albano
  */
 public class SplashScreenActivity extends Activity {
@@ -39,12 +41,24 @@ public class SplashScreenActivity extends Activity {
 	 * Attributes
 	 **************************************************************************/
 
+	/**
+	 * An enumeration for the type of question round that the user selected to
+	 * answer.
+	 * 
+	 * @author Justin Albano
+	 */
 	public enum Usertype {
-		ENGINEER,
-		PILOT
+		ENGINEER, PILOT
 	}
-	
+
+	/**
+	 * The button to select an engineering round of questions.
+	 */
 	private Button bEngineer;
+
+	/**
+	 * The button to select a pilot round of questions.
+	 */
 	private Button bPilot;
 
 	/***************************************************************************
@@ -92,9 +106,12 @@ public class SplashScreenActivity extends Activity {
 	}
 
 	/**
-	 * Transitions to 
+	 * Transitions to questions activity.
+	 * 
 	 * @param v
+	 *            The View that initiated the transition.
 	 * @param type
+	 *            The type of round that should be started.
 	 */
 	public void transitionToQuestionsAcitivity (View v, Usertype type) {
 
