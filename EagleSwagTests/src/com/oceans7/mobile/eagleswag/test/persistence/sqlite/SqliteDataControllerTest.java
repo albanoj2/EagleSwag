@@ -33,6 +33,7 @@ import com.oceans7.mobile.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
+import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
@@ -86,8 +87,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 		;
 
 		// Create the data controller
-		this.sqliteDataController = new SqliteDataController();
-		this.sqliteDataController.open(this.context);
+		this.sqliteDataController = DataControllers.getInstance().getSqliteDataController(context);
 	}
 
 	/**

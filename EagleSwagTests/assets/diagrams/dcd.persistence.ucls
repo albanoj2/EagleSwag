@@ -11,9 +11,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.oceans7.mobile.eagleswag.persistence.DataControllerFactory" 
-    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/DataControllerFactory.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.oceans7.mobile.eagleswag.persistence.DataControllersect="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/DataControllers.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="413" y="166"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      

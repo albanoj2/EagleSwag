@@ -31,7 +31,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.persistence.DataController;
-import com.oceans7.mobile.eagleswag.persistence.DataControllerFactory;
+import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
 /**
  * A delegate dedicated to encapsulating the logic for obtaining a combination
@@ -83,10 +83,7 @@ public class QuestionStrategyDelegate {
 		List<Question> questionList = new LinkedList<Question>();
 
 		// Obtain the data controller from the data controller factory
-		DataController dataController = DataControllerFactory.getInstance().getDataController(context);
-
-		// Open the data controller
-		dataController.open(context);
+		DataController dataController = DataControllers.getInstance().getDataController(context);
 
 		try {
 			// Obtain the number of questions that "should" be loaded

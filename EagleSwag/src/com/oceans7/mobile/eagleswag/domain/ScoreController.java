@@ -21,7 +21,7 @@ package com.oceans7.mobile.eagleswag.domain;
 import android.content.Context;
 
 import com.oceans7.mobile.eagleswag.persistence.DataController;
-import com.oceans7.mobile.eagleswag.persistence.DataControllerFactory;
+import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
 /**
  * Domain class responsible for retrieving the data (such as average score and
@@ -73,8 +73,7 @@ public class ScoreController {
 	public int getTotalScore (QuestionStrategy strategy) {
 
 		// Create and open the data controller
-		DataController dataController = DataControllerFactory.getInstance().getDataController(this.context);
-		dataController.open(this.context);
+		DataController dataController = DataControllers.getInstance().getDataController(this.context);
 
 		// Obtain the score from the data controller
 		int score = dataController.getTotalScore(strategy.getName());
@@ -99,8 +98,7 @@ public class ScoreController {
 	public int getAverageScore (QuestionStrategy strategy) {
 
 		// Create and open the data controller
-		DataController dataController = DataControllerFactory.getInstance().getDataController(this.context);
-		dataController.open(this.context);
+		DataController dataController = DataControllers.getInstance().getDataController(this.context);
 
 		// Obtain the average score from the data controller
 		int average = dataController.getAverageScore(strategy.getName());

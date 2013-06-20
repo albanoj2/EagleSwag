@@ -22,7 +22,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.persistence.DataController;
-import com.oceans7.mobile.eagleswag.persistence.DataControllerFactory;
+import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
 /**
  * A score for a round of questions.
@@ -84,8 +84,7 @@ public class Score {
 	public void save (QuestionStrategy strategy, Context context) {
 
 		// Obtain a reference to a data controller and open the controller
-		DataController controller = DataControllerFactory.getInstance().getDataController(context);
-		controller.open(context);
+		DataController controller = DataControllers.getInstance().getDataController(context);
 
 		// Save the score
 		controller.saveRoundScore(this, strategy.getName());

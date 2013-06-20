@@ -20,8 +20,6 @@ package com.oceans7.mobile.eagleswag.persistence;
 
 import java.util.Queue;
 
-import android.content.Context;
-
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
@@ -39,17 +37,6 @@ public interface DataController {
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
-
-	/**
-	 * Opens the data controller. This will establish any necessary connections
-	 * to external services (such as a database) and open any files on the file
-	 * system required necessary for storing and retrieving question data.
-	 * 
-	 * @param context
-	 *            The Android context used to open any database connections or
-	 *            files on the file system.
-	 */
-	public void open (Context context);
 
 	/**
 	 * Close the data controller. This will close all connections to any

@@ -21,7 +21,7 @@ package com.oceans7.mobile.eagleswag.domain;
 import android.content.Context;
 
 import com.oceans7.mobile.eagleswag.persistence.DataController;
-import com.oceans7.mobile.eagleswag.persistence.DataControllerFactory;
+import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
 /**
  * An abstract class that defines the interface for a question. All common
@@ -111,8 +111,7 @@ public abstract class Question {
 	public void save (Context context) {
 
 		// Obtain a reference to a data controller and open the controller
-		DataController controller = DataControllerFactory.getInstance().getDataController(context);
-		controller.open(context);
+		DataController controller = DataControllers.getInstance().getDataController(context);
 
 		// Save the question
 		controller.saveQuestion(this.getClass(), this);

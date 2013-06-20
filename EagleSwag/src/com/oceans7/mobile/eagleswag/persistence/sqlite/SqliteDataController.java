@@ -103,16 +103,19 @@ public class SqliteDataController implements DataController {
 	private ArrayList<LoadingListener> observers;
 
 	/***************************************************************************
-	 * Methods
+	 * Constructors
 	 **************************************************************************/
 
 	/**
-	 * {@inheritDoc}
+	 * Opens the data controller. This will establish any necessary connections
+	 * to external services (such as a database) and open any files on the file
+	 * system required necessary for storing and retrieving question data.
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#open()
+	 * @param context
+	 *            The Android context used to open any database connections or
+	 *            files on the file system.
 	 */
-	@Override
-	public void open (Context context) {
+	public SqliteDataController (Context context) {
 
 		// Store the context
 		this.context = context;
@@ -153,6 +156,20 @@ public class SqliteDataController implements DataController {
 		}
 	}
 
+	/***************************************************************************
+	 * Methods
+	 **************************************************************************/
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#open()
+	 */
+	// @Override
+	// public void open (Context context) {
+	//
+	// }
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -165,7 +182,7 @@ public class SqliteDataController implements DataController {
 			// Close the helper if it has been set
 			this.helper.close();
 		}
-		
+
 		if (this.database != null) {
 			// Close the database if it has been opened
 			this.database.close();

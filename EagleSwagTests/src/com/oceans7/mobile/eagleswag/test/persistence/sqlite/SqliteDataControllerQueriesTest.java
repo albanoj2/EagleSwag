@@ -33,7 +33,6 @@ import com.oceans7.mobile.eagleswag.domain.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.PilotQuestion;
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
-import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerHelper;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
@@ -62,11 +61,6 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	 */
 	private SQLiteDatabase db;
 
-	/**
-	 * Data controller used to test the update query.
-	 */
-	private SqliteDataController controller;
-
 	/***************************************************************************
 	 * Setup & Tear Down
 	 **************************************************************************/
@@ -86,10 +80,6 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		// Obtain a reference to the database
 		SqliteDataControllerHelper helper = new SqliteDataControllerHelper(this.context);
 		this.db = helper.getWritableDatabase();
-
-		// Setup the data controller
-		this.controller = new SqliteDataController();
-		this.controller.open(this.context);
 	}
 
 	/**
