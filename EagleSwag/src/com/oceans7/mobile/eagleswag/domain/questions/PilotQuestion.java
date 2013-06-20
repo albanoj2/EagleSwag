@@ -16,15 +16,15 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain;
+package com.oceans7.mobile.eagleswag.domain.questions;
 
 /**
  * The concrete implementation of a general question.
- *       
+ * 
  * @author Justin Albano
  */
-public class GeneralQuestion extends Question {
-	
+public class PilotQuestion extends Question {
+
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
@@ -41,7 +41,7 @@ public class GeneralQuestion extends Question {
 	 * @param usedCount
 	 *            The used count of the question.
 	 */
-	public GeneralQuestion (Integer id, String text, Integer yesValue, Integer noValue, Integer usedCount) {
+	public PilotQuestion (Integer id, String text, Integer yesValue, Integer noValue, Integer usedCount) {
 		super(id, text, yesValue, noValue, usedCount);
 	}
 

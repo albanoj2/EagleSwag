@@ -16,7 +16,7 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain;
+package com.oceans7.mobile.eagleswag.domain.roundtype;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -30,6 +30,8 @@ import java.util.Queue;
 import android.content.Context;
 import android.util.Log;
 
+import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
@@ -37,11 +39,11 @@ import com.oceans7.mobile.eagleswag.persistence.DataControllers;
  * A delegate dedicated to encapsulating the logic for obtaining a combination
  * of specific type questions and general questions. Concrete strategies should
  * use this class as a delegate for implementing the getQuestions() method of
- * the QuestionStrategy interface.
+ * the RoundType interface.
  * 
  * @author Justin Albano
  */
-public class QuestionStrategyDelegate {
+public class RoundTypeDelegate {
 
 	/***************************************************************************
 	 * Attributes
@@ -72,7 +74,7 @@ public class QuestionStrategyDelegate {
 	 *            The key used in the properties file that contains the
 	 *            distribution configuration data to specify the configuration
 	 *            data for the concrete question strategy implementing the
-	 *            QuestionStrategy interface.
+	 *            RoundType interface.
 	 * @return
 	 *         A list containing a combination of general questions, and
 	 *         questions of the class provided as the specificKey parameter.

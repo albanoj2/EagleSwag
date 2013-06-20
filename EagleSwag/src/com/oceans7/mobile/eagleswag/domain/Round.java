@@ -20,6 +20,9 @@ package com.oceans7.mobile.eagleswag.domain;
 
 import java.util.LinkedList;
 
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.roundtype.RoundType;
+
 import android.content.Context;
 import android.util.Log;
 
@@ -187,7 +190,7 @@ public class Round {
 	 * @param context
 	 *            The context used to save the questions.
 	 */
-	public void save (QuestionStrategy strategy, Context context) {
+	public void save (RoundType strategy, Context context) {
 
 		for (Question question : this.questionsAnsweredYes) {
 			// Iterate through the 'yes' questions and save each

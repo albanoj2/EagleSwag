@@ -21,6 +21,7 @@ package com.oceans7.mobile.eagleswag.domain;
 import android.content.Context;
 import android.util.Log;
 
+import com.oceans7.mobile.eagleswag.domain.roundtype.RoundType;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
@@ -81,7 +82,7 @@ public class Score {
 	 * @param strategy
 	 *            The strategy used to save the round.
 	 */
-	public void save (QuestionStrategy strategy, Context context) {
+	public void save (RoundType strategy, Context context) {
 
 		// Obtain a reference to a data controller and open the controller
 		DataController controller = DataControllers.getInstance().getDataController(context);

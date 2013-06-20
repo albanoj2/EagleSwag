@@ -36,7 +36,7 @@ import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.config.NoSuchQuestionTypeException;
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * A data parser strategy for a JSON data file. This parser strategy extracts

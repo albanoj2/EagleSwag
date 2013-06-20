@@ -30,10 +30,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextSwitcher;
 
-import com.oceans7.mobile.eagleswag.domain.EngineeringStrategy;
-import com.oceans7.mobile.eagleswag.domain.PilotStrategy;
 import com.oceans7.mobile.eagleswag.domain.RoundController;
 import com.oceans7.mobile.eagleswag.domain.RoundNotStartedException;
+import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
+import com.oceans7.mobile.eagleswag.domain.roundtype.PilotRoundType;
 import com.oceans7.mobile.eagleswag.ui.SplashScreenActivity.Usertype;
 import com.oceans7.mobileapps.eagleswag.R;
 
@@ -263,12 +263,12 @@ public class QuestionsActivity<T> extends Activity {
 
 				case ENGINEER:
 					// Engineer was selected
-					roundController.startRound(new EngineeringStrategy());
+					roundController.startRound(new EngineeringRoundType());
 					break;
 
 				case PILOT:
 					// Pilot was selected
-					roundController.startRound(new PilotStrategy());
+					roundController.startRound(new PilotRoundType());
 					break;
 			}
 

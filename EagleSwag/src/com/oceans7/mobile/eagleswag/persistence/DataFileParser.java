@@ -25,7 +25,7 @@ import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.config.NoSuchQuestionTypeException;
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * Class that is responsible for parsing the data file associated with a

@@ -22,7 +22,7 @@ import java.util.Queue;
 
 import android.content.Context;
 
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * Interface for a data file parser strategy. The data file parser strategy is

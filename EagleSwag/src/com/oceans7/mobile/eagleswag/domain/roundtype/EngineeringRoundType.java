@@ -16,24 +16,28 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain;
+package com.oceans7.mobile.eagleswag.domain.roundtype;
 
 import java.util.List;
+
+import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 import android.content.Context;
 
 /**
- * A concrete implementation of a question strategy for pilot. This strategy is
- * designed to obtain questions from the database for a pilot round of
- * questions. This question strategy will return a combination of pilot and
- * general questions (there may not be pilot questions, or there may not be
- * general questions, but there is the possibility of returning both). The name
- * of this pilot strategy is commonly used as a string key used to associate
- * scores in persistent storage with round of questions for an pilot.
+ * A concrete implementation of a question strategy for engineering. This
+ * strategy is designed to obtain questions from the database for a engineering
+ * round of questions. This question strategy will return a combination of
+ * engineering and general questions (there may not be engineering questions, or
+ * there may not be general questions, but there is the possibility of returning
+ * both). The name of this engineering strategy is commonly used as a string key
+ * used to associate scores in persistent storage with round of questions for an
+ * engineering.
  * 
  * @author Justin Albano
  */
-public class PilotStrategy implements QuestionStrategy {
+public class EngineeringRoundType implements RoundType {
 
 	/***************************************************************************
 	 * Methods
@@ -42,24 +46,23 @@ public class PilotStrategy implements QuestionStrategy {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.domain.QuestionStrategy#getQuestions(android.content.Context)
+	 * @see com.oceans7.mobile.eagleswag.domain.roundtype.RoundType#getQuestions()
 	 */
 	@Override
 	public List<Question> getQuestions (Context context) {
 		
 		// Create a delegate for obtaining questions from persistent storage
-		QuestionStrategyDelegate delegate = new QuestionStrategyDelegate();
-		return delegate.getQuestions(context, PilotQuestion.class, "pilot");
+		RoundTypeDelegate delegate = new RoundTypeDelegate();
+		return delegate.getQuestions(context, EngineeringQuestion.class, "engineer");
 	}
 
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.domain.QuestionStrategy#getName()
+	 * @see com.oceans7.mobile.eagleswag.domain.roundtype.RoundType#getName()
 	 */
 	@Override
 	public String getName () {
-		return "pilot";
+		return "engineering";
 	}
-
 }

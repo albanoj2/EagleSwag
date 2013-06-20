@@ -39,7 +39,7 @@ import android.util.Log;
 import com.oceans7.mobile.eagleswag.config.components.DataConfiguration;
 import com.oceans7.mobile.eagleswag.config.components.JsonConfiguration;
 import com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration;
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategy;
 
 /**

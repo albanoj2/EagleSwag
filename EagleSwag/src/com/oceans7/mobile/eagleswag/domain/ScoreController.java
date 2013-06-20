@@ -20,6 +20,7 @@ package com.oceans7.mobile.eagleswag.domain;
 
 import android.content.Context;
 
+import com.oceans7.mobile.eagleswag.domain.roundtype.RoundType;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
@@ -65,12 +66,12 @@ public class ScoreController {
 	 * @param strategy
 	 *            The strategy used to select which scores to return. For
 	 *            example, if the scores for all engineering rounds are desired,
-	 *            the EngineeringStrategy should be supplied.
+	 *            the EngineeringRoundType should be supplied.
 	 * @return
 	 *         The total score for the rounds associated with the supplied
 	 *         strategy.
 	 */
-	public int getTotalScore (QuestionStrategy strategy) {
+	public int getTotalScore (RoundType strategy) {
 
 		// Create and open the data controller
 		DataController dataController = DataControllers.getInstance().getDataController(this.context);
@@ -90,12 +91,12 @@ public class ScoreController {
 	 * @param strategy
 	 *            The strategy used to select which average score to return. For
 	 *            example, if the average score for all engineering rounds is
-	 *            desired, the EngineeringStrategy should be supplied.
+	 *            desired, the EngineeringRoundType should be supplied.
 	 * @return
 	 *         The average score for the rounds associated with the supplied
 	 *         strategy.
 	 */
-	public int getAverageScore (QuestionStrategy strategy) {
+	public int getAverageScore (RoundType strategy) {
 
 		// Create and open the data controller
 		DataController dataController = DataControllers.getInstance().getDataController(this.context);

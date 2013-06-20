@@ -16,9 +16,11 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain;
+package com.oceans7.mobile.eagleswag.domain.roundtype;
 
 import java.util.List;
+
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 import android.content.Context;
 
@@ -31,7 +33,7 @@ import android.content.Context;
  * 
  * @author Justin Albano
  */
-public interface QuestionStrategy {
+public interface RoundType {
 
 	public List<Question> getQuestions (Context context);
 

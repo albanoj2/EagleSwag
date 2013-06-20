@@ -16,7 +16,7 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain;
+package com.oceans7.mobile.eagleswag.domain.questions;
 
 /**
  * The concrete implementation of an engineering question.

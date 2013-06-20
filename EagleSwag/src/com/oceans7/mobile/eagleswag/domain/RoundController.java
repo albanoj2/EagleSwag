@@ -20,6 +20,9 @@ package com.oceans7.mobile.eagleswag.domain;
 
 import java.util.List;
 
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.roundtype.RoundType;
+
 import android.content.Context;
 
 /**
@@ -60,7 +63,7 @@ public class RoundController {
 	/**
 	 * The current strategy used to start the round.
 	 */
-	private QuestionStrategy currentStrategy;
+	private RoundType currentStrategy;
 
 	/**
 	 * Flag to track if a round has been started.
@@ -95,7 +98,7 @@ public class RoundController {
 	 * Start a new round for pilots. This initializes the current round and
 	 * obtains questions for a pilot.
 	 */
-	public synchronized void startRound (QuestionStrategy strategy) {
+	public synchronized void startRound (RoundType strategy) {
 
 		// Obtain the questions from the supplied strategy
 		this.currentQuestions = strategy.getQuestions(this.context);
@@ -280,7 +283,7 @@ public class RoundController {
 	 * @return
 	 *         The currentStrategy.
 	 */
-	public QuestionStrategy getCurrentStrategy () {
+	public RoundType getCurrentStrategy () {
 		return currentStrategy;
 	}
 

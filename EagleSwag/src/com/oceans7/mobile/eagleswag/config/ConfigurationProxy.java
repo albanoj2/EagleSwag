@@ -23,7 +23,7 @@ import java.util.Map;
 import android.content.Context;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * A proxy for the ConfigurationParser. This proxy acts a cache for the parser.

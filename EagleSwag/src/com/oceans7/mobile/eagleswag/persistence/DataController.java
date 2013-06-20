@@ -20,8 +20,8 @@ package com.oceans7.mobile.eagleswag.persistence;
 
 import java.util.Queue;
 
-import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**

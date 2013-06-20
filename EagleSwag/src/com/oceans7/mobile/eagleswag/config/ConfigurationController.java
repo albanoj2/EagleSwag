@@ -22,7 +22,7 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * Interface defining the methods for controlling the configuration file that

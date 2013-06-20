@@ -34,8 +34,8 @@ import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.config.QuestionType;
-import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
@@ -326,7 +326,7 @@ public class SqliteDataController implements DataController {
 	 * {@inheritDoc}
 	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#saveQuestion(java.lang.Class,
-	 *      com.oceans7.mobile.eagleswag.domain.Question)
+	 *      com.oceans7.mobile.eagleswag.domain.questions.Question)
 	 */
 	@Override
 	public void saveQuestion (Class<? extends Question> key, Question question) {
