@@ -143,7 +143,7 @@ public class SqliteDataControllerQueries {
 	public static Cursor getQuestions (Context context, SQLiteDatabase db, String table, int number) {
 
 		// Obtain the strategy from factory for getting questions
-		RetrieveQuestionsStrategy strategy = RetrieveQuestionsStrategyFactory.getInstance().getRetrieveQuestionsStrategy(context);
+		RetrievalStrategy strategy = RetrievalStrategies.getInstance().getRetrieveQuestionsStrategy();
 
 		// The query to obtain the questions
 		String query = strategy.getQuery(table, number);

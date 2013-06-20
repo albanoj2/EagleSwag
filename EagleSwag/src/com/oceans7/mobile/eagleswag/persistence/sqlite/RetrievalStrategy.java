@@ -19,30 +19,31 @@
 package com.oceans7.mobile.eagleswag.persistence.sqlite;
 
 /**
- * A least frequently used (LFU) strategy for obtaining questions from a
- * questions table in an SQLite database. The used count of the questions is
- * used as the variable which dictates the frequency of use for a question (a
- * question with a lower used count is considered to have been used less
- * frequently than a question with a higher used count).
+ * Interface for a strategy defining how to retrieve questions from the
+ * database. This strategy returns a query that dictates how questions should be
+ * retrieved from the database.
  * 
  * @author Justin Albano
  */
-public class LfuRetrieveQuestionsStrategy implements RetrieveQuestionsStrategy {
-
+public interface RetrievalStrategy {
+	
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
-	
+
 	/**
-	 * {@inheritDoc}
+	 * A query that defines how questions should be retrieved from the database.
+	 * This query contains the required logic for retrieving questions and is
+	 * intended to be executed against an SQLite database.
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.persistence.sqlite.RetrieveQuestionsStrategy#getQuery(java.lang.String)
+	 * @param table
+	 *            The name of the table where the questions will be retrieved
+	 *            from.
+	 * @param numberOfQuestions
+	 *            The number of questions to retrieve from the supplied table.
+	 * @return
+	 *         A query that defines how the questions will be retrieved from the
+	 *         database.
 	 */
-	@Override
-	public String getQuery (String table, int numberOfQuestions) {
-
-		// Use a LFU query to obtain the questions
-		return "SELECT * FROM " + table + " " + "ORDER BY " + SqliteDataControllerConstants.QuestionsColumns.USED_COUNT + " ASC " + "LIMIT " + numberOfQuestions;
-	}
-
+	public String getQuery (String table, int numberOfQuestions);
 }

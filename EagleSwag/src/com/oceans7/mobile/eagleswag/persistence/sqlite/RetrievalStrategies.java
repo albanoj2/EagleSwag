@@ -16,18 +16,15 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.persistence;
+package com.oceans7.mobile.eagleswag.persistence.sqlite;
 
-import android.content.Context;
-
-import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 
 /**
- * Factory used to create the data controller for persistent storage.
+ * Factory to create strategy for retrieving questions from the database.
  * 
  * @author Justin Albano
  */
-public class DataControllers {
+public class RetrievalStrategies {
 
 	/***************************************************************************
 	 * Attributes
@@ -36,7 +33,7 @@ public class DataControllers {
 	/**
 	 * Singleton instance of factory.
 	 */
-	private static DataControllers instance;
+	private static RetrievalStrategies instance;
 
 	/***************************************************************************
 	 * Constructors
@@ -45,51 +42,46 @@ public class DataControllers {
 	/**
 	 * Hidden constructor (for singleton).
 	 */
-	private DataControllers () {}
+	private RetrievalStrategies () {}
 
 	/***************************************************************************
 	 * Methods
 	 **************************************************************************/
 
 	/**
-	 * Obtains a singleton instance of the data controller factory.
+	 * Obtains a reference to the singleton instance of the factory.
 	 * 
 	 * @return
-	 *         A singleton instance of the data controller factory.
+	 *         A singleton instance of the factory.
 	 */
-	public static synchronized DataControllers getInstance () {
+	public static synchronized RetrievalStrategies getInstance () {
 
 		if (instance == null) {
 			// Lazy instantiation of the instance
-			instance = new DataControllers();
+			instance = new RetrievalStrategies();
 		}
 
 		return instance;
 	}
 
 	/**
-	 * Obtains the data controller for persistence storage.
+	 * Obtains the strategy for retrieving questions from the database.
 	 * 
-	 * @param context
-	 *            The context used to create the data controller.
 	 * @return
-	 *         The data controller (as specified by the data controller
-	 *         configuration file).
+	 *         A strategy for accessing questions from the database.
 	 */
-	public DataController getDataController (Context context) {
-		return this.getSqliteDataController(context);
+	public RetrievalStrategy getRetrieveQuestionsStrategy () {
+		return this.getLfuRetrieveQuestionsStrategy();
 	}
 
 	/**
-	 * Creates an SQLite data controller.
+	 * Creates a least frequently used question retrieval strategy.
 	 * 
-	 * @param context
-	 *            The context used to create the SQLite data controller.
 	 * @return
-	 *         An instance of a SQLite data controller.
+	 *         A least frequently used question retrieval strategy.
 	 */
-	public SqliteDataController getSqliteDataController (Context context) {
-		return new SqliteDataController(context);
+	public LfuRetrievalStrategy getLfuRetrieveQuestionsStrategy () {
+		return new LfuRetrievalStrategy();
 	}
 
 }
