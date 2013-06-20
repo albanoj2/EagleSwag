@@ -23,10 +23,10 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.domain.EngineeringStrategy;
-import com.oceans7.mobile.eagleswag.domain.PilotStrategy;
 import com.oceans7.mobile.eagleswag.domain.RoundController;
 import com.oceans7.mobile.eagleswag.domain.RoundNotStartedException;
+import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
+import com.oceans7.mobile.eagleswag.domain.roundtype.PilotRoundType;
 
 /**
  * Test cases for {@link com.oceans7.mobile.eagleswag.domain.RoundController}
@@ -87,7 +87,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testStartEngineeringRound () throws Exception {
 
 		// Start engineering round
-		this.manager.startRound(new EngineeringStrategy());
+		this.manager.startRound(new EngineeringRoundType());
 
 		// Ensure that the questions and round have been set in the manager
 		assertNotNull("Question queue is set:", this.manager.getCurrentQuestions());
@@ -103,7 +103,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testStartPilotRound () throws Exception {
 
 		// Start engineering round
-		this.manager.startRound(new PilotStrategy());
+		this.manager.startRound(new PilotRoundType());
 
 		// Ensure that the questions and round have been set in the manager
 		assertNotNull("Question queue is set:", this.manager.getCurrentQuestions());
@@ -119,7 +119,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testAnswerCurrentQuestionYes () throws Exception {
 
 		// Start a round
-		this.manager.startRound(new PilotStrategy());
+		this.manager.startRound(new PilotRoundType());
 
 		// Get the original number of questions answered as yes
 		int originalYes = this.manager.getCurrentRound().getNumberOfYesQuestions();
@@ -139,7 +139,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testAnswerCurrentQuestionNo () throws Exception {
 
 		// Start a round
-		this.manager.startRound(new PilotStrategy());
+		this.manager.startRound(new PilotRoundType());
 
 		// Get the original number of questions answered as no
 		int originalNo = this.manager.getCurrentRound().getNumberOfNoQuestions();
@@ -158,7 +158,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testEndRound () throws Exception {
 
 		// Start a round
-		this.manager.startRound(new PilotStrategy());
+		this.manager.startRound(new PilotRoundType());
 
 		// End the round
 		this.manager.endRound();
@@ -176,7 +176,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testSampleEngineeringRound () throws Exception {
 
 		// Start the round for an engineer
-		this.manager.startRound(new EngineeringStrategy());
+		this.manager.startRound(new EngineeringRoundType());
 
 		while (this.manager.hasMoreQuestions()) {
 
@@ -199,7 +199,7 @@ public class RoundControllerTest extends InstrumentationTestCase {
 	public void testSamplePilotRound () throws Exception {
 
 		// Start the round for a pilot
-		this.manager.startRound(new PilotStrategy());
+		this.manager.startRound(new PilotRoundType());
 
 		while (this.manager.hasMoreQuestions()) {
 

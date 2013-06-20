@@ -26,20 +26,20 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobile.eagleswag.domain.EngineeringStrategy;
-import com.oceans7.mobile.eagleswag.domain.GeneralQuestion;
-import com.oceans7.mobile.eagleswag.domain.PilotQuestion;
-import com.oceans7.mobile.eagleswag.domain.PilotStrategy;
-import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
+import com.oceans7.mobile.eagleswag.domain.roundtype.PilotRoundType;
 
 /**
- * Test cases for {@link com.oceans7.mobile.eagleswag.domain.QuestionStrategy}.
+ * Test cases for {@link com.oceans7.mobile.eagleswag.domain.roundtype.RoundType}.
  * 
  * @author Justin Albano
  * 
- * @see com.oceans7.mobile.eagleswag.domain.EngineeringStrategy
- * @see com.oceans7.mobile.eagleswag.domain.PilotStrategy
+ * @see com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType
+ * @see com.oceans7.mobile.eagleswag.domain.roundtype.PilotRoundType
  */
 public class QuestionStrategiesTest extends InstrumentationTestCase {
 
@@ -94,7 +94,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testCreateEngineeringQueue () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
+		List<Question> questions = new EngineeringRoundType().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -120,7 +120,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
+		List<Question> questions = new EngineeringRoundType().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -158,7 +158,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
+		List<Question> questions = new EngineeringRoundType().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -202,7 +202,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testCreatePilotQueue () throws Exception {
 
 		// Obtain the pilot questions
-		List<Question> questions = new PilotStrategy().getQuestions(this.context);
+		List<Question> questions = new PilotRoundType().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Iterate through the queue and pop off each element
@@ -228,7 +228,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testCreateCorrectTotalNumberOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = new PilotStrategy().getQuestions(this.context);
+		List<Question> questions = new PilotRoundType().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -266,7 +266,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testCreateCorrectDistributionOfPilotQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = new PilotStrategy().getQuestions(this.context);
+		List<Question> questions = new PilotRoundType().getQuestions(this.context);
 
 		// Obtain the number of questions that "should" be loaded
 		Properties properties = new Properties();
@@ -311,7 +311,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testValidEngineeringQuestions () throws Exception {
 
 		// Obtain the engineering questions
-		List<Question> questions = new EngineeringStrategy().getQuestions(this.context);
+		List<Question> questions = new EngineeringRoundType().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null
@@ -334,7 +334,7 @@ public class QuestionStrategiesTest extends InstrumentationTestCase {
 	public void testValidPilotQuestions () throws Exception {
 
 		// Obtain the pilot questions
-		List<Question> questions = new PilotStrategy().getQuestions(this.context);
+		List<Question> questions = new PilotRoundType().getQuestions(this.context);
 
 		for (Question question : questions) {
 			// Loop through each question and ensure the data is not null

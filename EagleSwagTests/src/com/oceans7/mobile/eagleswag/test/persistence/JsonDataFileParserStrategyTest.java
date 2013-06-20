@@ -23,9 +23,9 @@ import java.util.Queue;
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
-import com.oceans7.mobile.eagleswag.domain.EngineeringQuestion;
-import com.oceans7.mobile.eagleswag.domain.GeneralQuestion;
-import com.oceans7.mobile.eagleswag.domain.PilotQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
+import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
 import com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy;
 
 /**
