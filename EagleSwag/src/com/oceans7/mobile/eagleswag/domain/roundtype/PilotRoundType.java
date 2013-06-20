@@ -51,7 +51,7 @@ public class PilotRoundType implements RoundType {
 	public List<Question> getQuestions (Context context) {
 		
 		// Create a delegate for obtaining questions from persistent storage
-		RoundTypeDelegate delegate = new RoundTypeDelegate();
+		RoundTypeHelper delegate = new RoundTypeHelper();
 		return delegate.getQuestions(context, PilotQuestion.class, "pilot");
 	}
 

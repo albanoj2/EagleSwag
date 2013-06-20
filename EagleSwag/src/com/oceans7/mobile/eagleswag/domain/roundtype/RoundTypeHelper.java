@@ -43,7 +43,7 @@ import com.oceans7.mobile.eagleswag.persistence.DataControllers;
  * 
  * @author Justin Albano
  */
-public class RoundTypeDelegate {
+public class RoundTypeHelper {
 
 	/***************************************************************************
 	 * Attributes
