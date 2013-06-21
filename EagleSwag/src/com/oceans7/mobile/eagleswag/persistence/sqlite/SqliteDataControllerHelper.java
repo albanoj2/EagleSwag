@@ -101,7 +101,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	 * placed into. The configuration data is obtained from the configuration
 	 * controller and a questions table in the database is created for each
 	 * question type.
-	 * 
+	 * <p/>
 	 * {@inheritDoc}
 	 * 
 	 * @see android.database.sqlite.SQLiteOpenHelper#onCreate(android.database.sqlite.SQLiteDatabase)
@@ -180,7 +180,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 * <p/>
 	 * @see android.database.sqlite.SQLiteOpenHelper#onUpgrade(android.database.sqlite.SQLiteDatabase,
 	 *      int, int)
 	 */
