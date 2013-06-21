@@ -20,7 +20,6 @@ package com.oceans7.mobile.eagleswag.domain;
 
 import java.util.LinkedList;
 
-import com.oceans7.mobile.eagleswag.domain.roundtype.RoundType;
 
 import android.content.Context;
 import android.util.Log;

@@ -34,7 +34,7 @@ import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
 import com.oceans7.mobile.eagleswag.domain.roundtype.PilotRoundType;
 
 /**
- * Test cases for {@link com.oceans7.mobile.eagleswag.domain.roundtype.RoundType}.
+ * Test cases for {@link com.oceans7.mobile.eagleswag.domain.RoundType}.
  * 
  * @author Justin Albano
  * 

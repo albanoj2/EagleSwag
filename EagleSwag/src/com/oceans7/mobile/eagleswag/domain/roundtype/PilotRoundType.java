@@ -21,6 +21,7 @@ package com.oceans7.mobile.eagleswag.domain.roundtype;
 import java.util.List;
 
 import com.oceans7.mobile.eagleswag.domain.Question;
+import com.oceans7.mobile.eagleswag.domain.RoundType;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
 
 import android.content.Context;
@@ -45,7 +46,7 @@ public class PilotRoundType implements RoundType {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.domain.roundtype.RoundType#getQuestions(android.content.Context)
+	 * @see com.oceans7.mobile.eagleswag.domain.RoundType#getQuestions(android.content.Context)
 	 */
 	@Override
 	public List<Question> getQuestions (Context context) {
@@ -58,7 +59,7 @@ public class PilotRoundType implements RoundType {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.domain.roundtype.RoundType#getName()
+	 * @see com.oceans7.mobile.eagleswag.domain.RoundType#getName()
 	 */
 	@Override
 	public String getName () {

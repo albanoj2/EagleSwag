@@ -21,7 +21,6 @@ package com.oceans7.mobile.eagleswag.domain;
 import android.content.Context;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.domain.roundtype.RoundType;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 

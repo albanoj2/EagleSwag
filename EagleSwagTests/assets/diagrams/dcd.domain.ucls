@@ -49,7 +49,7 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.oceans7.mobile.eagleswag.domain.Question"EagleSwag" 
+  <class id="6" language="java" name="com.oceans7.mobile.eagleswag.domain.Question" project="EagleSwag" 
     file="/EagleSwag/src/com/oceans7/mobile/eagleswag/domain/Question.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="519" y="585"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
@@ -78,9 +78,8 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <interface id="9" language="java" name="com.oceans7.mobile.eagleswag.domain.roundtype.RoundType" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/domain/roundtype/RoundType.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <interface id="9" language="jacom.oceans7.mobile.eagleswag.domain.RoundType" project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/domain/RoundType.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="803" y="191"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
