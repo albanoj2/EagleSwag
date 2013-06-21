@@ -44,6 +44,8 @@ public interface DataController {
 	 * file system.
 	 */
 	public void close ();
+	
+	public <T extends Question> void loadQuestions (Class<T> key);
 
 	/**
 	 * Obtains a specified number of questions of the supplied type, T. The

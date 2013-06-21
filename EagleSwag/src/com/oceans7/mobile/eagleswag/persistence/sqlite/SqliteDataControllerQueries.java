@@ -18,6 +18,9 @@
 
 package com.oceans7.mobile.eagleswag.persistence.sqlite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -43,6 +46,76 @@ public class SqliteDataControllerQueries {
 	/***************************************************************************
 	 * Static Methods
 	 **************************************************************************/
+
+	/**
+	 * Obtains the names of all the tables in the database provided.
+	 * Citation: http://stackoverflow.com/a/15384267/2403253
+	 * 
+	 * @param db
+	 *            The database to search for tables.
+	 * @return
+	 *         The names of the all the tables in the database.
+	 */
+	public static List<String> getNonSystemTableNames (SQLiteDatabase db) {
+
+		// Stub to store the table names in
+		List<String> tables = new ArrayList<String>();
+
+		// Obtain the cursor for the names of the tables
+		Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+
+		if (c.moveToFirst()) {
+			// The cursor is iterable
+			String name;
+
+			while (!c.isAfterLast()) {
+				name = c.getString(0);
+
+				if (!name.equals("android_metadata") && !name.equals("sqlite_sequence")) {
+					// Add the table name to the list
+					tables.add(c.getString(0));
+				}
+
+				c.moveToNext();
+			}
+		}
+
+		Log.e("TEST", tables.toString());
+
+		return tables;
+	}
+
+	/**
+	 * Queries if a table exists in the database.
+	 * Citation: http://stackoverflow.com/a/8827554/2403253
+	 * 
+	 * @param db
+	 *            The database to query for the table.
+	 * @param tableName
+	 *            The name of the table to find in the database.
+	 * @return
+	 *         True if the table exists; false otherwise.
+	 */
+	public static boolean isTableExists (SQLiteDatabase db, String tableName) {
+
+		if (tableName == null || db == null || !db.isOpen()) {
+			// Table name or database is null, or database is not open
+			return false;
+		}
+
+		// A cursor from the query to the database
+		Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM sqlite_master WHERE type = ? AND name = ?", new String[] { "table", tableName });
+
+		if (!cursor.moveToFirst()) {
+			// If the cursor is not iterable
+			return false;
+		}
+
+		// Obtain the data from the cursor
+		int count = cursor.getInt(0);
+		cursor.close();
+		return count > 0;
+	}
 
 	/**
 	 * Creates a new questions table in the database supplied. The table

@@ -21,9 +21,7 @@ package com.oceans7.mobile.eagleswag.persistence.sqlite;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 
 import android.content.Context;
@@ -32,11 +30,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
-import com.oceans7.mobile.eagleswag.config.QuestionType;
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
+import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategies;
+import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategy;
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
@@ -74,13 +72,6 @@ public class SqliteDataController implements DataController {
 	private SQLiteDatabase database;
 
 	/**
-	 * Database helper that manages many of the underlying tasks associated with
-	 * SQLite database. This helper is used to generate the writable instance of
-	 * the database used to store data for this class.
-	 */
-	private SqliteDataControllerHelper helper;
-
-	/**
 	 * A map of question classes to the database table names used. This is used
 	 * to map a question type to a table in the database, which allows for the
 	 * retrieval and storage of questions.
@@ -89,7 +80,7 @@ public class SqliteDataController implements DataController {
 	 * the SQLite database table that holds the general questions will be
 	 * returned.
 	 */
-	private Map<Class<? extends Question>, String> classToTableMap;
+	//private Map<Class<? extends Question>, String> classToTableMap;
 
 	/**
 	 * Internal cache to speed up the retrieval of score data from the SQLite
@@ -124,35 +115,15 @@ public class SqliteDataController implements DataController {
 		this.cache = new ScoreCache();
 
 		// Create the database helper
-		this.helper = new SqliteDataControllerHelper(context);
+		SqliteDataControllerHelper helper = new SqliteDataControllerHelper(context);
 
 		try {
 			// Obtain a writable database reference
-			this.database = this.helper.getWritableDatabase();
+			this.database = helper.getWritableDatabase();
 		}
 		catch (SQLException e) {
 			// The helper could not create a writable database
 			Log.i(this.getClass().getName(), "Writable database cannot be created by SQLite database helper: " + e);
-		}
-
-		// Create the class key to database table map
-		this.classToTableMap = new HashMap<Class<? extends Question>, String>();
-
-		// Obtain the question types from the configuration file
-		Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
-
-		for (Class<? extends Question> key : qtMap.keySet()) {
-			// Loop through each of the entries and enter them into the map: the
-			// key from each entry is used as the key in the map, and the SQLite
-			// database table name is extracted from the question type and used
-			// as the value in the table
-
-			// Get the table name that maps to the key
-			String table = ConfigurationHelper.getInstance().getTableName(key, context);
-
-			// Add the entry to the class key to table name map
-			this.classToTableMap.put(key, table);
-			Log.i(this.getClass().getName(), "Added mapping: " + key.getCanonicalName() + " -> " + table);
 		}
 	}
 
@@ -163,29 +134,60 @@ public class SqliteDataController implements DataController {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#open()
-	 */
-	// @Override
-	// public void open (Context context) {
-	//
-	// }
-
-	/**
-	 * {@inheritDoc}
-	 * 
 	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#close()
 	 */
 	@Override
 	public void close () {
 
-		if (this.helper != null) {
-			// Close the helper if it has been set
-			this.helper.close();
-		}
-
 		if (this.database != null) {
 			// Close the database if it has been opened
 			this.database.close();
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#loadQuestions(java.lang.Class)
+	 */
+	@Override
+	public <T extends Question> void loadQuestions (Class<T> key) {
+
+		// Obtain a reference to the data file parser
+		DataFileParserStrategy parser = DataFileParserStrategies.getInstance().getDataFileParserStrategy(this.context);
+
+		// Parse the data file and retrieve the parsed questions
+		Queue<? extends Question> questions = parser.getQuestions(key);
+
+		// Generate the table name from the key
+		String table = generateTableName(key);
+
+		// Create the table in the database
+		SqliteDataControllerQueries.createQuestionsTable(this.database, table);
+		Log.i(this.getClass().getName(), "Created table '" + table + "'");
+
+		try {
+			// Begin SQL insertion transaction
+			this.database.beginTransaction();
+
+			for (Question question : questions) {
+				// Insert each question into the database
+				
+				// Insert the question into the database
+				SqliteDataControllerQueries.insertIntoQuestionsTable(this.database, table, question);
+				Log.i(this.getClass().getName(), "Inserted " + question + " into '" + table + "'");
+			}
+
+			// Mark SQL insertion transaction as successfully completed
+			this.database.setTransactionSuccessful();
+		}
+		catch (SQLException e) {
+			// An exception occurred while trying to create the table
+			Log.e(this.getClass().getName(), "SQL Error while creating the database: " + e);
+		}
+		finally {
+			// End SQL insertion transaction
+			this.database.endTransaction();
 		}
 	}
 
@@ -209,9 +211,17 @@ public class SqliteDataController implements DataController {
 
 		if (number > 0) {
 			// Continue only if there is data to retrieve from the database
+			
+			// Generate the table name from the key
+			String table = generateTableName(key);
+			
+			if (!SqliteDataControllerQueries.isTableExists(this.database, table)) {
+				// If the questions table has not yet been created, create it
+				this.loadQuestions(key);
+			}
 
 			// Obtain the data for the questions from the database
-			Cursor cursor = SqliteDataControllerQueries.getQuestions(this.context, this.database, this.classToTableMap.get(key), number);
+			Cursor cursor = SqliteDataControllerQueries.getQuestions(this.context, this.database, table, number);
 
 			// Reset cursor
 			cursor.moveToFirst();
@@ -332,7 +342,12 @@ public class SqliteDataController implements DataController {
 	public void saveQuestion (Class<? extends Question> key, Question question) {
 
 		// Convert the key into the table name where the data will be saved
-		String table = this.classToTableMap.get(key);
+		String table = generateTableName(key);
+		
+		if (!SqliteDataControllerQueries.isTableExists(this.database, table)) {
+			// If the questions table has not yet been created, create it
+			this.loadQuestions(key);
+		}
 
 		// Save the question in the database
 		SqliteDataControllerQueries.updateQuestion(this.database, table, question);
@@ -426,17 +441,21 @@ public class SqliteDataController implements DataController {
 		}
 	}
 
+	/**
+	 * A helper method for generating a table name from a key.
+	 * 
+	 * @param key
+	 *            The key to use to generate the table name.
+	 * @return
+	 *         A generated table name from the key.
+	 */
+	public static <Q extends Question> String generateTableName (Class<Q> key) {
+		return key.getSimpleName();
+	}
+
 	/***************************************************************************
 	 * Getters & Setters
 	 **************************************************************************/
-
-	/**
-	 * @return
-	 *         The map of classes to table names.
-	 */
-	public Map<Class<? extends Question>, String> getClassToTableMap () {
-		return this.classToTableMap;
-	}
 
 	/**
 	 * @return

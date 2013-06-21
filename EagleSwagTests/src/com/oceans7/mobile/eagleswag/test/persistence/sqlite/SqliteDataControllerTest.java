@@ -27,7 +27,6 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
@@ -84,7 +83,6 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 		// Establish the context to access the SQLite database
 		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
-		;
 
 		// Create the data controller
 		this.sqliteDataController = DataControllers.getInstance().getSqliteDataController(context);
@@ -148,7 +146,10 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	public <T extends Question> void helperObtainMoreQuestionsThenAvailable (Class<T> key) throws Exception {
 
 		// Obtain the table name for the key
-		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
+		String table = this.sqliteDataController.generateTableName(key);
+		
+		// Load the questions into the database
+		this.sqliteDataController.loadQuestions(key);
 
 		// Number of questions in the engineering questions table
 		long numberOfQuestionsInDatabase = DatabaseUtils.queryNumEntries(this.sqliteDataController.getDatabase(), table);
@@ -242,6 +243,24 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	 */
 	public void testObtainMorePilotQuestionsThenAvailable () throws Exception {
 		this.helperObtainMoreQuestionsThenAvailable(PilotQuestion.class);
+	}
+
+	/**
+	 * Test method for {@link
+	 * com.oceans7.mobile.eagleswag.domain.Round#getQuestions(Class<? extends
+	 * Question>)}.
+	 */
+	public void testLoadQuestions () {
+
+		// Load the general questions
+		this.sqliteDataController.loadQuestions(GeneralQuestion.class);
+		
+		// Retrieve the questions that were loaded
+		Queue<GeneralQuestion> questions = sqliteDataController.getQuestions(GeneralQuestion.class, 2);
+		
+		// Ensure the questions were loaded
+		assertNotNull("Queue was created:", questions);
+		assertFalse("Queue not empty:", questions.size() == 0);
 	}
 
 	/**

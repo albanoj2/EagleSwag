@@ -19,6 +19,7 @@
 package com.oceans7.mobile.eagleswag.test.persistence.sqlite;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -27,12 +28,12 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
+import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerHelper;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
@@ -120,7 +121,10 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		T testQuestion = constructor.newInstance(originalArgs);
 
 		// Obtain the name of the questions table
-		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
+		String table = SqliteDataController.generateTableName(key);
+
+		// Ensure the questions table has been created
+		SqliteDataControllerQueries.createQuestionsTable(this.db, table);
 
 		// Insert the test question into the data base
 		long id = SqliteDataControllerQueries.insertIntoQuestionsTable(this.db, table, testQuestion);
@@ -179,7 +183,10 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 		int newUsedCount = 3;
 
 		// Obtain the name of the questions table
-		String table = ConfigurationHelper.getInstance().getTableName(key, this.context);
+		String table = SqliteDataController.generateTableName(key);
+
+		// Ensure the questions table has been created
+		SqliteDataControllerQueries.createQuestionsTable(this.db, table);
 
 		// Create a new question to insert into the database (using reflection)
 		Class<?>[] argTypes = new Class<?>[] { Integer.class, String.class, Integer.class, Integer.class, Integer.class };
@@ -223,6 +230,45 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 	/***************************************************************************
 	 * Test Cases
 	 **************************************************************************/
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#getNonSystemTableNames(android.database.sqlite.SQLiteDatabase)}
+	 * .
+	 */
+	public void testGetAllTableNames () {
+
+		// Create a few test tables
+		SqliteDataControllerQueries.createQuestionsTable(this.db, "test1");
+		SqliteDataControllerQueries.createQuestionsTable(this.db, "test2");
+		SqliteDataControllerQueries.createQuestionsTable(this.db, "test3");
+
+		// Obtain the names of the database tables
+		List<String> tables = SqliteDataControllerQueries.getNonSystemTableNames(this.db);
+
+		// Ensure the names of the tables are correct
+		assertTrue("Correct number of tables:", tables.size() >= 3);
+		assertTrue("Table 1:", tables.contains("test1"));
+		assertTrue("Table 2:", tables.contains("test2"));
+		assertTrue("Table 3:", tables.contains("test3"));
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#isTableExists(android.database.sqlite.SQLiteDatabase)}
+	 * .
+	 */
+	public void testIsTableExists () {
+
+		// Ensure the table does not yet exist
+		assertFalse("Table not created:", SqliteDataControllerQueries.isTableExists(this.db, "test"));
+
+		// Create the table
+		SqliteDataControllerQueries.createQuestionsTable(this.db, "test");
+
+		// Ensure the table now exists
+		assertTrue("Table created:", SqliteDataControllerQueries.isTableExists(this.db, "test"));
+	}
 
 	/**
 	 * Test method for

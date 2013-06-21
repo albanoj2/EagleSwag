@@ -40,7 +40,7 @@ public class SqliteDataControllerConstants {
 	 * and the application is run, the database is automatically updated (the
 	 * SqliteDataControllerHelper runs its update logic to update the database).
 	 */
-	public static final int DATABASE_VERSION = 16;
+	public static final int DATABASE_VERSION = 17;
 
 	/**
 	 * A numerical reference for each of the columns in a questions table.
