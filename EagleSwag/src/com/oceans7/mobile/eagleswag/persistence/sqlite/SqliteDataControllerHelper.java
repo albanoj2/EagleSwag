@@ -32,7 +32,8 @@ import android.util.Log;
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.config.QuestionType;
 import com.oceans7.mobile.eagleswag.domain.questions.Question;
-import com.oceans7.mobile.eagleswag.persistence.DataFileParser;
+import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategies;
+import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategy;
 import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
@@ -109,7 +110,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 	public void onCreate (SQLiteDatabase db) {
 
 		// Obtain a data file parser and question types from configuration
-		DataFileParser parser = new DataFileParser();
+		DataFileParserStrategy parser = DataFileParserStrategies.getInstance().getDataFileParserStrategy(this.context);
 		Map<Class<? extends Question>, QuestionType> qtMap = ConfigurationHelper.getInstance().getAllQuestionTypes(this.context);
 
 		// A list to store the queues of questions (and counter of questions)
@@ -124,7 +125,7 @@ public class SqliteDataControllerHelper extends SQLiteOpenHelper {
 			// Loop through each of the question types in configuration
 
 			// Obtain questions from data file parser and add them to the list
-			Queue<? extends Question> questions = parser.getQuestions(key, context);
+			Queue<? extends Question> questions = parser.getQuestions(key);
 			questionQueueList.add(questions);
 			totalNumberOfQuestions += questions.size();
 

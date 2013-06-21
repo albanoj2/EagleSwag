@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <types>
     <type name="generalQuestions">
-        <key package="com.oceans7.mobile.eagleswag.domain">GeneralQuestion</key>
+        <key package="com.oceans7.mobile.eagleswag.domain.questions">GeneralQuestion</key>
         <data>
         	<asset path="data/">questions.json</asset>
         	<parserStrategy package="com.oceans7.mobile.eagleswag.persistence">
@@ -19,7 +19,7 @@
     </type>
     
     <type name="engineeringQuestions">
-        <key package="com.oceans7.mobile.eagleswag.domain">EngineeringQuestion</key>
+        <key package="com.oceans7.mobile.eagleswag.domain.questions">EngineeringQuestion</key>
         <data>
         	<asset path="data/">questions.json</asset>
         	<parserStrategy package="com.oceans7.mobile.eagleswag.persistence">
@@ -37,7 +37,7 @@
     </type>
     
     <type name="pilotQuestions">
-        <key package="com.oceans7.mobile.eagleswag.domain">PilotQuestion</key>
+        <key package="com.oceans7.mobile.eagleswag.domain.questions">PilotQuestion</key>
         <data>
         	<asset path="data/">questions.json</asset>
         	<parserStrategy package="com.oceans7.mobile.eagleswag.persistence">

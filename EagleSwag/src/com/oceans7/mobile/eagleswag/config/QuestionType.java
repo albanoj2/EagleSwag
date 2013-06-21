@@ -18,8 +18,6 @@
 
 package com.oceans7.mobile.eagleswag.config;
 
-import com.oceans7.mobile.eagleswag.config.components.DataConfiguration;
-import com.oceans7.mobile.eagleswag.config.components.JsonConfiguration;
 import com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration;
 
 /**
@@ -41,21 +39,6 @@ public class QuestionType {
 	 * The name of the question type.
 	 */
 	private String name;
-
-	/**
-	 * The data configuration for the question type. This configuration contains
-	 * the information pertaining to the data file for a question type.
-	 */
-	private DataConfiguration dataConfiguration;
-
-	/**
-	 * The JSON persistence configuration. This configuration contains the
-	 * information pertaining to the JSON data file parser.
-	 * 
-	 * @note This attribute may be null if no JSON configuration data is
-	 *       specified within the question type configuration file.
-	 */
-	private JsonConfiguration jsonConfiguration;
 
 	/**
 	 * The SQLite persistence configuration. This configuration contains the
@@ -104,38 +87,6 @@ public class QuestionType {
 	 */
 	public void setName (String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return
-	 *         The dataConfiguration.
-	 */
-	public DataConfiguration getDataConfiguration () {
-		return dataConfiguration;
-	}
-
-	/**
-	 * @param dataConfiguration
-	 *            The dataConfiguration to set.
-	 */
-	public void setDataConfiguration (DataConfiguration dataConfiguration) {
-		this.dataConfiguration = dataConfiguration;
-	}
-
-	/**
-	 * @return
-	 *         The jsonConfiguration.
-	 */
-	public JsonConfiguration getJsonConfiguration () {
-		return jsonConfiguration;
-	}
-
-	/**
-	 * @param jsonConfiguration
-	 *            The jsonConfiguration to set.
-	 */
-	public void setJsonConfiguration (JsonConfiguration jsonConfiguration) {
-		this.jsonConfiguration = jsonConfiguration;
 	}
 
 	/**

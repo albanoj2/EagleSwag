@@ -28,7 +28,6 @@ import com.oceans7.mobile.eagleswag.config.QuestionType;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.Question;
-import com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy;
 
 /**
  * Helper methods for configuration test cases.
@@ -52,28 +51,16 @@ public class HelperMethods extends AndroidTestCase {
 
 		// Obtain the data from the question type
 		QuestionType generalType = map.get(GeneralQuestion.class);
-		String gAsset = generalType.getDataConfiguration().getAsset();
-		String gParserStrategy = generalType.getDataConfiguration().getParserStrategy().getName();
-		String gJsonId = generalType.getJsonConfiguration().getId();
 		String gSqliteTable = generalType.getSqliteConfiguration().getTable();
 
 		// Ensure the general data parsed from the JSON file is accurate
-		assertEquals("General => data asset:", "data/questions.json", gAsset);
-		assertEquals("General => parser strategy:", JsonDataFileParserStrategy.class.getName(), gParserStrategy);
-		assertEquals("General => JSON ID:", "generalQuestions", gJsonId);
 		assertEquals("General => table:", "GeneralQuestions", gSqliteTable);
 
 		// Obtain the data from the question type
 		QuestionType engineeringType = map.get(EngineeringQuestion.class);
-		String eAsset = engineeringType.getDataConfiguration().getAsset();
-		String eParserStrategy = engineeringType.getDataConfiguration().getParserStrategy().getName();
-		String eJsonId = engineeringType.getJsonConfiguration().getId();
 		String eSqliteTable = engineeringType.getSqliteConfiguration().getTable();
 
 		// Ensure the engineering data parsed from the JSON file is accurate
-		assertEquals("Engineering => data asset:", "data/questions.json", eAsset);
-		assertEquals("Engineering => parser strategy:", JsonDataFileParserStrategy.class.getName(), eParserStrategy);
-		assertEquals("Engineering => JSON ID:", "engineeringQuestions", eJsonId);
 		assertEquals("Engineering => table:", "EngineeringQuestions", eSqliteTable);
 	}
 }

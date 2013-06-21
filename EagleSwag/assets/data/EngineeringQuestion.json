@@ -1,0 +1,40 @@
+{
+	"EngineeringQuestion": [
+        {
+          "text": "Do you know what Mordor is?",
+          "yesValue": "0",
+          "noValue": "5",
+          "usedCount": "0"
+        },
+        {
+          "text": "Do you drink just because you major in engineering?",
+          "yesValue": "8",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Can you read this \"01001000\"?",
+          "yesValue": "0",
+          "noValue": "9",
+          "usedCount": "0"
+        },
+        {
+          "text": "Are you an engineer?",
+          "yesValue": "0",
+          "noValue": "10",
+          "usedCount": "0"
+        },
+        {
+          "text": "Has duct tape been the most useful tool thus far in your life?",
+          "yesValue": "6",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Can you fix anything with duct tape and zip ties?",
+          "yesValue": "0",
+          "noValue": "5",
+          "usedCount": "0"
+        }
+      ]
+}

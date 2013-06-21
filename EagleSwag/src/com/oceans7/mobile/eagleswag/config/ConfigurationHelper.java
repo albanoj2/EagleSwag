@@ -22,13 +22,9 @@ import java.util.Map;
 
 import android.content.Context;
 
-import com.oceans7.mobile.eagleswag.config.components.DataConfiguration;
-import com.oceans7.mobile.eagleswag.config.components.JsonConfiguration;
-import com.oceans7.mobile.eagleswag.config.components.NoJsonConfigurationException;
 import com.oceans7.mobile.eagleswag.config.components.NoSqliteConfigurationException;
 import com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobile.eagleswag.domain.questions.Question;
-import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategy;
 
 /**
  * A helper class that contains methods for obtaining specific configuration
@@ -114,91 +110,6 @@ public class ConfigurationHelper {
 	}
 
 	/**
-	 * Obtains the data asset location for a question type in the configuration
-	 * file. The data asset is a combination of the asset path and file name in
-	 * the configuration file for the question type requested.
-	 * 
-	 * @param key
-	 *            The question class whose data asset location is requested. For
-	 *            example, if the data asset location of the general questions
-	 *            is requested, the key would be GeneralQuestion.class. This key
-	 *            is specified in the configuration file under the 'key'
-	 *            element.
-	 * @param context
-	 *            The context used to access the configuration file.
-	 * @return
-	 *         The location of the data asset for the question class specified.
-	 * @throws NoSuchQuestionTypeException
-	 *             No question type with the key provided was found in the
-	 *             configuration file.
-	 */
-	public <T extends Question> String getDataAsset (Class<T> key, Context context) throws NoSuchQuestionTypeException {
-
-		// Obtain the question type for the key from the configuration file
-		QuestionType qt = this.configurationController.getQuestionTypes(context).get(key);
-
-		if (qt == null) {
-			// No such question type exists in the configuration file
-			throw new NoSuchQuestionTypeException(key);
-		}
-
-		// Return the data asset of the question type
-		DataConfiguration dataConfiguration = qt.getDataConfiguration();
-
-		if (dataConfiguration != null) {
-			// The asset location is set
-			return dataConfiguration.getAsset();
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Obtains the data parsing strategy for a question type in the
-	 * configuration file. The parser strategy is returned as a class object of
-	 * the parser, as a subtype of the DataFileParserStrategy class. For
-	 * example, if the parser is specified as 'XYZParserStrategy', the class
-	 * returned by this method is 'Class<XYZParserStrategy extends
-	 * DataFileParserStrategy>'.
-	 * 
-	 * @param key
-	 *            The question class whose data asset location is requested. For
-	 *            example, if the data asset location of the general questions
-	 *            is requested, the key would be GeneralQuestion.class. This key
-	 *            is specified in the configuration file under the 'key'
-	 *            element.
-	 * @param context
-	 *            The context used to access the configuration file.
-	 * @return
-	 * @throws NoSuchQuestionTypeException
-	 *             No question type with the key provided was found in the
-	 *             configuration file.
-	 */
-	public <T extends Question> Class<? extends DataFileParserStrategy> getParserStrategy (Class<T> key, Context context) throws NoSuchQuestionTypeException {
-
-		// Obtain the question type for the key from the configuration file
-		QuestionType qt = this.configurationController.getQuestionTypes(context).get(key);
-
-		if (qt == null) {
-			// No such question type exists in the configuration file
-			throw new NoSuchQuestionTypeException(key);
-		}
-
-		// Return the parser strategy of the question type
-		DataConfiguration dataConfiguration = qt.getDataConfiguration();
-
-		if (dataConfiguration != null) {
-			// The parser strategy for the type is specified
-			return dataConfiguration.getParserStrategy();
-		}
-		else {
-			return null;
-		}
-
-	}
-
-	/**
 	 * Obtains the SQLite table name for a question type in the configuration
 	 * file (maybe be null).
 	 * 
@@ -245,57 +156,6 @@ public class ConfigurationHelper {
 		else {
 			// No SQLite table specified in the configuration file
 			throw new NoSqliteConfigurationException("No database table name specified");
-		}
-
-	}
-
-	/**
-	 * Obtains the JSON ID tag for a question type in the configuration file
-	 * (may be null).
-	 * 
-	 * @note The JSON ID may be null if it is not specified for a question type
-	 *       in the configuration file. This may occur if another data file
-	 *       controller is used (other than JSON).
-	 * 
-	 * @param key
-	 *            The question class whose data asset location is requested. For
-	 *            example, if the data asset location of the general questions
-	 *            is requested, the key would be GeneralQuestion.class. This key
-	 *            is specified in the configuration file under the 'key'
-	 *            element.
-	 * @param context
-	 *            The context used to access the configuration file.
-	 * @return
-	 *         The name of the JSON ID tag in the JSON data file that
-	 *         corresponds to the key.
-	 * 
-	 * @throws NoSuchQuestionTypeException
-	 *             No question type with the key provided was found in the
-	 *             configuration file.
-	 * @throws NoJsonConfigurationException
-	 *             No JSON ID configuration data set for the question type
-	 *             supplied.
-	 */
-	public <T extends Question> String getJsonId (Class<T> key, Context context) throws NoSuchQuestionTypeException {
-
-		// Obtain the question type for the key from the configuration file
-		QuestionType qt = this.configurationController.getQuestionTypes(context).get(key);
-
-		if (qt == null) {
-			// No such question type exists in the configuration file
-			throw new NoSuchQuestionTypeException(key);
-		}
-
-		// Return the JSON element ID of the question type
-		JsonConfiguration jsonConfiguration = qt.getJsonConfiguration();
-
-		if (jsonConfiguration != null) {
-			// The ID for the JSON configuration is set
-			return jsonConfiguration.getId();
-		}
-		else {
-			// No JSON table specified in the configuration file
-			throw new NoJsonConfigurationException("No JSON ID specified");
 		}
 
 	}

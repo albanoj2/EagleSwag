@@ -36,11 +36,8 @@ import org.xml.sax.SAXException;
 import android.content.Context;
 import android.util.Log;
 
-import com.oceans7.mobile.eagleswag.config.components.DataConfiguration;
-import com.oceans7.mobile.eagleswag.config.components.JsonConfiguration;
 import com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration;
 import com.oceans7.mobile.eagleswag.domain.questions.Question;
-import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategy;
 
 /**
  * A parser for the question type configuration data. This parser acts as the
@@ -117,10 +114,7 @@ public class ConfigurationParser implements ConfigurationController {
 
 					// Obtain the element objects for each of the sub-elements
 					Element keyElement = (Element) typeElement.getElementsByTagName("key").item(0);
-					Element dataElement = (Element) typeElement.getElementsByTagName("data").item(0);
 					Element persistenceElement = (Element) typeElement.getElementsByTagName("persistence").item(0);
-					Element assetElement = (Element) dataElement.getElementsByTagName("asset").item(0);
-					Element parserStratElement = (Element) dataElement.getElementsByTagName("parserStrategy").item(0);
 					Element jsonElement = (Element) persistenceElement.getElementsByTagName("json").item(0);
 					Element sqliteElement = (Element) persistenceElement.getElementsByTagName("sqlite").item(0);
 
@@ -134,19 +128,6 @@ public class ConfigurationParser implements ConfigurationController {
 					String qualifiedClassName = packageName + "." + className;
 					Class<? extends Question> clazz = Class.forName(qualifiedClassName).asSubclass(Question.class);
 
-					// Extract the data asset location
-					String asset = assetElement.getAttribute("path") + assetElement.getTextContent();
-
-					// Create the parser strategy class and set the attribute
-					String parserStratPackage = parserStratElement.getAttribute("package");
-					String parserStratClass = parserStratElement.getTextContent().trim();
-					String parserStratQualifiedClass = parserStratPackage + "." + parserStratClass;
-					Class<? extends DataFileParserStrategy> parserClass = Class.forName(parserStratQualifiedClass).asSubclass(DataFileParserStrategy.class);
-
-					// Build data configuration and add it to the question type
-					DataConfiguration dataConfiguration = new DataConfiguration(asset, parserClass);
-					questionType.setDataConfiguration(dataConfiguration);
-
 					if (jsonElement != null) {
 						// The JSON element has been specified
 
@@ -155,9 +136,6 @@ public class ConfigurationParser implements ConfigurationController {
 
 						// The data within the JSON element
 						String jsonId = jsonIdElement.getTextContent().trim();
-
-						// Set the JSON data for the question type
-						questionType.setJsonConfiguration(new JsonConfiguration(jsonId));
 
 						// The JSON data was added
 						Log.i(this.getClass().getName(), "The JSON data was found for '" + name + "': id: <" + jsonId + ">");

@@ -1,0 +1,148 @@
+{
+	"PilotQuestion": [
+        {
+          "text": "Is you flight instructor female?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Are you no showing your next flight simply because you do not give a shit?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Is your personal policy \"8 hour bottle to... screw it\"?",
+          "yesValue": "4",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Do you want to be a part 141 instructor?",
+          "yesValue": "0",
+          "noValue": "6",
+          "usedCount": "0"
+        },
+        {
+          "text": "When you fly, do you only wear a headset and socks?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "I use my checklist",
+          "yesValue": "0",
+          "noValue": "8",
+          "usedCount": "0"
+        },
+        {
+          "text": "I failed a check ride... because my check pilot is a douche!",
+          "yesValue": "8",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "In your last flight, did takeoffs not equal landings?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Are you supposed to be preflighting right now?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "My instructor and I love this flight school?",
+          "yesValue": "0",
+          "noValue": "8",
+          "usedCount": "0"
+        },
+        {
+          "text": "Is your last name Sullenberg?",
+          "yesValue": "8",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Do you intentionally avoid direct eye contact with your instructor just to piss him off?",
+          "yesValue": "7",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "I am not paying for my last flight!",
+          "yesValue": "4",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Have you ever responded \"roger\" to a text that required a one word answer?",
+          "yesValue": "7",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Do you know what 91.61 is?",
+          "yesValue": "0",
+          "noValue": "9",
+          "usedCount": "0"
+        },
+        {
+          "text": "When your instructor says \"take this book and read chapter __ over the weekend\", do you commit the following: Take the book, Bring it home, Never open it, Get wasted, Lose the book, No show your next activity, Then switch instructors?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Have you ever Jettisoned your instructors flight bag?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Do you use your non-existent pilot stat to get laid?",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Airbus over Boeing?",
+          "yesValue": "0",
+          "noValue": "9",
+          "usedCount": "0"
+        },
+        {
+          "text": "LOOK THERES A F22 OVERHEAD!...                   ...Did you look up?",
+          "yesValue": "0",
+          "noValue": "9",
+          "usedCount": "0"
+        },
+        {
+          "text": "Have you ever woken up at 3:30 just to plan a cross country only for your flight instructor to cancel?",
+          "yesValue": "6",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Is your self worth dependent upon your pilot rating?",
+          "yesValue": "0",
+          "noValue": "5",
+          "usedCount": "0"
+        },
+        {
+          "text": "Are you a real pilot?",
+          "yesValue": "8",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Is flying learning how to throw yourself at the ground and miss?",
+          "yesValue": "8",
+          "noValue": "0",
+          "usedCount": "0"
+        }
+      ]
+}

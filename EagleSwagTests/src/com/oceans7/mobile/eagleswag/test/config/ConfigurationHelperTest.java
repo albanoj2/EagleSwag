@@ -31,7 +31,6 @@ import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.Question;
-import com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy;
 
 /**
  * Test cases for
@@ -133,36 +132,6 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.config.ConfigurationHelper#getDataAsset(java.lang.Class, android.content.Context)}
-	 * .
-	 */
-	public void testGetDataAsset () {
-
-		for (Class<? extends Question> clazz : this.questionClasses) {
-			// Ensure the data asset is correctly set for the question types
-			assertEquals(clazz.getCanonicalName() + " data asset:",
-				"data/questions.json",
-				ConfigurationHelper.getInstance().getDataAsset(clazz, this.context));
-		}
-	}
-
-	/**
-	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.config.ConfigurationHelper#getParserStrategy(java.lang.Class, android.content.Context)}
-	 * .
-	 */
-	public void testGetParserStrategy () {
-
-		for (Class<? extends Question> clazz : this.questionClasses) {
-			// Ensure the parser strategy is correct for the question types
-			assertEquals(clazz.getCanonicalName() + " parser strategy:",
-				JsonDataFileParserStrategy.class.getName(),
-				ConfigurationHelper.getInstance().getParserStrategy(clazz, this.context).getName());
-		}
-	}
-
-	/**
-	 * Test method for
 	 * {@link com.oceans7.mobile.eagleswag.config.ConfigurationHelper#getTableName(java.lang.Class, android.content.Context)}
 	 * .
 	 */
@@ -176,26 +145,6 @@ public class ConfigurationHelperTest extends InstrumentationTestCase {
 			assertEquals(clazz.getCanonicalName() + " SQLite table name:",
 				this.tableNames.get(i),
 				ConfigurationHelper.getInstance().getTableName(clazz, this.context));
-
-			i++;
-		}
-	}
-
-	/**
-	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.config.ConfigurationHelper#getJsonId(java.lang.Class, android.content.Context)}
-	 * .
-	 */
-	public void testGetJsonId () {
-
-		// Index of current iteration
-		int i = 0;
-
-		for (Class<? extends Question> clazz : this.questionClasses) {
-			// Ensure the JSON ID is correct for the question types
-			assertEquals(clazz.getCanonicalName() + " JSON ID:",
-				this.jsonIds.get(i),
-				ConfigurationHelper.getInstance().getJsonId(clazz, this.context));
 
 			i++;
 		}

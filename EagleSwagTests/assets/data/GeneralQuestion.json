@@ -1,0 +1,16 @@
+{
+	"GeneralQuestion": [
+        {
+          "text": "General question 1",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "General question 2",
+          "yesValue": "5",
+          "noValue": "5",
+          "usedCount": "2"
+        }
+      ]
+}

@@ -11,7 +11,7 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.oceans7.mobile.eagleswag.persistence.DataControllersect="EagleSwag" 
+  <class id="2" language="java" name="com.oceans7.mobile.eagleswag.persistence.DataControllers" project="EagleSwag" 
     file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/DataControllers.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="413" y="166"/>    
@@ -31,8 +31,9 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </interface>  
-  <class id="4" language="java" name="com.oceans7.mobile.eagleswag.persistence.JsonDataFileParserStrategy" 
-    project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/JsonDataFileParserStrategy.java" 
+  <class id="4" language="java" com.oceans7.mobile.eagleswag.persistence.parsers.JsonDataFileParserStrategyParserStrategy" 
+    project="EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/persistence/parsers/JsonDataFileParserStrategy.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="145" y="479"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 

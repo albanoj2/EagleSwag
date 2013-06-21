@@ -20,8 +20,6 @@ package com.oceans7.mobile.eagleswag.persistence;
 
 import java.util.Queue;
 
-import android.content.Context;
-
 import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
@@ -49,11 +47,9 @@ public interface DataFileParserStrategy {
 	 *            the key, the general questions from the data file will be
 	 *            returned, and the queue returned will contain elements of type
 	 *            GeneralQuestion.
-	 * @param context
-	 *            The context used to access the data file.
 	 * @return
 	 *         A queue containing questions of the type specified by the key
 	 *         provided.
 	 */
-	public <T extends Question> Queue<T> getQuestions (Class<T> key, Context context);
+	public <T extends Question> Queue<T> getQuestions (Class<T> key);
 }

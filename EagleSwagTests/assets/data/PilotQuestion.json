@@ -1,0 +1,16 @@
+{
+	"PilotQuestion": [
+        {
+          "text": "Pilot question 1",
+          "yesValue": "10",
+          "noValue": "0",
+          "usedCount": "0"
+        },
+        {
+          "text": "Pilot question 2",
+          "yesValue": "10",
+          "noValue": "2",
+          "usedCount": "10"
+        }
+      ]
+}
