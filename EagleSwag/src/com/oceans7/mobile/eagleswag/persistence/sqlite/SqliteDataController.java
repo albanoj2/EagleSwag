@@ -35,7 +35,6 @@ import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategies;
 import com.oceans7.mobile.eagleswag.persistence.DataFileParserStrategy;
-import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
  * A data controller that implements data storage and retrieval using a SQLite
@@ -72,17 +71,6 @@ public class SqliteDataController implements DataController {
 	private SQLiteDatabase database;
 
 	/**
-	 * A map of question classes to the database table names used. This is used
-	 * to map a question type to a table in the database, which allows for the
-	 * retrieval and storage of questions.
-	 * 
-	 * For example, if "GeneralQuestion.class" is used as the key in this map,
-	 * the SQLite database table that holds the general questions will be
-	 * returned.
-	 */
-	//private Map<Class<? extends Question>, String> classToTableMap;
-
-	/**
 	 * Internal cache to speed up the retrieval of score data from the SQLite
 	 * database.
 	 */
@@ -92,6 +80,11 @@ public class SqliteDataController implements DataController {
 	 * The list of observers that are notified the update method is called.
 	 */
 	private ArrayList<LoadingListener> observers;
+
+	/**
+	 * The number of questions loaded before the loading listeners are notified.
+	 */
+	private static final int LOADING_THRESHOLD = 5;
 
 	/***************************************************************************
 	 * Constructors
@@ -158,6 +151,10 @@ public class SqliteDataController implements DataController {
 
 		// Parse the data file and retrieve the parsed questions
 		Queue<? extends Question> questions = parser.getQuestions(key);
+		
+		// Variables to store the number of questions (total and loaded)
+		int total = questions.size();
+		int loaded = 0;
 
 		// Generate the table name from the key
 		String table = generateTableName(key);
@@ -172,10 +169,16 @@ public class SqliteDataController implements DataController {
 
 			for (Question question : questions) {
 				// Insert each question into the database
-				
+
 				// Insert the question into the database
 				SqliteDataControllerQueries.insertIntoQuestionsTable(this.database, table, question);
 				Log.i(this.getClass().getName(), "Inserted " + question + " into '" + table + "'");
+				loaded++;
+				
+				if (loaded % LOADING_THRESHOLD == 0 || loaded == total) {
+					// If the loading threshold is met, notifiy listeners
+					this.updateLoadingListeners(total, loaded);
+				}
 			}
 
 			// Mark SQL insertion transaction as successfully completed
@@ -211,10 +214,10 @@ public class SqliteDataController implements DataController {
 
 		if (number > 0) {
 			// Continue only if there is data to retrieve from the database
-			
+
 			// Generate the table name from the key
 			String table = generateTableName(key);
-			
+
 			if (!SqliteDataControllerQueries.isTableExists(this.database, table)) {
 				// If the questions table has not yet been created, create it
 				this.loadQuestions(key);
@@ -343,7 +346,7 @@ public class SqliteDataController implements DataController {
 
 		// Convert the key into the table name where the data will be saved
 		String table = generateTableName(key);
-		
+
 		if (!SqliteDataControllerQueries.isTableExists(this.database, table)) {
 			// If the questions table has not yet been created, create it
 			this.loadQuestions(key);
@@ -404,7 +407,7 @@ public class SqliteDataController implements DataController {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#addLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)
+	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#addLoadingListener(com.oceans7.mobile.eagleswag.persistence.sqlite.LoadingListener)
 	 */
 	@Override
 	public void addLoadingListener (LoadingListener listener) {
@@ -426,7 +429,7 @@ public class SqliteDataController implements DataController {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#removeLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)
+	 * @see com.oceans7.mobile.eagleswag.persistence.DataController#removeLoadingListener(com.oceans7.mobile.eagleswag.persistence.sqlite.LoadingListener)
 	 */
 	@Override
 	public void removeLoadingListener (LoadingListener listener) {

@@ -22,7 +22,7 @@ import java.util.Queue;
 
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
-import com.oceans7.mobile.eagleswag.util.LoadingListener;
+import com.oceans7.mobile.eagleswag.persistence.sqlite.LoadingListener;
 
 /**
  * The manager of persistent storage. The data controller specifies the

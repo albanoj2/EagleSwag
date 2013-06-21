@@ -23,7 +23,7 @@ import android.content.Context;
 import com.oceans7.mobile.eagleswag.persistence.parsers.JsonDataFileParserStrategy;
 
 /**
- * TODO Class documentation
+ * Factory for the creation of the data file parser strategies.
  * 
  * @author Justin Albano
  */

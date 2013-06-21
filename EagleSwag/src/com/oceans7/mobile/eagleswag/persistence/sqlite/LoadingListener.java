@@ -16,7 +16,7 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.util;
+package com.oceans7.mobile.eagleswag.persistence.sqlite;
 
 /**
  * An interface for an observer of a load event while the SQLite database helper

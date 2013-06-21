@@ -33,9 +33,9 @@ import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
+import com.oceans7.mobile.eagleswag.persistence.sqlite.LoadingListener;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
-import com.oceans7.mobile.eagleswag.util.LoadingListener;
 
 /**
  * Test cases for
@@ -86,6 +86,15 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 		// Create the data controller
 		this.sqliteDataController = DataControllers.getInstance().getSqliteDataController(context);
+
+		// Set a loading listener for debugging: this is just to gain an
+		// intuitive feeling that the listener is working
+		this.sqliteDataController.addLoadingListener(new LoadingListener() {
+			@Override
+			public void update (int total, int current) {
+				Log.d(this.getClass().getName(), "Total: (" + total + "), current: (" + current + ")");
+			}
+		});
 	}
 
 	/**
@@ -146,8 +155,8 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 	public <T extends Question> void helperObtainMoreQuestionsThenAvailable (Class<T> key) throws Exception {
 
 		// Obtain the table name for the key
-		String table = this.sqliteDataController.generateTableName(key);
-		
+		String table = SqliteDataController.generateTableName(key);
+
 		// Load the questions into the database
 		this.sqliteDataController.loadQuestions(key);
 
@@ -254,10 +263,10 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 		// Load the general questions
 		this.sqliteDataController.loadQuestions(GeneralQuestion.class);
-		
+
 		// Retrieve the questions that were loaded
 		Queue<GeneralQuestion> questions = sqliteDataController.getQuestions(GeneralQuestion.class, 2);
-		
+
 		// Ensure the questions were loaded
 		assertNotNull("Queue was created:", questions);
 		assertFalse("Queue not empty:", questions.size() == 0);
@@ -346,7 +355,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#addLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#addLoadingListener(com.oceans7.mobile.eagleswag.persistence.sqlite.LoadingListener)}
 	 * .
 	 */
 	public void testAddLoadingListener () {
@@ -383,7 +392,7 @@ public class SqliteDataControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#removeLoadingListener(com.oceans7.mobile.eagleswag.util.LoadingListener)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController#removeLoadingListener(com.oceans7.mobile.eagleswag.persistence.sqlite.LoadingListener)}
 	 * .
 	 */
 	public void testRemoveLoadingListener () {
