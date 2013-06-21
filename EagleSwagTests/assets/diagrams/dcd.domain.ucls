@@ -49,9 +49,8 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.oceans7.mobile.eagleswag.domain.questions.Question" project="EagleSwag" 
-    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/domain/questions/Question.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="com.oceans7.mobile.eagleswag.domain.Question"EagleSwag" 
+    file="/EagleSwag/src/com/oceans7/mobile/eagleswag/domain/Question.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="519" y="585"/>    
     <display autosize="true" stereotype="false" package="false" initial-value="false" signature="false" accessors="true" 
       visibility="true">      
@@ -117,7 +116,7 @@
       <operations public="true" package="true" protected="true" private="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java"com.oceans7.mobile.eagleswag.domain.roundtype.RoundTypeHelperelper" 
+  <class id="13" language="java" name="com.oceans7.mobile.eagleswag.domain.roundtype.RoundTypeHelper" 
     project="EagleSwag" file="/EagleSwag/src/com/oceans7/mobile/eagleswag/domain/roundtype/RoundTypeHelper.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="793" y="586"/>    

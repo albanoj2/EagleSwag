@@ -27,8 +27,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * A catalog of queries for the SQLite database. This catalog contains static

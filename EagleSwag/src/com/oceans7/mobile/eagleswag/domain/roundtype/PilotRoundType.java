@@ -20,8 +20,8 @@ package com.oceans7.mobile.eagleswag.domain.roundtype;
 
 import java.util.List;
 
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 import android.content.Context;
 

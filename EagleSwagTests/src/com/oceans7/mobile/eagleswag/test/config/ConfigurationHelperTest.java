@@ -27,10 +27,10 @@ import android.test.RenamingDelegatingContext;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
 import com.oceans7.mobile.eagleswag.config.QuestionType;
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * Test cases for

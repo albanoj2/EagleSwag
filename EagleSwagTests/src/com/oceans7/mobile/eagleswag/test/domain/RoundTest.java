@@ -23,9 +23,9 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Round;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * Test cases for {@link com.oceans7.mobile.eagleswag.domain.Round}.
@@ -89,7 +89,7 @@ public class RoundTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.Round#submitYesQuestion(com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.domain.Round#submitYesQuestion(com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 * <p/>
 	 * Ensures that a question submitted as having been answered 'yes' is
@@ -113,7 +113,7 @@ public class RoundTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.Round#submitNoQuestion(com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.domain.Round#submitNoQuestion(com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 * <p/>
 	 * Ensures that a question submitted as having been answered 'no' is

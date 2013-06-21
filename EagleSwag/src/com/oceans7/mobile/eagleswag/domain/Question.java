@@ -16,7 +16,7 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain.questions;
+package com.oceans7.mobile.eagleswag.domain;
 
 import android.content.Context;
 
@@ -171,7 +171,7 @@ public abstract class Question {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * @see com.oceans7.mobile.eagleswag.domain.questions.Question#incrementUsedCount()
+	 * @see com.oceans7.mobile.eagleswag.domain.Question#incrementUsedCount()
 	 */
 	@Override
 	public String toString () {

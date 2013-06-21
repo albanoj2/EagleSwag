@@ -28,11 +28,11 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerHelper;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries;
@@ -256,7 +256,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testInsertIntoGeneralQuestionsTable () throws Exception {
@@ -265,7 +265,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.questions.Question)
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)
 	 * .
 	 */
 	public void testInsertIntoEngineeringQuestionsTable () throws Exception {
@@ -274,7 +274,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#insertIntoQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testInsertIntoPilotQuestionsTable () throws Exception {
@@ -283,7 +283,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testUpdateGeneralQuestion () throws Exception {
@@ -292,7 +292,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testUpdateEngineeringQuestion () throws Exception {
@@ -301,7 +301,7 @@ public class SqliteDataControllerQueriesTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.questions.Question)}
+	 * {@link com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerQueries#updateQuestionsTable(android.database.sqlite.SQLiteDatabase, java.lang.String, com.oceans7.mobile.eagleswag.domain.Question)}
 	 * .
 	 */
 	public void testUpdatePilotQuestion () throws Exception {

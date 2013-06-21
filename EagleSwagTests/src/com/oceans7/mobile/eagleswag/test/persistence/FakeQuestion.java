@@ -18,7 +18,7 @@
 
 package com.oceans7.mobile.eagleswag.test.persistence;
 
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.Question;
 
 /**
  * A fake question to test the JSON data file parser.

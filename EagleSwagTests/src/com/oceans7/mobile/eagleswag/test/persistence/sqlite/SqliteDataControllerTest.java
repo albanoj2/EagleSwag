@@ -28,11 +28,11 @@ import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationHelper;
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Score;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataController;
 import com.oceans7.mobile.eagleswag.persistence.sqlite.SqliteDataControllerConstants;

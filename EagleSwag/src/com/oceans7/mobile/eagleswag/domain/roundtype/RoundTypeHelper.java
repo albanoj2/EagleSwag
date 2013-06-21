@@ -30,8 +30,8 @@ import java.util.Queue;
 import android.content.Context;
 import android.util.Log;
 
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 

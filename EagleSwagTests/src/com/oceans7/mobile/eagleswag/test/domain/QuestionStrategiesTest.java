@@ -26,10 +26,10 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 import android.util.Log;
 
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.PilotQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
 import com.oceans7.mobile.eagleswag.domain.roundtype.PilotRoundType;
 

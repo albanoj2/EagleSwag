@@ -18,7 +18,7 @@
 
 package com.oceans7.mobile.eagleswag.config;
 
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.Question;
 
 /**
  * Runtime exception thrown when a question type is requested, but the key

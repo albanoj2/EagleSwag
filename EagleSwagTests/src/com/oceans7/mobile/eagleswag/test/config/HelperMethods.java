@@ -25,9 +25,9 @@ import android.test.AndroidTestCase;
 
 import com.oceans7.mobile.eagleswag.config.ConfigurationController;
 import com.oceans7.mobile.eagleswag.config.QuestionType;
+import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.questions.EngineeringQuestion;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
 
 /**
  * Helper methods for configuration test cases.

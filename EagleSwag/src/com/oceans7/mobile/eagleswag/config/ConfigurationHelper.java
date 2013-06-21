@@ -24,7 +24,7 @@ import android.content.Context;
 
 import com.oceans7.mobile.eagleswag.config.components.NoSqliteConfigurationException;
 import com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.Question;
 
 /**
  * A helper class that contains methods for obtaining specific configuration

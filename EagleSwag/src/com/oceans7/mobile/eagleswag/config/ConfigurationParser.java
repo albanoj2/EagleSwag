@@ -37,7 +37,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.oceans7.mobile.eagleswag.config.components.SqliteConfiguration;
-import com.oceans7.mobile.eagleswag.domain.questions.Question;
+import com.oceans7.mobile.eagleswag.domain.Question;
 
 /**
  * A parser for the question type configuration data. This parser acts as the

@@ -18,6 +18,8 @@
 
 package com.oceans7.mobile.eagleswag.domain.questions;
 
+import com.oceans7.mobile.eagleswag.domain.Question;
+
 /**
  * The concrete implementation of an engineering question.
  * 
