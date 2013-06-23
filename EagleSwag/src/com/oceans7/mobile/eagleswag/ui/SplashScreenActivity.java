@@ -117,7 +117,7 @@ public class SplashScreenActivity extends Activity {
 
 		// Switch to the questions activity
 		Intent intent = new Intent(v.getContext(), QuestionsActivity.class);
-		intent.putExtra("QuestionType", type);
+		intent.putExtra("QuestionType", type.ordinal());
 		startActivity(intent);
 	}
 

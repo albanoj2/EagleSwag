@@ -257,6 +257,7 @@ public class QuestionsActivity<T> extends Activity {
 
 			// Obtain the type of questions to load
 			Usertype type = Usertype.values()[getIntent().getExtras().getInt("QuestionType")];
+			Log.i(this.getClass().getName(), "Type: " + type);
 
 			switch (type) {
 			// Load the correct questions based on the type supplied
