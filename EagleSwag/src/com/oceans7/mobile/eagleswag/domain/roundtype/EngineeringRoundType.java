@@ -38,7 +38,7 @@ import android.content.Context;
  * 
  * @author Justin Albano
  */
-public class EngineeringRoundType implements RoundType {
+public class EngineeringRoundType extends RoundType {
 
 	/***************************************************************************
 	 * Methods
@@ -55,15 +55,5 @@ public class EngineeringRoundType implements RoundType {
 		// Create a delegate for obtaining questions from persistent storage
 		RoundTypeHelper delegate = new RoundTypeHelper();
 		return delegate.getQuestions(context, EngineeringQuestion.class, "engineer");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @see com.oceans7.mobile.eagleswag.domain.RoundType#getName()
-	 */
-	@Override
-	public String getName () {
-		return "engineering";
 	}
 }

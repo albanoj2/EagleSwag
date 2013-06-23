@@ -57,16 +57,22 @@ public class Round {
 	 * The score of the round.
 	 */
 	private Score score;
+	
+	/**
+	 * The type of round.
+	 */
+	private RoundType type;
 
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
 
-	public Round () {
+	public Round (RoundType type) {
 
 		// Initialize the data structures to store the answered questions
 		this.questionsAnsweredYes = new LinkedList<Question>();
 		this.questionsAnsweredNo = new LinkedList<Question>();
+		this.type = type;
 	}
 
 	/***************************************************************************
@@ -167,7 +173,7 @@ public class Round {
 			Log.i(this.getClass().getName(), "Score for round: " + score);
 
 			// Set the score for the round
-			this.score = new Score(score);
+			this.score = new Score(this.type, score);
 
 			return score;
 		}
@@ -181,14 +187,10 @@ public class Round {
 	 * Save the questions for the round. Before saving each question, the used
 	 * count for each question is incremented to reflect its use.
 	 * 
-	 * @param strategy
-	 *            The question strategy used to save the round. If the strategy
-	 *            is null, the score for the round will not be saved.
-	 * 
 	 * @param context
 	 *            The context used to save the questions.
 	 */
-	public void save (RoundType strategy, Context context) {
+	public void save (Context context) {
 
 		for (Question question : this.questionsAnsweredYes) {
 			// Iterate through the 'yes' questions and save each
@@ -212,9 +214,9 @@ public class Round {
 			Log.i(this.getClass().getName(), "Incremented used count and saved question: " + question);
 		}
 
-		if (strategy != null && this.score != null) {
+		if (this.score != null) {
 			// Save score object if a strategy is provided and the score is set
-			this.score.save(strategy, context);
+			this.score.save(context);
 		}
 	}
 

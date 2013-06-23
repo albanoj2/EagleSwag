@@ -26,6 +26,7 @@ import android.util.Log;
 import com.oceans7.mobile.eagleswag.domain.Question;
 import com.oceans7.mobile.eagleswag.domain.Round;
 import com.oceans7.mobile.eagleswag.domain.questions.GeneralQuestion;
+import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
 
 /**
  * Test cases for {@link com.oceans7.mobile.eagleswag.domain.Round}.
@@ -66,11 +67,10 @@ public class RoundTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Create the round object
-		this.round = new Round();
+		this.round = new Round(null);
 
 		// Set the context of the test fixture
 		this.context = new RenamingDelegatingContext(this.getInstrumentation().getTargetContext(), "test_");
-		;
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class RoundTest extends InstrumentationTestCase {
 		this.round.submitNoQuestion(question2);
 
 		// Save the questions for the round
-		this.round.save(null, this.context);
+		this.round.save(this.context);
 
 		// Ensure that the used count of the saved questions have been
 		// incremented

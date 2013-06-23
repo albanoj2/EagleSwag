@@ -81,9 +81,9 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 	public void testGetTotalScore () {
 
 		// Save some scores
-		new Score(10).save(new EngineeringRoundType(), this.context);
-		new Score(30).save(new EngineeringRoundType(), this.context);
-		new Score(70).save(new EngineeringRoundType(), this.context);
+		new Score(new EngineeringRoundType(), 10).save(this.context);
+		new Score(new EngineeringRoundType(), 30).save(this.context);
+		new Score(new EngineeringRoundType(), 70).save(this.context);
 
 		// Retrieve the scores from the score controller
 		ScoreController scoreController = new ScoreController(this.context);
@@ -101,9 +101,9 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 	public void testGetAverageScore () {
 
 		// Save some scores
-		new Score(0).save(new EngineeringRoundType(), this.context);
-		new Score(50).save(new EngineeringRoundType(), this.context);
-		new Score(100).save(new EngineeringRoundType(), this.context);
+		new Score(new EngineeringRoundType(), 0).save(this.context);
+		new Score(new EngineeringRoundType(), 50).save(this.context);
+		new Score(new EngineeringRoundType(), 100).save(this.context);
 
 		// Retrieve the average from the score controller
 		ScoreController scoreController = new ScoreController(this.context);
@@ -121,9 +121,9 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 	public void testGetAverageScoreRounding () {
 
 		// Save some scores
-		new Score(10).save(new EngineeringRoundType(), this.context);
-		new Score(10).save(new EngineeringRoundType(), this.context);
-		new Score(20).save(new EngineeringRoundType(), this.context);
+		new Score(new EngineeringRoundType(), 10).save(this.context);
+		new Score(new EngineeringRoundType(), 10).save(this.context);
+		new Score(new EngineeringRoundType(), 20).save(this.context);
 
 		// Retrieve the average from the score controller
 		ScoreController scoreController = new ScoreController(this.context);

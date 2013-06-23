@@ -37,7 +37,7 @@ import android.content.Context;
  * 
  * @author Justin Albano
  */
-public class PilotRoundType implements RoundType {
+public class PilotRoundType extends RoundType {
 
 	/***************************************************************************
 	 * Methods

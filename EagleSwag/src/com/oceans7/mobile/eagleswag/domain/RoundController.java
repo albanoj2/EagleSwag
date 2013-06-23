@@ -20,7 +20,6 @@ package com.oceans7.mobile.eagleswag.domain;
 
 import java.util.List;
 
-
 import android.content.Context;
 
 /**
@@ -95,17 +94,20 @@ public class RoundController {
 	/**
 	 * Start a new round for pilots. This initializes the current round and
 	 * obtains questions for a pilot.
+	 * 
+	 * @param type
+	 *            The type of round to start.
 	 */
-	public synchronized void startRound (RoundType strategy) {
+	public synchronized void startRound (RoundType type) {
 
 		// Obtain the questions from the supplied strategy
-		this.currentQuestions = strategy.getQuestions(this.context);
+		this.currentQuestions = type.getQuestions(this.context);
 
 		// Create new round object
-		this.currentRound = new Round();
+		this.currentRound = new Round(type);
 
 		// Set the current strategy
-		this.currentStrategy = strategy;
+		this.currentStrategy = type;
 
 		// Set flag to 'round started'
 		this.hasRoundBeenStarted = true;
@@ -202,7 +204,7 @@ public class RoundController {
 			int score = this.currentRound.calculateScore();
 
 			// Save the current round
-			this.currentRound.save(this.currentStrategy, this.context);
+			this.currentRound.save(this.context);
 
 			// Destroy the current round and set of questions
 			this.currentRound = null;

@@ -45,30 +45,52 @@ public class Score {
 	 */
 	private long timestamp;
 
+	/**
+	 * The type of round the score is attributed to.
+	 */
+	private RoundType type;
+
 	/***************************************************************************
 	 * Constructors
 	 **************************************************************************/
 
 	/**
-	 * Default constructor (automatically sets the timestamp)
-	 */
-	public Score () {
-		this.setTimestamp(System.currentTimeMillis() / 1000L);
-	}
-
-	/**
-	 * Parameterized constructor that allows for the initialization of the score
-	 * and the timestamp of when the score was recorded (automatically sets the
-	 * timestamp).
+	 * Parameterized constructor (automatically sets the timestamp)
+	 * 
+	 * @param type
+	 *            The type of round the score is attributed to.
 	 * 
 	 * @param score
 	 *            The score value.
 	 */
-	public Score (int score) {
+	public Score (RoundType type, int score) {
 
-		// Set the data for the round score
+		// Set the data for the score
 		this.setScore(score);
 		this.setTimestamp(System.currentTimeMillis() / 1000L);
+		this.setType(type);
+	}
+
+	/**
+	 * A constructor used to set only the type of round (the score defaults to
+	 * 0).
+	 * 
+	 * @param type
+	 *            The type of round the score is attributed to.
+	 */
+	public Score (RoundType type) {
+		this(type, 0);
+	}
+
+	/**
+	 * A constructor used to set only the score of the round (the round type is
+	 * set to null).
+	 * 
+	 * @param score
+	 *            The score.
+	 */
+	public Score (int score) {
+		this(null, score);
 	}
 
 	/***************************************************************************
@@ -81,14 +103,14 @@ public class Score {
 	 * @param strategy
 	 *            The strategy used to save the round.
 	 */
-	public void save (RoundType strategy, Context context) {
+	public void save (Context context) {
 
 		// Obtain a reference to a data controller and open the controller
 		DataController controller = DataControllers.getInstance().getDataController(context);
 
 		// Save the score
-		controller.saveRoundScore(this, strategy.getName());
-		
+		controller.saveRoundScore(this, this.getType());
+
 		// Log the score at the time of saving
 		Log.i(this.getClass().getName(), "Saving score of " + this.getScore());
 
@@ -131,6 +153,22 @@ public class Score {
 	 */
 	public void setTimestamp (long timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	/**
+	 * @return
+	 *         The type.
+	 */
+	public String getType () {
+		return type.getName();
+	}
+
+	/**
+	 * @param type
+	 *            The type to set.
+	 */
+	public void setType (RoundType type) {
+		this.type = type;
 	}
 
 }

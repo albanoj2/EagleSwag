@@ -32,10 +32,12 @@ import android.content.Context;
  * 
  * @author Justin Albano
  */
-public interface RoundType {
+public abstract class RoundType {
 
-	public List<Question> getQuestions (Context context);
+	public abstract List<Question> getQuestions (Context context);
 
-	public String getName ();
+	public String getName () {
+		return this.getClass().getSimpleName();
+	}
 
 }
