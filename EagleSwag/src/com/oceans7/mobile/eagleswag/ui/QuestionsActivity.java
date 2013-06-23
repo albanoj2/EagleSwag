@@ -162,33 +162,25 @@ public class QuestionsActivity<T> extends Activity {
 	 */
 	private void nextQuestionIfPossible () {
 
-		try {
-
-			if (this.roundController.hasMoreQuestions()) {
-				// Display the next question if another question is available
-				this.tsQuestion.setText(this.roundController.getCurrentQuestion().getQuestionString());
-			}
-			else {
-				// No more questions left for the round
-
-				// Save the current round and obtain the score for the round
-				int score = this.roundController.endRound();
-
-				// Render the buttons unusable before the transition occurs
-				this.bYes.setOnClickListener(null);
-				this.bNo.setOnClickListener(null);
-
-				// Create an intent and send the score with the intent
-				Intent intent = new Intent(this, ScoreActivity.class);
-				intent.putExtra("Score", score);
-				startActivity(intent);
-				finish();
-			}
-
+		if (this.roundController.hasMoreQuestions()) {
+			// Display the next question if another question is available
+			this.tsQuestion.setText(this.roundController.getCurrentQuestion().getQuestionString());
 		}
-		catch (RoundNotStartedException e) {
-			// The round was not started before trying to display next question
-			Log.e(this.getClass().getName(), "Round not started: " + e);
+		else {
+			// No more questions left for the round
+
+			// Save the current round and obtain the score for the round
+			int score = this.roundController.endRound();
+
+			// Render the buttons unusable before the transition occurs
+			this.bYes.setOnClickListener(null);
+			this.bNo.setOnClickListener(null);
+
+			// Create an intent and send the score with the intent
+			Intent intent = new Intent(this, ScoreActivity.class);
+			intent.putExtra("Score", score);
+			startActivity(intent);
+			finish();
 		}
 	}
 

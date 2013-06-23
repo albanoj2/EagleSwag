@@ -26,7 +26,7 @@ package com.oceans7.mobile.eagleswag.domain;
  * 
  * @author Justin Albano
  */
-public class RoundNotStartedException extends Exception {
+public class RoundNotStartedException extends RuntimeException {
 
 	/***************************************************************************
 	 * Attributes
@@ -49,6 +49,6 @@ public class RoundNotStartedException extends Exception {
 	 *            A message to attribute to the exception.
 	 */
 	public RoundNotStartedException (String message) {
-		super(message);
+		super("An action was performed on a round that was not started: " + message);
 	}
 }
