@@ -20,7 +20,6 @@ package com.oceans7.mobile.eagleswag.domain;
 
 import java.util.List;
 
-
 import android.content.Context;
 
 /**
@@ -34,8 +33,22 @@ import android.content.Context;
  */
 public abstract class RoundType {
 
+	/**
+	 * Retrieve the questions required for a round.
+	 * 
+	 * @param context
+	 *            The context used to retrieve the questions.
+	 * @return
+	 *         A list of questions to answer for a round.
+	 */
 	public abstract List<Question> getQuestions (Context context);
 
+	/**
+	 * Gets the name of the round type.
+	 * 
+	 * @return
+	 *         The name of the round type.
+	 */
 	public String getName () {
 		return this.getClass().getSimpleName();
 	}

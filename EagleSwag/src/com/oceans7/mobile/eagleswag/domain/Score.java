@@ -25,7 +25,9 @@ import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 
 /**
- * A score for a round of questions.
+ * A score for a round of questions. The type for a score uses convention over
+ * configuration: The type associated with the score is the simple class name of
+ * the round type associated with the score.
  * 
  * @author Justin Albano
  */
