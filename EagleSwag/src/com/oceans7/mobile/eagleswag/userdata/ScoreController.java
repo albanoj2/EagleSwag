@@ -16,10 +16,11 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.domain;
+package com.oceans7.mobile.eagleswag.userdata;
 
 import android.content.Context;
 
+import com.oceans7.mobile.eagleswag.domain.RoundType;
 import com.oceans7.mobile.eagleswag.persistence.DataController;
 import com.oceans7.mobile.eagleswag.persistence.DataControllers;
 

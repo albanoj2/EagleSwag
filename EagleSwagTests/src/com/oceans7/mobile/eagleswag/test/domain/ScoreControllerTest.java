@@ -23,11 +23,11 @@ import android.test.InstrumentationTestCase;
 import android.test.RenamingDelegatingContext;
 
 import com.oceans7.mobile.eagleswag.domain.Score;
-import com.oceans7.mobile.eagleswag.domain.ScoreController;
 import com.oceans7.mobile.eagleswag.domain.roundtype.EngineeringRoundType;
+import com.oceans7.mobile.eagleswag.userdata.ScoreController;
 
 /**
- * Test cases for {@link com.oceans7.mobile.eagleswag.domain.ScoreController}.
+ * Test cases for {@link com.oceans7.mobile.eagleswag.userdata.ScoreController}.
  * 
  * @author Justin Albano
  */
@@ -75,7 +75,7 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.ScoreController#getTotalScore(com.oceans7.mobile.eagleswag.domain.QuestionStrategy)}
+	 * {@link com.oceans7.mobile.eagleswag.userdata.ScoreController#getTotalScore(com.oceans7.mobile.eagleswag.domain.QuestionStrategy)}
 	 * .
 	 */
 	public void testGetTotalScore () {
@@ -95,7 +95,7 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.ScoreController#getAverageScore(com.oceans7.mobile.eagleswag.domain.QuestionStrategy)}
+	 * {@link com.oceans7.mobile.eagleswag.userdata.ScoreController#getAverageScore(com.oceans7.mobile.eagleswag.domain.QuestionStrategy)}
 	 * .
 	 */
 	public void testGetAverageScore () {
@@ -115,7 +115,7 @@ public class ScoreControllerTest extends InstrumentationTestCase {
 
 	/**
 	 * Test method for
-	 * {@link com.oceans7.mobile.eagleswag.domain.ScoreController#getAverageScore(com.oceans7.mobile.eagleswag.domain.QuestionStrategy)}
+	 * {@link com.oceans7.mobile.eagleswag.userdata.ScoreController#getAverageScore(com.oceans7.mobile.eagleswag.domain.QuestionStrategy)}
 	 * .
 	 */
 	public void testGetAverageScoreRounding () {
