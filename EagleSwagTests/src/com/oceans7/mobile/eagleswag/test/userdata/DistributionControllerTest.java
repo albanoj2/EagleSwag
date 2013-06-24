@@ -18,6 +18,9 @@
 
 package com.oceans7.mobile.eagleswag.test.userdata;
 
+import java.io.InputStream;
+import java.util.Properties;
+
 import android.content.Context;
 import android.test.InstrumentationTestCase;
 
@@ -46,6 +49,11 @@ public class DistributionControllerTest extends InstrumentationTestCase {
 	private static final String ASSET_LOCATION = "config/distribution.cfg";
 
 	/**
+	 * The context used to access the configuration file.
+	 */
+	private Context context;
+
+	/**
 	 * The distribution controller under test.
 	 */
 	private DistributionController distributionController;
@@ -64,8 +72,8 @@ public class DistributionControllerTest extends InstrumentationTestCase {
 		super.setUp();
 
 		// Create distribution controller
-		Context context = this.getInstrumentation().getContext();
-		this.distributionController = new DistributionController(ASSET_LOCATION, context);
+		this.context = this.getInstrumentation().getContext();
+		this.distributionController = new DistributionController(ASSET_LOCATION, this.context);
 	}
 
 	/***************************************************************************
@@ -102,6 +110,35 @@ public class DistributionControllerTest extends InstrumentationTestCase {
 		assertEquals("Pilot round, pilot question:",
 			DistributionController.DEFAULT_DISTRIBUTION,
 			this.distributionController.getDistribution(new PilotRoundType(), PilotQuestion.class));
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.oceans7.mobile.eagleswag.userdata.DistributionController#setDistribution(com.oceans7.mobile.eagleswag.domain.RoundType, java.lang.Class, int)}
+	 * .
+	 */
+	public void testSetDefaultDistribution () throws Exception {
+
+		// Load the original properties file
+		Properties originalProps = new Properties();
+		InputStream is = this.context.getAssets().open(ASSET_LOCATION);
+		originalProps.load(is);
+		is.close();
+
+		// Obtain the original engineering round, engineering question
+		int originalCount = this.distributionController.getDistribution(new EngineeringRoundType(), EngineeringQuestion.class);
+
+		// Set a new value for the engineering round, engineering question
+		this.distributionController.setDistribution(new EngineeringRoundType(), EngineeringQuestion.class, 10);
+
+		// Ensure the value was actually set
+		assertEquals("New value was set:", 10, this.distributionController.getDistribution(new EngineeringRoundType(), EngineeringQuestion.class));
+		
+		// Reset the properties file
+		originalProps.store(this.context.openFileOutput(ASSET_LOCATION, Context.MODE_PRIVATE), "");
+		
+		// Ensure the properties file was reset
+		assertEquals("File was reset:", originalCount, this.distributionController.getDistribution(new EngineeringRoundType(), EngineeringQuestion.class));
 	}
 
 }

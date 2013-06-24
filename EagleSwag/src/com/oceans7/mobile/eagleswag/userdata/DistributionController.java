@@ -32,6 +32,7 @@ import com.oceans7.mobile.eagleswag.domain.RoundType;
 /**
  * TODO Class documentation
  * TODO Add set(...) method
+ * TODO Investigate a way to modify the properties (possibly a database)
  * 
  * @author Justin Albano
  */
@@ -111,7 +112,7 @@ public class DistributionController {
 			is.close();
 
 			// Obtain the distribution for the type and key provided
-			String distribution = properties.getProperty(PREFIX + "." + type.getName() + "." + key.getSimpleName());
+			String distribution = properties.getProperty(this.generatePropertyName(type, key));
 
 			if (distribution != null) {
 				// Set the distribution if it is configured
@@ -139,6 +140,25 @@ public class DistributionController {
 		}
 
 		return intDistribution;
+	}
+
+	public void setDistribution (RoundType type, Class<? extends Question> key, int distribution) {
+		
+	}
+
+	/**
+	 * Helper method that generates the property name from the supplied
+	 * parameters.
+	 * 
+	 * @param type
+	 *            The round type.
+	 * @param key
+	 *            The question type (key).
+	 * @return
+	 *         A property name from the supplied parameters.
+	 */
+	private String generatePropertyName (RoundType type, Class<? extends Question> key) {
+		return PREFIX + "." + type.getName() + "." + key.getSimpleName();
 	}
 
 }
