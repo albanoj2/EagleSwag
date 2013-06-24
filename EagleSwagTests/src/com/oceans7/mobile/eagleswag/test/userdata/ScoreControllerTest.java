@@ -16,7 +16,7 @@
  * <http://www.gnu.org/licenses/>
  */
 
-package com.oceans7.mobile.eagleswag.test.domain;
+package com.oceans7.mobile.eagleswag.test.userdata;
 
 import android.content.Context;
 import android.test.InstrumentationTestCase;
